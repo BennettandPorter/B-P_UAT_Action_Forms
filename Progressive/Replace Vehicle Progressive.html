@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Progressive Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" />
+  <style>
+    .star { color: #ef4444; margin-left: 2px; }
+    .modal-bg { background: rgba(0,0,0,0.4);}
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+  <form
+    id="mainForm"
+    action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DU7000006EuID"
+    method="POST"
+    class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8"
+    autocomplete="off"
+    novalidate
+  >
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+      Replace Vehicle Progressive Form
+    </h2>
+
+    <!-- Policy Changes Section -->
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          Email<span class="star">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          autocomplete="off"
+        />
+      </div>
+    
+      <!-- Policy Action -->
+      <fieldset class="mb-4">
+        <legend class="block text-sm font-medium text-gray-700 mb-1">
+          Select the Request Type:<span class="star">*</span>
+        </legend>
+        <div class="flex space-x-6">
+          <label class="inline-flex items-center">
+            <input type="radio" name="requestTypeRadios" value="Y" class="mr-2" />Quote
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="requestTypeRadios" value="N" class="mr-2" />Endorsement
+          </label>
+        </div>
+        <!-- Hidden select field mapped to radio buttons -->
+        <select id="00NU7000006IOzh" name="Is_this_a_quote_or_a_change_request__c" class="hidden">
+          <option value=""></option>
+          <option value="Y">Y</option>
+          <option value="N">N</option>
+        </select>
+      </fieldset>
+      <div class="mb-4">
+        <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700"> Policy Number<span class="star">*</span></label>
+        <input
+          type="text"
+          id="00NU7000005zuX3"
+          name="Policy_Number__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+          autocomplete="off"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700"> Effective Date (MM/DD/YYYY)<span class="star">*</span></label>
+        <input
+          type="text"
+          id="00NU7000005zuLl"
+          name="Date__c"
+          placeholder="MM/DD/YYYY"
+          maxlength="10"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          autocomplete="off"
+        />
+      </div>
+    </section>
+
+   <!-- New Vehicle Details Section -->
+<section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Vehicle Details Section">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Vehicle Details</h3>
+<!-- Do you know the VIN of the Old Vehicle? Radios -->
+<div class="mb-4">
+  <span class="block text-sm font-medium text-gray-700">
+    Do you know the VIN of the Old Vehicle?<span class="star">*</span>
+  </span>
+  <div class="flex flex-row space-x-6 mt-2">
+    <label class="inline-flex items-center">
+      <input type="radio" name="vinOldKnown" value="Y" class="mr-2" />Yes
+    </label>
+    <label class="inline-flex items-center">
+      <input type="radio" name="vinOldKnown" value="N" class="mr-2" />No
+    </label>
+  </div>
+  <select id="00NU7000006DHIv" name="Do_you_know_the_VIN_of_this_vehicle__c" title="Do you know the VIN of this vehicle?" class="hidden">
+    <option value="">--None--</option>
+    <option value="Y">Y</option>
+    <option value="N">N</option>
+  </select>
+</div>
+<div class="mb-4">
+  <label for="00NU700000616Sv" class="block text-sm font-medium text-gray-700">
+    VIN number of Old Vehicle:<span class="star">*</span>
+  </label>
+  <input id="00NU700000616Sv" maxlength="255" name="VIN_number__c" size="20" type="text"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+</div>
+  <!-- Do you know the VIN of the New Vehicle? Radios -->
+  <div class="mb-4">
+    <span class="block text-sm font-medium text-gray-700">
+      Do you know the VIN of the New Vehicle?<span class="star">*</span>
+    </span>
+    <div class="flex flex-row space-x-6 mt-2">
+      <label class="inline-flex items-center">
+        <input type="radio" name="vinKnown" value="Y" class="mr-2" />Yes
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="vinKnown" value="N" class="mr-2" />No
+      </label>
+    </div>
+    <!-- Hidden select mapped to Salesforce field -->
+    <select id="00NU7000006NiT7" name="Do_you_know_the_VIN_of_this_vehicle_2__c" title="Do you know the VIN of the New Vehicle?" class="hidden">
+      <option value="">--None--</option>
+      <option value="Y">Y</option>
+      <option value="N">N</option>
+    </select>
+  </div>
+  <div class="mb-4">
+    <label for="00NU7000006Knh3" class="block text-sm font-medium text-gray-700">
+      VIN Number of New Vehicle<span class="star">*</span>
+    </label>
+    <input id="00NU7000006Knh3" maxlength="255" name="VIN_number_2__c" type="text"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+  </div>
+  <div class="mb-4">
+  <label for="00NU7000007QI0T" class="block text-sm font-medium text-gray-700">
+    Please Enter the Year of New Vehicle:<span class="star">*</span>
+  </label>
+  <input id="00NU7000007QI0T" maxlength="30" name="Please_Enter_the_Year_of_Vehicle_to_Add__c" type="text"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+</div>
+</section>
+
+    <!-- Verify Vehicle Information Section -->
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Verify Vehicle Information Section">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Verify Vehicle Information</h3>
+       <div class="mb-4">
+        <label for="00NU700000618Xx" class="block text-sm font-medium text-gray-700">
+          Primary Use<span class="star">*</span>
+        </label>
+        <select id="00NU700000618Xx" name="Primary_Use__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="">--None--</option>
+          <option value="Commute">Commute</option>
+          <option value="Pleasure/Personal">Pleasure/Personal</option>
+          <option value="Business">Business</option>
+          <option value="Farm">Farm</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <span class="block text-sm font-medium text-gray-700">
+          Do you also use this vehicle for Ridesharing?<span class="star">*</span>
+        </span>
+        <div class="flex flex-row space-x-6 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="ridesharing" value="Y" class="mr-2" />Yes
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="ridesharing" value="N" class="mr-2" />No
+          </label>
+        </div>
+
+        <select id="00NU7000007QIDN" name="Is_this_vehicle_used_for_ridesharing__c" class="hidden">
+          <option value="">--None--</option>
+          <option value="Y">Y</option>
+          <option value="N">N</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="00NU7000007QqQM" class="block text-sm font-medium text-gray-700">
+          Annual mileage<span class="star">*</span>
+        </label>
+        <select id="00NU7000007QqQM" name="Annual_mileage__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <!-- options omitted for brevity same as above… -->
+          <option value="0 - 3,999 miles">0 - 3,999 miles</option>
+          <option value="4,000 - 5,999 miles">4,000 - 5,999 miles</option>
+          <option value="6,000 - 7,999 miles">6,000 - 7,999 miles</option>
+          <option value="8,000 - 9,999 miles">8,000 - 9,999 miles</option>
+          <option value="10,000 - 11,999 miles">10,000 - 11,999 miles</option>
+          <option value="12,000 - 13,999 miles">12,000 - 13,999 miles</option>
+          <option value="14,000 - 15,999 miles">14,000 - 15,999 miles</option>
+          <option value="16,000 - 17,999 miles">16,000 - 17,999 miles</option>
+          <option value="18,000 - 19,999 miles">18,000 - 19,999 miles</option>
+          <option value="20,000 - 21,999 miles">20,000 - 21,999 miles</option>
+          <option value="22,000 - 23,999 miles">22,000 - 23,999 miles</option>
+          <option value="24,000 - 26,999 miles">24,000 - 26,999 miles</option>
+          <option value="27,000 - 29,999 miles">27,000 - 29,999 miles</option>
+          <option value="30,000 miles or more">30,000 miles or more</option>
+        </select>
+      </div>
+      <!-- Fields for Commute -->
+      <div id="commuteFields" class="hidden">
+        <div class="mb-4">
+          <label for="00NU7000006AXyX" class="block text-sm font-medium text-gray-700">
+            Current number of days commuting to work or school<span class="star">*</span>
+          </label>
+          <select id="00NU7000006AXyX" name="Days_commuting_to_work_school__c"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000006AY3N" class="block text-sm font-medium text-gray-700">
+            Miles one way to work or school<span class="star">*</span>
+          </label>
+          <input id="00NU7000006AY3N" maxlength="18" name="Miles_one_way_to_work_or_school__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+      </div>
+      <div class="mb-4">
+    <span class="block text-sm font-medium text-gray-700">
+      Primary Location<span class="star">*</span>
+    </span>
+    <div class="flex flex-col space-y-2 mt-2">
+      <label class="inline-flex items-center">
+        <input type="radio" name="primaryLocation" value="mailing" class="mr-2" />Mailing
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="primaryLocation" value="other" class="mr-2" />Other
+      </label>
+    </div>
+
+    <select id="00NU7000007QqVB" name="Primary_location_Progressive__c" class="hidden">
+      <option value="mailing">mailing</option>
+      <option value="other">other</option>
+    </select>
+  </div>
+      <!-- Fields for Other Location -->
+      <div id="otherLocationFields" class="hidden">
+        <div class="mb-4">
+          <label for="00NU7000006Drkb" class="block text-sm font-medium text-gray-700">
+            Primary location address 1<span class="star">*</span>
+          </label>
+          <input id="00NU7000006Drkb" maxlength="255" name="Primary_location_address__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000007QpFl" class="block text-sm font-medium text-gray-700">
+            Primary location address 2
+          </label>
+          <input id="00NU7000007QpFl" maxlength="255" name="Primary_location_address_2__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000005zvUj" class="block text-sm font-medium text-gray-700">
+            City<span class="star">*</span>
+          </label>
+          <input id="00NU7000005zvUj" maxlength="30" name="City__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000006cbfp" class="block text-sm font-medium text-gray-700">
+            Zip Code<span class="star">*</span>
+          </label>
+          <input id="00NU7000006cbfp" maxlength="30" name="Interest_Zip_Code__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="00NU700000616cb" class="block text-sm font-medium text-gray-700">
+          Vehicle financed, leased or owned<span class="star">*</span>
+        </label>
+        <select id="00NU700000616cb" name="Vehicle_financed_leased_or_owned__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="">--None--</option>
+          <option value="Lease">Lease</option>
+          <option value="Own and make payments">Own and make payments</option>
+          <option value="Own and do not make payments">Own and do not make payments</option>
+        </select>
+      </div>
+      <!-- Fields for Lease & Own and make payments -->
+      <div id="lienholderFields" class="hidden">
+        <div class="mb-4">
+          <label for="00NU7000007QpKb" class="block text-sm font-medium text-gray-700">
+            Lienholder Name<span class="star">*</span>
+          </label>
+          <input id="00NU7000007QpKb" maxlength="100" name="Lienholder__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000007QpPR" class="block text-sm font-medium text-gray-700">
+             Address 1<span class="star">*</span>
+          </label>
+          <input id="00NU7000007QpPR" maxlength="100" name="Lienholder_Address_1__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000007QpUH" class="block text-sm font-medium text-gray-700">
+            Address 2
+          </label>
+          <input id="00NU7000007QpUH" maxlength="100" name="Lienholder_Address_2__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000007QpcL" class="block text-sm font-medium text-gray-700">
+             City<span class="star">*</span>
+          </label>
+          <input id="00NU7000007QpcL" maxlength="50" name="Lienholder_City__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000005zvWL" class="block text-sm font-medium text-gray-700">
+            State<span class="star">*</span>
+          </label>
+          <select id="00NU7000005zvWL" name="State__c"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <!-- States options as above -->
+            <option value="">--None--</option>
+            <option value="Arizona">Arizona</option>
+            <option value="Florida">Florida</option>
+            <option value="Alabama">Alabama</option>
+            <option value="Alaska">Alaska</option>
+            <option value="Alberta">Alberta</option>
+            <option value="Arkansas">Arkansas</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="California">California</option>
+            <option value="Colorado">Colorado</option>
+            <option value="Connecticut">Connecticut</option>
+            <option value="Delaware">Delaware</option>
+            <option value="Dist Of Columbia">Dist Of Columbia</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Guam">Guam</option>
+            <option value="Hawaii">Hawaii</option>
+            <option value="Idaho">Idaho</option>
+            <option value="Illinois">Illinois</option>
+            <option value="Indiana">Indiana</option>
+            <option value="International">International</option>
+            <option value="Iowa">Iowa</option>
+            <option value="Kansas">Kansas</option>
+            <option value="Kentucky">Kentucky</option>
+            <option value="Louisiana">Louisiana</option>
+            <option value="Maine">Maine</option>
+            <option value="Manitoba">Manitoba</option>
+            <option value="Maryland">Maryland</option>
+            <option value="Massachusetts">Massachusetts</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Michigan">Michigan</option>
+            <option value="Minnesota">Minnesota</option>
+            <option value="Mississippi">Mississippi</option>
+            <option value="Missouri">Missouri</option>
+            <option value="Montana">Montana</option>
+            <option value="Nebraska">Nebraska</option>
+            <option value="Nevada">Nevada</option>
+            <option value="New Brunswick">New Brunswick</option>
+            <option value="New Hampshire">New Hampshire</option>
+            <option value="New Jersey">New Jersey</option>
+            <option value="New Mexico">New Mexico</option>
+            <option value="New York">New York</option>
+            <option value="Newfoundland">Newfoundland</option>
+            <option value="North Carolina">North Carolina</option>
+            <option value="North Dakota">North Dakota</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nova Scotia">Nova Scotia</option>
+            <option value="Ohio">Ohio</option>
+            <option value="Oklahoma">Oklahoma</option>
+            <option value="Ontario">Ontario</option>
+            <option value="Oregon">Oregon</option>
+            <option value="Pennsylvania">Pennsylvania</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
+            <option value="Puerto Rico">Puerto Rico</option>
+            <option value="Quebec">Quebec</option>
+            <option value="Rhode Island">Rhode Island</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="South Carolina">South Carolina</option>
+            <option value="South Dakota">South Dakota</option>
+            <option value="Tennessee">Tennessee</option>
+            <option value="Texas">Texas</option>
+            <option value="Utah">Utah</option>
+            <option value="Vermont">Vermont</option>
+            <option value="Virgin Islands">Virgin Islands</option>
+            <option value="Virginia">Virginia</option>
+            <option value="Washington">Washington</option>
+            <option value="West Virginia">West Virginia</option>
+            <option value="Wisconsin">Wisconsin</option>
+            <option value="Wyoming">Wyoming</option>
+            <option value="Yukon Territory">Yukon Territory</option>
+            <option value="District of Columbia">District of Columbia</option>
+            <option value="Nunavut">Nunavut</option>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label for="00NU7000007QfZm" class="block text-sm font-medium text-gray-700">
+            ZIP code<span class="star">*</span>
+          </label>
+          <input id="00NU7000007QfZm" maxlength="30" name="Lienholder_ZIP_code__c" type="text"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+        </div>
+      </div>
+      <div class="mb-4">
+        <label for="00NU7000007QpCX" class="block text-sm font-medium text-gray-700">
+          Length of vehicle ownership<span class="star">*</span>
+        </label>
+        <select id="00NU7000007QpCX" name="Length_of_vehicle_ownership__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="">--None--</option>
+          <option value="Less than 1 month">Less than 1 month</option>
+          <option value="At least 1 month, but less than 6 months">At least 1 month, but less than 6 months</option>
+          <option value="At least 6 months, but less than 1 year">At least 6 months, but less than 1 year</option>
+          <option value="At least 1 year, but less than 3 years">At least 1 year, but less than 3 years</option>
+          <option value="At least 3 years, but less than 5 years">At least 3 years, but less than 5 years</option>
+          <option value="5 years or more">5 years or more</option>
+        </select>
+      </div>
+    </section>
+    <!-- Coverage Section -->
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Coverage Section">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Coverages</h3>
+      <div class="mb-4">
+        <label for="00NU700000618bB" class="block text-sm font-medium text-gray-700">
+          Comprehensive<span class="star">*</span>
+        </label>
+        <select id="00NU700000618bB" name="Comprehensive__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="No Coverage">No Coverage</option>
+          <option value="$100 deductible">$100 deductible</option>
+          <option value="$250 deductible">$250 deductible</option>
+          <option value="$500 deductible">$500 deductible</option>
+          <option value="$750 deductible">$750 deductible</option>
+          <option value="$1,000 deductible">$1,000 deductible</option>
+          <option value="$1,500 deductible">$1,500 deductible</option>
+          <option value="$2,000 deductible">$2,000 deductible</option>
+          <option value="$100 deductible with Full Glass">$100 deductible with Full Glass</option>
+          <option value="$250 deductible with Full Glass">$250 deductible with Full Glass</option>
+          <option value="$500 deductible with Full Glass">$500 deductible with Full Glass</option>
+          <option value="$750 deductible with Full Glass">$750 deductible with Full Glass</option>
+          <option value="$1,000 deductible with Full Glass">$1,000 deductible with Full Glass</option>
+          <option value="$1,500 deductible with Full Glass">$1,500 deductible with Full Glass</option>
+          <option value="$2,000 deductible with Full Glass">$2,000 deductible with Full Glass</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="00NU700000618cn" class="block text-sm font-medium text-gray-700">
+          Collision<span class="star">*</span>
+        </label>
+        <select id="00NU700000618cn" name="Collision__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="No Coverage">No Coverage</option>
+          <option value="$100 deductible">$100 deductible</option>
+          <option value="$250 deductible">$250 deductible</option>
+          <option value="$500 deductible">$500 deductible</option>
+          <option value="$750 deductible">$750 deductible</option>
+          <option value="$1,000 deductible">$1,000 deductible</option>
+          <option value="$1,500 deductible">$1,500 deductible</option>
+          <option value="$2,000 deductible">$2,000 deductible</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label for="00NU700000618eP" class="block text-sm font-medium text-gray-700">
+          Rental Reimbursement<span class="star">*</span>
+        </label>
+        <select id="00NU700000618eP" name="Rental_Reimbursement__c"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+          <option value="No Coverage">No Coverage</option>
+          <option value="$40 each day/maximum 30 days">$40 each day/maximum 30 days</option>
+          <option value="$50 each day/maximum 30 days">$50 each day/maximum 30 days</option>
+          <option value="$60 each day/maximum 30 days">$60 each day/maximum 30 days</option>
+        </select>
+      </div>
+      <!-- Roadside Assistance Radios -->
+  <div class="mb-4">
+    <span class="block text-sm font-medium text-gray-700">
+      Roadside Assistance<span class="star">*</span>
+    </span>
+    <div class="flex flex-col space-y-2 mt-2">
+      <label class="inline-flex items-center">
+        <input type="radio" name="roadsideAssistance" value="No Coverage" class="mr-2" />No Coverage
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="roadsideAssistance" value="Selected" class="mr-2" />Selected
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="roadsideAssistance" value="Selected with Trip Interruption" class="mr-2" />Selected with Trip Interruption
+      </label>
+    </div>
+    <!-- Hidden select mapped to Salesforce field -->
+    <select id="00NU700000618hd" name="Roadside_Assistance__c" class="hidden">
+      <option value="">--None--</option>
+      <option value="No Coverage">No Coverage</option>
+      <option value="Selected">Selected</option>
+      <option value="Selected with Trip Interruption">Selected with Trip Interruption</option>
+    </select>
+  </div>
+
+      <div class="mb-6">
+  <label for="00NU7000007QrCj" class="block text-sm font-medium text-gray-700 mb-2">
+    Custom Parts and/or Equipment value<span class="star">*</span>
+  </label>
+  
+  <!-- Mini info box -->
+  <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3 shadow-sm">
+    <div class="flex items-start">
+      <div class="w-5 h-5 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold mr-2 flex-shrink-0 mt-0.5">
+        i
+      </div>
+      <p class="text-xs text-gray-700 leading-relaxed">
+        Custom parts or equipment are accessories and enhancements permanently installed in or on the insured's vehicle.
+      </p>
+    </div>
+  </div>
+  
+  <input 
+    id="00NU7000007QrCj" 
+    maxlength="30" 
+    name="Custom_Parts_and_or_Equipment_value__c" 
+    type="text"
+    class="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+    placeholder="e.g., $2500"
+  />
+</div>
+      <div class="mb-4">
+    <span class="block text-sm font-medium text-gray-700">
+      Loan/Lease Payoff<span class="star">*</span>
+    </span>
+    <div class="flex flex-col space-y-2 mt-2">
+      <label class="inline-flex items-center">
+        <input type="radio" name="loanLeasePayoff" value="No Coverage" class="mr-2" />No Coverage
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="loanLeasePayoff" value="Selected" class="mr-2" />Selected
+      </label>
+    </div>
+    <!-- Hidden select mapped to Salesforce field -->
+    <select id="00NU7000007Qqzp" name="Loan_Lease_Payoff__c" class="hidden">
+      <option value="">--None--</option>
+      <option value="No Coverage">No Coverage</option>
+      <option value="Selected">Selected</option>
+    </select>
+  </div>
+  <div id="purchaseDateField" class="mb-4 hidden">
+  <label for="00NU7000007Vz4n" class="block text-sm font-medium text-gray-700">
+    Please Enter Purchase Date:<span class="star">*</span>
+  </label>
+  <input
+    id="00NU7000007Vz4n"
+    name="Please_Enter_Purchase_Date__c"
+    size="12"
+    type="text"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+    placeholder="MM/DD/YYYY"
+    autocomplete="off"
+  />
+</div>
+
+  
+    </section>
+
+    <!-- Hidden Salesforce fields -->
+    <input type="hidden" name="delete_Action_Form__c" value="1" />
+    <input type="hidden" name="oid" value="00DU7000006EuID" />
+    <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+    <input type="hidden" name="first_name" value="Progressive Replace Vehicle" />
+    <input type="hidden" name="last_name" value="Test" />
+    <input type="hidden" name="status" value="New" />
+    <input type="hidden" name="phone" value="29146836129" />
+    <input type="hidden" name="lead_source" value="Web Form" />
+    <input type="hidden" name="company" value="Progressive Replace Vehicle" />
+    <input type="hidden" id="00NU7000007OdKL" name="Carrier__c" value="Progressive" />
+    <input type="hidden" id="00NU7000005zuNN" name="Policy_Action__c" value="Replace Vehicle" />
+        <input type="hidden" name="Form_Captured_Data__c" />
+    <input type="hidden" name="Form_Missing_Data__c" />
+
+
+    <div class="flex justify-end mt-6">
+      <button
+        type="button"
+        id="reviewBtn"
+        class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+      >
+        Review and Submit
+      </button>
+    </div>
+  </form>
+
+  <!-- Confirmation Dialog -->
+  <div
+    id="dialog"
+    class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dialogTitle"
+  >
+    <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+      <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+      <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+      <div class="flex justify-end space-x-3" id="dialogButtons">
+        <button
+          id="proceedBtn"
+          class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+        >
+          Proceed to End Request
+        </button>
+        <button
+          id="editBtn"
+          class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+        >
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+/* ======================= DATE PICKERS ======================= */
+
+if (window.Pikaday) {
+  const createPicker = id => new Pikaday({
+    field: document.getElementById(id),
+    format: "MM/DD/YYYY",
+    toString(d){ return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()}`; },
+    parse(s){ const [m,d,y]=s.split("/"); return new Date(y,m-1,d); }
+  });
+  createPicker("00NU7000005zuLl");
+  createPicker("00NU7000007Vz4n");
+}
+
+/* ======================= UTILITIES ======================= */
+
+function getRadioValue(name){
+  const r=document.querySelector(`input[name="${name}"]:checked`);
+  return r?r.value:"";
+}
+
+/* ======================= SYNC REQUEST TYPE ======================= */
+
+const radios=document.querySelectorAll('input[name="requestTypeRadios"]');
+const hiddenSelect=document.getElementById("00NU7000006IOzh");
+radios.forEach(r=>r.addEventListener("change",()=>hiddenSelect.value=r.checked?r.value:""));
+if(hiddenSelect.value){
+  const m=document.querySelector(`input[name="requestTypeRadios"][value="${hiddenSelect.value}"]`);
+  if(m) m.checked=true;
+}
+
+/* ======================= CONDITIONAL UI ======================= */
+
+const primaryUse=document.getElementById("00NU700000618Xx");
+const commuteFields=document.getElementById("commuteFields");
+primaryUse.addEventListener("change",()=>commuteFields.classList.toggle("hidden",primaryUse.value!=="Commute"));
+
+const financedSelect=document.getElementById("00NU700000616cb");
+const lienholderFields=document.getElementById("lienholderFields");
+financedSelect.addEventListener("change",()=>lienholderFields.classList.toggle("hidden",!(financedSelect.value==="Lease"||financedSelect.value==="Own and make payments")));
+
+document.querySelectorAll('input[name="primaryLocation"]').forEach(r=>r.addEventListener("change",()=>{
+  document.getElementById("otherLocationFields").classList.toggle("hidden",getRadioValue("primaryLocation")!=="other");
+}));
+
+/* ======================= SYNC RADIOS ======================= */
+
+function syncRadioToSelect(name,id){
+  const sel=document.getElementById(id);
+  document.querySelectorAll(`input[name="${name}"]`).forEach(r=>r.addEventListener("change",()=>{if(r.checked) sel.value=r.value;}));
+  const c=document.querySelector(`input[name="${name}"]:checked`);
+  if(c) sel.value=c.value;
+}
+
+syncRadioToSelect("roadsideAssistance","00NU700000618hd");
+syncRadioToSelect("primaryLocation","00NU7000007QqVB");
+syncRadioToSelect("loanLeasePayoff","00NU7000007Qqzp");
+syncRadioToSelect("vinKnown","00NU7000006NiT7");
+syncRadioToSelect("vinOldKnown","00NU7000006DHIv");
+syncRadioToSelect("ridesharing","00NU7000007QIDN");
+
+/* ======================= PURCHASE DATE ======================= */
+
+const purchaseDateField=document.getElementById("purchaseDateField");
+document.querySelectorAll('input[name="loanLeasePayoff"]').forEach(r=>r.addEventListener("change",()=>{
+  purchaseDateField.classList.toggle("hidden",getRadioValue("loanLeasePayoff")!=="Selected");
+}));
+
+/* ======================= FORM CAPTURE ======================= */
+
+const form=document.getElementById("mainForm");
+
+const captured=document.createElement("input");
+captured.type="hidden";
+captured.name="Form_Captured_Data__c";
+form.appendChild(captured);
+
+const missingCaptured=document.createElement("input");
+missingCaptured.type="hidden";
+missingCaptured.name="Form_Missing_Data__c";
+form.appendChild(missingCaptured);
+
+/* ======================= VALIDATION ======================= */
+
+const reviewBtn=document.getElementById("reviewBtn");
+const dialog=document.getElementById("dialog");
+const dialogTitle=document.getElementById("dialogTitle");
+const missingFieldsList=document.getElementById("missingFieldsList");
+const proceedBtn=document.getElementById("proceedBtn");
+const editBtn=document.getElementById("editBtn");
+
+function req(n,l,t=null){return{name:n,label:l,type:t};}
+function reqR(n,l){return{radio:n,label:l};}
+
+function getRequiredFields(){
+  const f=[
+    req("email","Email","email"),
+    reqR("requestTypeRadios","Select the Request Type:"),
+    req("00NU7000005zuX3","Policy Number"),
+    req("00NU7000005zuLl","Effective Date (MM/DD/YYYY)","date"),
+    req("00NU7000007QI0T","Year of Vehicle to Add"),
+    reqR("vinKnown","Do you know the VIN of the New Vehicle?"),
+    req("00NU7000006Knh3","VIN Number"),
+    reqR("ridesharing","Do you also use this vehicle for Ridesharing?"),
+    req("00NU7000007QqQM","Annual mileage"),
+    req("00NU700000618Xx","Primary Use"),
+    reqR("primaryLocation","Primary Location"),
+    req("00NU700000616cb","Vehicle financed, leased or owned"),
+    req("00NU7000007QpCX","Length of vehicle ownership"),
+    req("00NU700000618bB","Comprehensive"),
+    req("00NU700000618cn","Collision"),
+    req("00NU700000618eP","Rental Reimbursement"),
+    reqR("roadsideAssistance","Roadside Assistance"),
+    req("00NU7000007QrCj","Custom Parts and/or Equipment value"),
+    reqR("loanLeasePayoff","Loan/Lease Payoff")
+  ];
+
+  if(primaryUse.value==="Commute"){
+    f.push(req("00NU7000006AXyX","Current number of days commuting to work or school"));
+    f.push(req("00NU7000006AY3N","Miles one way to work or school"));
+  }
+
+  if(getRadioValue("primaryLocation")==="other"){
+    f.push(req("00NU7000006Drkb","Primary location address 1"));
+    f.push(req("00NU7000005zvUj","City"));
+    f.push(req("00NU7000006cbfp","Zip Code"));
+  }
+
+  if(financedSelect.value==="Lease"||financedSelect.value==="Own and make payments"){
+    f.push(req("00NU7000007QpKb","Lienholder Name"));
+    f.push(req("00NU7000007QpPR","Address 1"));
+    f.push(req("00NU7000007QpcL","City"));
+    f.push(req("00NU7000005zvWL","State"));
+    f.push(req("00NU7000007QfZm","ZIP code"));
+  }
+
+  if(getRadioValue("loanLeasePayoff")==="Selected"){
+    f.push(req("00NU7000007Vz4n","Please Enter Purchase Date","date"));
+  }
+
+  return f;
+}
+
+function getValue(f){
+  if(f.radio) return getRadioValue(f.radio);
+  const e=document.getElementById(f.name);
+  return e?e.value.trim():"";
+}
+
+reviewBtn.onclick=()=>{
+  const missing=[], filled=[];
+  getRequiredFields().forEach(f=>{
+    const v=getValue(f);
+    if(!v) missing.push(f.label);
+    else filled.push(`${f.label} = ${v}`);
+  });
+
+  captured.value=filled.join("\n");
+  missingCaptured.value=missing.join("\n");
+
+  dialogTitle.textContent=missing.length
+    ?"Below Mandatory Fields are missing and the Team will contact you shortly."
+    :"All mandatory fields are completed. Ready to submit your request?";
+
+  missingFieldsList.innerHTML=missing.map(x=>`<li>${x}</li>`).join("");
+  dialog.classList.remove("hidden");
+};
+
+editBtn.onclick=()=>dialog.classList.add("hidden");
+proceedBtn.onclick=()=>form.submit();
+
+});
+</script>
+</body>
+</html>
