@@ -881,6 +881,7 @@ toggleFilingStateField();
     { id: "driverStatus", label: "Driver Status" },
     { id: "yearsLicensed", label: "Number of Years Licensed" },
     { id: "stateLicense", label: "State Licensed" },
+    { id: "licenseNumber", label: "License Number" },
     { id: "comprehensiveClaimsmain", label: "Has this driver experienced any traffic violations within the last five years or any of the following within the last seven years?/Comprehensive Claims" },
     { id: "driverSR22", label: "Is this driver required by the court to file a financial reponsibility filing?/SR-22 Filing" }
   ];
@@ -1013,6 +1014,16 @@ let formDataJsonInput = document.getElementById("formDataJson");
   if (educationDiv && !educationDiv.classList.contains("hidden")) {
     dynamicFieldData.push({ id: "educationLevel", label: "Highest Level of Education" });
   }
+
+if (employmentDiv && !employmentDiv.classList.contains('hidden')) {
+    dynamicFieldData.push({ id: 'currentEmployment', label: 'Current Employment' });
+    // Add occupation if employment field is visible
+    const occupationDiv = document.getElementById('occupationField');
+    if (occupationDiv && !occupationDiv.classList.contains('hidden')) {
+        dynamicFieldData.push({ id: 'driverOccupation', label: 'Occupation' });
+    }
+}
+
 // const filingStateField = document.getElementById("00NU7000005zuIX");
 // if (filingStateField && !filingStateField.classList.contains("hidden")) {
   //dynamicFieldData.push({ id: "00NU7000005zuIX", label: "Filing State" });
@@ -1143,12 +1154,12 @@ toggleDriverFields();
 
   proceedBtn.addEventListener("click", () => {
     const errors = validateAll();
-    if (errors.length) {
-      alert("Please fix the following errors before submitting:\n- " + errors.join("\n- "));
-      return;
-    }
-    dialog.classList.add("hidden");
-    form.submit();
+   if (licenseStatusField.value !== "Valid") {
+  alert("License status must be Valid to proceed.");
+  return;
+}
+dialog.classList.add("hidden");
+form.submit();
   });
 
   window.addEventListener("click", (e) => {
