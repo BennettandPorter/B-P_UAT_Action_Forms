@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safeco Web-to-Lead Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+  <style>
+    .hidden { display: none; }
+    .error { border-color: #ef4444; }
+    .error-message {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .sf-date-field {
+      color: #000 !important;
+    }
+    .sf-date-field::placeholder {
+      color: #a0aec0 !important;
+      opacity: 1;
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 320px;
+      background-color: #f9fafb;
+      color: #1f2937;
+      text-align: left;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -160px;
+      font-size: 0.85rem;
+      line-height: 1.3;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+    }
+    .tooltip:hover .tooltiptext,
+    .tooltip:focus-within .tooltiptext {
+      visibility: visible;
+    }
+
+   .location-section > .location-label {
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+
+
+
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+  <form
+    action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&amp;orgId=00DVD000007JpKX"
+    method="POST"
+    class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-6"
+    id="mainForm"
+    autocomplete="off"
+  >
+    <h2 class="text-2xl font-bold text-center text-gray-800">Safeco Form</h2>
+    <!-- Hidden Fields -->
+    <input type="hidden" name="oid" value="00DVD000007JpKX" />
+   <!-- <input type="hidden" name="recordType" value="012U7000003Ie25IAC" />-->
+    <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+    <input type="hidden" name="first_name" value="UpdateAddress" />
+    <input type="hidden" name="last_name" value="Lead" />
+    <input type="hidden" name="status" value="New" />
+    <input type="hidden" name="phone" value="2367236712" />
+    <input type="hidden" name="lead_source" value="Web Form" />
+    <input type="hidden" name="company" value="Caelius Test Safeco New" />
+    <input type="hidden" name="delete_Action_Form__c" value="1" />
+    <input type="hidden" id="formDataJson" name="Form_Captured_Data__c" value="" />
+    <input type="hidden" id="formMissingData" name="Form_Missing_Data__c" value="" />
+                            <input type="hidden" name="Carrier__c" value ="Safeco">
+
+    <input
+          type="hidden"
+          id="00NU7000005zuNN"
+          name="Policy_Action__c"
+          value="Update Address"
+        />
+<!-- <input type="hidden" name="debug" value=1>                              
+<input type="hidden" name="debugEmail" value="annie.rawal@caeliusconsulting.com"> -->
+
+
+    <!-- Policy Changes Section (email, request type, policy action) -->
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          Email<span class="text-red-600">*</span>
+        </label>
+        <input
+          type="email" id="email" name="email"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          autocomplete="off"
+          
+
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="text-red-600">*</span></label>
+        <div class="flex space-x-4 mb-2">
+          <label class="inline-flex items-center ">
+            <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Quote"  class="mr-2 " />Quote
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Endorse"  class="mr-2" />Endorsement
+          </label>
+        </div>
+        <div id="quotePolicyError" class="error-message hidden ">Please select an option</div>
+      </div>
+    <!--  <div>
+        <label for="policyAction" class="block text-sm font-medium text-gray-700 mt-4 ">Policy Action</label>
+        <select id="00NU7000005zuNN" name="00NU7000005zuNN" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2">
+          <option value="">--None--</option>
+          <option value="Replace Vehicle">Replace Vehicle</option>
+          <option value="Add Vehicle">Add Vehicle</option>
+          <option value="Remove Vehicle">Remove Vehicle</option>
+          <option value="Add Driver">Add Driver</option>
+          <option value="Remove Driver">Remove Driver</option>
+          <option value="Update Address">Update Address</option>
+        </select>
+        <div id="policyActionError" class="error-message hidden">Please select a policy action</div>
+      </div>
+      -->
+      <!-- Moved fields: Policy Number, Line of Business, Effective Date -->
+      <div class = "space-y-4 mt-2">
+        <div>
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">Policy Number<span class="text-red-600">*</span></label>
+          <input
+            type="text"
+            id="00NU7000005zuX3"
+            name="Policy_Number__c"
+            
+            
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            title="Policy Number must start with 'Y' and be 8 characters total (e.g., Y1234567)"
+          />
+          <div id="policyNumberError" class="error-message hidden">Policy Number must start with 'Y' and be 8 digits total (e.g., Y1234567).</div>
+        </div>
+        <!--
+        <div>
+          <label for="00NU7000006Hi7d" class="block text-sm font-medium text-gray-700">Line of Business</label>
+          <select id="00NU7000006Hi7d" name="00NU7000006Hi7d" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--None--</option>
+            <option value="Auto (includes motorhome, trailer &amp; antique or classic)">Auto</option>
+            <option value="Home">Home</option>
+            <option value="Fire">Fire</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="Off-Road Rec Vehicle">Off-Road Rec Vehicle</option>
+            <option value="Umbrella">Umbrella</option>
+            <option value="Watercraft">Watercraft</option>
+          </select>
+        </div>
+        -->
+        <div>
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">Effective Date<span class="text-red-600">*</span></label>
+          <input 
+            type="text" 
+            id="00NU7000005zuLl" 
+            name="Date__c"
+            placeholder="MM/DD/YYYY"
+            autocomplete="off"
+            
+            class="mt-1 w-full p-2 border border-gray-700 rounded-lg shadow-sm sf-date-field" />
+          <div id="00NU7000005zuLl_error" class="error-message hidden">Enter a valid MM/DD/YYYY date.</div>
+        </div>
+      </div>
+      <div class="mb-5">
+  <label class="hidden">Show Sections:</label>
+
+  <div class="space-y-3 mt-8">
+  <label class="block">
+    <input type="checkbox" required id="showMailing" class="mr-2" />
+    Mailing Address Information
+  </label>
+  <label class="block">
+    <input type="checkbox" id="showPhone" class="mr-2" />
+    Phone / Email
+  </label>
+  <label class="block">
+   <input type="checkbox" id="showGarage" name="showGarage" value="1" class="mr-2" />Garage Locations
+  </label>
+</div>
+</div>
+
+
+    </section>
+    <!-- Driver Details Section (Only First/Last/Middle name) -->
+     <div id="mailingSection">
+
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Mailing Address Information">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">
+Mailing Address Information</h3>
+      
+          <div class="mb-2">
+            <label for="00NU7000006YRFF" class="block text-sm font-medium text-gray-700 mb-1">Address Line 1<span class="text-red-600">*</span></label>
+            <input type="text" id="00NU7000006YRFF" name="Address_Safeco__c"   class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+          </div>
+
+          <div class="mb-2">
+            <label for="00NU7000006YTXB" class="block text-sm font-medium text-gray-700 mb-1">Address Line 2</label>
+            <input type="text" id="00NU7000006YTXB" name="Address_Line_2__c"  class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="mb-4">
+            <label for="00NU7000006cbfp" class="block text-sm font-medium text-gray-700 mb-1">Zip Code<span class="text-red-600">*</span></label>
+            <input type="text" id="00NU7000006cbfp" name="Interest_Zip_Code__c"     class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+          </div>
+
+         
+          <div class="mb-4">
+            <label for="00NU7000005zvUj" class="block text-sm font-medium text-gray-700 mb-1">City<span class="text-red-600">*</span></label>
+            <input type="text" id="00NU7000005zvUj" name="City__c"class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+          </div>
+      <div mb-4>
+            <label for="00NU7000005zvWL" class="block text-sm font-medium text-gray-700 mb-1">State<span class="text-red-600">*</span></label>
+            <select id="00NU7000005zvWL" name="State__c"  class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+              <option value="">--None--</option>
+             <option value="Arizona">Arizona</option>
+            <option value="Alabama">Alabama</option>
+            <option value="Alaska">Alaska</option>
+            <option value="Alberta">Alberta</option>
+            <option value="Arkansas">Arkansas</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="California">California</option>
+            <option value="Colorado">Colorado</option>
+            <option value="Connecticut">Connecticut</option>
+            <option value="Delaware">Delaware</option>
+            <option value="Dist Of Columbia">Dist Of Columbia</option>
+            <option value="Florida">Florida</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Guam">Guam</option>
+            <option value="Hawaii">Hawaii</option>
+            <option value="Idaho">Idaho</option>
+            <option value="Illinois">Illinois</option>
+            <option value="Indiana">Indiana</option>
+            <option value="International">International</option>
+            <option value="Iowa">Iowa</option>
+            <option value="Kansas">Kansas</option>
+            <option value="Kentucky">Kentucky</option>
+            <option value="Louisiana">Louisiana</option>
+            <option value="Maine">Maine</option>
+            <option value="Manitoba">Manitoba</option>
+            <option value="Maryland">Maryland</option>
+            <option value="Massachusetts">Massachusetts</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Michigan">Michigan</option>
+            <option value="Minnesota">Minnesota</option>
+            <option value="Mississippi">Mississippi</option>
+            <option value="Missouri">Missouri</option>
+            <option value="Montana">Montana</option>
+            <option value="Nebraska">Nebraska</option>
+            <option value="Nevada">Nevada</option>
+            <option value="New Brunswick">New Brunswick</option>
+            <option value="New Hampshire">New Hampshire</option>
+            <option value="New Jersey">New Jersey</option>
+            <option value="New Mexico">New Mexico</option>
+            <option value="New York">New York</option>
+            <option value="Newfoundland">Newfoundland</option>
+            <option value="North Carolina">North Carolina</option>
+            <option value="North Dakota">North Dakota</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nova Scotia">Nova Scotia</option>
+            <option value="Nunavut">Nunavut</option>
+            <option value="Ohio">Ohio</option>
+            <option value="Oklahoma">Oklahoma</option>
+            <option value="Ontario">Ontario</option>
+            <option value="Oregon">Oregon</option>
+            <option value="Pennsylvania">Pennsylvania</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
+            <option value="Puerto Rico">Puerto Rico</option>
+            <option value="Quebec">Quebec</option>
+            <option value="Rhode Island">Rhode Island</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="South Carolina">South Carolina</option>
+            <option value="South Dakota">South Dakota</option>
+            <option value="Tennessee">Tennessee</option>
+            <option value="Texas">Texas</option>
+            <option value="Utah">Utah</option>
+            <option value="Vermont">Vermont</option>
+            <option value="Virgin Islands">Virgin Islands</option>
+            <option value="Virginia">Virginia</option>
+            <option value="Washington">Washington</option>
+            <option value="West Virginia">West Virginia</option>
+            <option value="Wisconsin">Wisconsin</option>
+            <option value="Wyoming">Wyoming</option>
+            <option value="Yukon Territory">Yukon Territory</option>
+            <option value="District of Columbia">District of Columbia</option>
+            </select>
+       </div>
+
+    </section>
+    </div>
+
+    <div id="phoneSection">
+ <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Phone / Email">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Phone / Email</h3>
+      <div class="space-y-4">
+    
+
+        <div >
+          <label for="00NU7000006qtBR" class="block text-sm font-medium text-gray-700 mb-1">Primary Phone Number<span class="text-red-600">*</span></label>
+          <input type="tel" id="00NU7000006qtBR" name="Primary_Phone__c" pattern="[0-9]{10}"  class="w-full p-2 border border-gray-300 rounded-lg" />
+        </div>
+
+
+        <div>
+          <label for="00NU7000006qr9e" class="block text-sm font-medium text-gray-700 mb-1">Email Address<span class="text-red-600">*</span></label>
+          <input type="email" id="00NU7000006qr9e" name="Email_UA__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+        </div>
+        </div>
+ </section>
+</div>
+
+<div id="garageSection">
+  <section class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+    <h3 class="text-xl font-semibold mb-4 text-gray-700">Garaged Locations</h3>
+
+   <div id="garage1Disclaimer" class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded-md hidden" aria-hidden="true">
+  <p class="text-sm text-gray-700">
+    <strong>Note:</strong> By default, all vehicles will be assigned to <strong>Garage Location 1</strong>.
+  </p>
+</div>
+
+    <div id="location1" class="location-section">
+      <h4 class="location-label text-lg font-normal mb-4 text-gray-600">Location 1</h4>
+      <div class="mb-2">
+      <label for="00NU7000006qtOL" class="block text-sm font-semibold mb-1">Address Line 1 <span class="text-red-600">*</span></label>
+      <input type="text" name="Address_Line_1_GL__c" id="00NU7000006qtOL" maxlength="30"  class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+    </div>
+
+    <div class="mb-2">
+      <label for="00NU7000006qtTB" class="block text-sm font-semibold mb-1">Address Line 2</label>
+      <input type="text" name="Address_Line_2_GL__c" id="00NU7000006qtTB" class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label for="00NU7000006qtZd" class="block text-sm font-semibold mb-1">ZIP Code <span class="text-red-600">*</span></label>
+        <input type="text" name="Zip_Code_1_GL__c" id="00NU7000006qtZd"  class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+      </div>
+
+      <div>
+        <label for="00NU7000006qtcr" class="block text-sm font-semibold mb-1">City <span class="text-red-600">*</span></label>
+        <input type="text" name="City_1_GL__c" id="00NU7000006qtcr"  class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+      </div>
+
+      <div>
+        <label for="00NU7000006qteT" class="block text-sm font-semibold mb-1">State <span class="text-red-600">*</span></label>
+        <select name="State_1_Gl__c" id="00NU7000006qteT"  class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+          <option value="">--None--</option>
+             <option value="Arizona">Arizona</option>
+            <option value="Alabama">Alabama</option>
+            <option value="Alaska">Alaska</option>
+            <option value="Alberta">Alberta</option>
+            <option value="Arkansas">Arkansas</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="California">California</option>
+            <option value="Colorado">Colorado</option>
+            <option value="Connecticut">Connecticut</option>
+            <option value="Delaware">Delaware</option>
+            <option value="Dist Of Columbia">Dist Of Columbia</option>
+            <option value="Florida">Florida</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Guam">Guam</option>
+            <option value="Hawaii">Hawaii</option>
+            <option value="Idaho">Idaho</option>
+            <option value="Illinois">Illinois</option>
+            <option value="Indiana">Indiana</option>
+            <option value="International">International</option>
+            <option value="Iowa">Iowa</option>
+            <option value="Kansas">Kansas</option>
+            <option value="Kentucky">Kentucky</option>
+            <option value="Louisiana">Louisiana</option>
+            <option value="Maine">Maine</option>
+            <option value="Manitoba">Manitoba</option>
+            <option value="Maryland">Maryland</option>
+            <option value="Massachusetts">Massachusetts</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Michigan">Michigan</option>
+            <option value="Minnesota">Minnesota</option>
+            <option value="Mississippi">Mississippi</option>
+            <option value="Missouri">Missouri</option>
+            <option value="Montana">Montana</option>
+            <option value="Nebraska">Nebraska</option>
+            <option value="Nevada">Nevada</option>
+            <option value="New Brunswick">New Brunswick</option>
+            <option value="New Hampshire">New Hampshire</option>
+            <option value="New Jersey">New Jersey</option>
+            <option value="New Mexico">New Mexico</option>
+            <option value="New York">New York</option>
+            <option value="Newfoundland">Newfoundland</option>
+            <option value="North Carolina">North Carolina</option>
+            <option value="North Dakota">North Dakota</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nova Scotia">Nova Scotia</option>
+            <option value="Nunavut">Nunavut</option>
+            <option value="Ohio">Ohio</option>
+            <option value="Oklahoma">Oklahoma</option>
+            <option value="Ontario">Ontario</option>
+            <option value="Oregon">Oregon</option>
+            <option value="Pennsylvania">Pennsylvania</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
+            <option value="Puerto Rico">Puerto Rico</option>
+            <option value="Quebec">Quebec</option>
+            <option value="Rhode Island">Rhode Island</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="South Carolina">South Carolina</option>
+            <option value="South Dakota">South Dakota</option>
+            <option value="Tennessee">Tennessee</option>
+            <option value="Texas">Texas</option>
+            <option value="Utah">Utah</option>
+            <option value="Vermont">Vermont</option>
+            <option value="Virgin Islands">Virgin Islands</option>
+            <option value="Virginia">Virginia</option>
+            <option value="Washington">Washington</option>
+            <option value="West Virginia">West Virginia</option>
+            <option value="Wisconsin">Wisconsin</option>
+            <option value="Wyoming">Wyoming</option>
+            <option value="Yukon Territory">Yukon Territory</option>
+            <option value="District of Columbia">District of Columbia</option>
+           
+        </select>
+      </div>
+    </div>
+  <div id="garage1AssignContainer" class="mt-4 hidden">
+  <label for="00NU700000736sr" class="block text-sm font-medium text-gray-700 mb-1">
+    Do you want to assign any Vehicle to this Garaged Location 1?
+  </label>
+  <input type="checkbox" id="00NU700000736sr" />
+  <input type="hidden" id="garage1AssignHidden" name="sameGaraged__c" value="true" />
+</div>
+<div id="location1VinField" class="mt-3 hidden">
+  <label for="00NU700000616Sv" class="block text-sm font-medium text-gray-700 mb-3">
+    Vehicle VIN<span class="text-red-600">*</span>
+  </label>
+  <input type="text" id="00NU700000616Sv" name="VIN_number__c" class="w-full p-2 border border-gray-300 rounded-lg" placeholder="List all vehicles (comma-separated) to link with this garage." />
+</div>
+    <hr class="border-t border-gray-300 my-4" />
+    </div>
+
+    <div id="location2" class="location-section hidden">
+      <h4 class="location-label text-lg font-normal mb-4 text-gray-600">Location 2</h4>
+      <div class="mb-2">
+      <label for="00NU7000006qtg5" class="block text-sm font-semibold mb-1">Address Line 1 <span class="text-red-600">*</span></label>
+      <input type="text" name="Address_Line_1_2_Gl__c" id="00NU7000006qtg5" maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+    </div>
+
+    <div class="mb-2">
+      <label for="00NU7000006qthh" class="block text-sm font-semibold mb-1">Address Line 2</label>
+      <input type="text" name="Address_Line_2_2_GL__c" id="00NU7000006qthh" maxlength="30"  class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label for="00NU7000006qtjJ" class="block text-sm font-semibold mb-1">ZIP Code <span class="text-red-600">*</span></label>
+        <input type="text" name="Zip_Code_2_GL__c" id="00NU7000006qtjJ" class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+      </div>
+
+      <div>
+        <label for="00NU7000006qsRW" class="block text-sm font-semibold mb-1">City <span class="text-red-600">*</span></label>
+        <input type="text" name="City_2_GL__c" id="00NU7000006qsRW" class="w-full p-2 border border-gray-300 rounded-lg mb-2" />
+      </div>
+
+      <div>
+        <label for="00NU7000006quYv" class="block text-sm font-semibold mb-1">State <span class="text-red-600">*</span></label>
+        <select name="State_2_GL__c" id="00NU7000006quYv"  class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+          <option value="">--None--</option>
+             <option value="Arizona">Arizona</option>
+            <option value="Alabama">Alabama</option>
+            <option value="Alaska">Alaska</option>
+            <option value="Alberta">Alberta</option>
+            <option value="Arkansas">Arkansas</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="California">California</option>
+            <option value="Colorado">Colorado</option>
+            <option value="Connecticut">Connecticut</option>
+            <option value="Delaware">Delaware</option>
+            <option value="Dist Of Columbia">Dist Of Columbia</option>
+            <option value="Florida">Florida</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Guam">Guam</option>
+            <option value="Hawaii">Hawaii</option>
+            <option value="Idaho">Idaho</option>
+            <option value="Illinois">Illinois</option>
+            <option value="Indiana">Indiana</option>
+            <option value="International">International</option>
+            <option value="Iowa">Iowa</option>
+            <option value="Kansas">Kansas</option>
+            <option value="Kentucky">Kentucky</option>
+            <option value="Louisiana">Louisiana</option>
+            <option value="Maine">Maine</option>
+            <option value="Manitoba">Manitoba</option>
+            <option value="Maryland">Maryland</option>
+            <option value="Massachusetts">Massachusetts</option>
+            <option value="Mexico">Mexico</option>
+            <option value="Michigan">Michigan</option>
+            <option value="Minnesota">Minnesota</option>
+            <option value="Mississippi">Mississippi</option>
+            <option value="Missouri">Missouri</option>
+            <option value="Montana">Montana</option>
+            <option value="Nebraska">Nebraska</option>
+            <option value="Nevada">Nevada</option>
+            <option value="New Brunswick">New Brunswick</option>
+            <option value="New Hampshire">New Hampshire</option>
+            <option value="New Jersey">New Jersey</option>
+            <option value="New Mexico">New Mexico</option>
+            <option value="New York">New York</option>
+            <option value="Newfoundland">Newfoundland</option>
+            <option value="North Carolina">North Carolina</option>
+            <option value="North Dakota">North Dakota</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nova Scotia">Nova Scotia</option>
+            <option value="Nunavut">Nunavut</option>
+            <option value="Ohio">Ohio</option>
+            <option value="Oklahoma">Oklahoma</option>
+            <option value="Ontario">Ontario</option>
+            <option value="Oregon">Oregon</option>
+            <option value="Pennsylvania">Pennsylvania</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
+            <option value="Puerto Rico">Puerto Rico</option>
+            <option value="Quebec">Quebec</option>
+            <option value="Rhode Island">Rhode Island</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="South Carolina">South Carolina</option>
+            <option value="South Dakota">South Dakota</option>
+            <option value="Tennessee">Tennessee</option>
+            <option value="Texas">Texas</option>
+            <option value="Utah">Utah</option>
+            <option value="Vermont">Vermont</option>
+            <option value="Virgin Islands">Virgin Islands</option>
+            <option value="Virginia">Virginia</option>
+            <option value="Washington">Washington</option>
+            <option value="West Virginia">West Virginia</option>
+            <option value="Wisconsin">Wisconsin</option>
+            <option value="Wyoming">Wyoming</option>
+            <option value="Yukon Territory">Yukon Territory</option>
+            <option value="District of Columbia">District of Columbia</option>
+        </select>
+      </div>
+    </div>
+    <div class="mt-4">
+  <label for="00NU70000074Dtt" class="block text-sm font-medium text-gray-700 mb-1">
+    Do you want to assign any Vehicle to this Garaged Location 2?
+  </label>
+  <input type="checkbox" id="00NU70000074Dtt" />
+  <input type="hidden" id="garage2AssignHidden" name="sameGaraged2__c" value="true" />
+</div>
+  <div id="garage2VinField" class="mt-3 hidden">
+    <label for="00NU7000006Knh3" class="block text-sm font-medium text-gray-700 mb-3">
+      Vehicle VIN<span class="text-red-600">*</span>
+    </label>
+    <input type="text" id="00NU7000006Knh3" name="VIN_number_2__c" 
+      class="w-full p-2 border border-gray-300 rounded-lg" 
+      placeholder="List all vehicles (comma-separated) to link with this garage." />
+  </div>
+   <button type="button"
+          id="deleteLocation2Btn"
+          class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg shadow mb-4 mt-6"
+  >Delete Location 2</button>
+
+    <hr class="border-t border-gray-300 my-4" />
+    
+    </div>
+
+   
+    <button 
+      id="addGarageLocationBtn" 
+      type="button"
+      class="bg-teal-700 hover:bg-teal-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 mt-4 shadow"
+    >
+      <span class="text-lg font-bold">+</span>
+      <span>Add a New Item</span>
+    </button>
+    <p id="garageLimitMsg" class="text-red-600 text-sm mt-2 hidden">
+  More than 2 addresses are not allowed.
+</p>
+  </section>
+</div>
+
+
+  
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const maxLocations = 2;
+
+  // Utility to toggle required/disabled fields for a section
+  function toggleSectionRequired(sectionId, show) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    section.querySelectorAll("input, select, textarea").forEach(input => {
+      if (input.id === "00NU700000736sr" || input.id === "00NU70000074Dtt") return; // skip garage checkboxes
+      if (show) {
+        input.disabled = false;
+        if (input.hasAttribute("data-visible-required") || input.hasAttribute("data-original-required")) {
+          input.setAttribute("required", "true");
+        }
+      } else {
+        input.disabled = true;
+        input.removeAttribute("required");
+        input.value = "";
+        input.setCustomValidity('');
+        if (input.tagName.toLowerCase() === "select") input.selectedIndex = 0;
+      }
+    });
+  }
+
+  // Initialize original required attributes
+  ["mailingSection", "phoneSection", "garageSection"].forEach(secId => {
+    const sec = document.getElementById(secId);
+    if (!sec) return;
+    sec.querySelectorAll("input, select, textarea").forEach(input => {
+      if (input.hasAttribute("required")) input.setAttribute("data-original-required", "true");
+    });
+  });
+
+  // Toggle sections based on checkboxes
+  function toggleSection(checkboxId, sectionId) {
+    const checked = document.getElementById(checkboxId)?.checked;
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.style.display = checked ? "block" : "none";
+      toggleSectionRequired(sectionId, checked);
+    }
+
+    if (checkboxId === "showGarage") toggleLocationRequired("location1", checked);
+  }
+
+  ["showMailing", "showPhone", "showGarage"].forEach(checkboxId => {
+    const sectionId = checkboxId === "showMailing" ? "mailingSection" :
+                      checkboxId === "showPhone" ? "phoneSection" :
+                      checkboxId === "showGarage" ? "garageSection" : null;
+    const checkbox = document.getElementById(checkboxId);
+    if (!checkbox) return;
+    checkbox.addEventListener("change", () => toggleSection(checkboxId, sectionId));
+    toggleSection(checkboxId, sectionId); // initial toggle
+  });
+
+  // Garage location toggle logic
+  function toggleLocationRequired(locationId, show) {
+  const locDiv = document.getElementById(locationId);
+  if (!locDiv) return;
+
+  locDiv.querySelectorAll("input, select, textarea").forEach(input => {
+    // Always allow the "assign vehicles" checkbox to remain enabled
+    if (
+      (locationId === "location1" && input.id === "00NU700000736sr") ||
+      (locationId === "location2" && input.id === "00NU70000074Dtt")
+    ) {
+      input.disabled = false;
+      return;
+    }
+    // Address line 2 can stay optional and enabled only when shown
+    if (input.id.endsWith("TB") || input.id.endsWith("hh")) {
+      input.disabled = !show;
+      input.required = false;
+      return;
+    }
+    // Main handling
+    if (show) {
+      input.disabled = false;
+      // Only require fields if visible location 1, or if location 2 is shown and the assign vehicle checkbox is checked
+      input.required = !!input.getAttribute("data-visible-required");
+    } else {
+      input.disabled = true;
+      input.required = false;
+      input.value = "";
+      input.setCustomValidity('');
+      if (input.tagName.toLowerCase() === "select") input.selectedIndex = 0;
+    }
+  });
+  locDiv.classList.toggle("hidden", !show);
+}
+
+
+  // Initialize locations
+  let visibleLocationCount = 1;
+  for (let i = 1; i <= maxLocations; i++) {
+    toggleLocationRequired(`location${i}`, i === 1 && document.getElementById("showGarage").checked);
+  }
+
+  // Add Location button
+  const addBtn = document.getElementById("addGarageLocationBtn");
+  const garageLimitMsg = document.getElementById("garageLimitMsg");
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      if (visibleLocationCount < maxLocations) {
+        visibleLocationCount++;
+        toggleLocationRequired(`location${visibleLocationCount}`, true);
+        if (visibleLocationCount === maxLocations) {
+          addBtn.disabled = true;
+          addBtn.classList.add("opacity-50", "cursor-not-allowed");
+          garageLimitMsg.classList.remove("hidden");
+        }
+        document.getElementById("garage1AssignContainer").classList.remove("hidden");
+        document.getElementById("garage1Disclaimer").classList.remove("hidden");
+      }
+    });
+  }
+
+  // Assign vehicle toggle logic
+  function handleAssignVehicle(checkbox, vinField, vinInput) {
+    if (checkbox.checked) {
+      vinField.classList.remove("hidden");
+      vinInput.disabled = false;
+      vinInput.required = true;
+    } else {
+      vinField.classList.add("hidden");
+      vinInput.value = "";
+      vinInput.disabled = true;
+      vinInput.required = false;
+      vinInput.setCustomValidity("");
+    }
+  }
+
+  const location1Checkbox = document.getElementById("00NU700000736sr");
+  const location1VinField = document.getElementById("location1VinField");
+  const location1VinInput = document.getElementById("00NU700000616Sv");
+  location1Checkbox.addEventListener("change", () => handleAssignVehicle(location1Checkbox, location1VinField, location1VinInput));
+  handleAssignVehicle(location1Checkbox, location1VinField, location1VinInput);
+
+  const location2Checkbox = document.getElementById("00NU70000074Dtt");
+  const location2VinField = document.getElementById("garage2VinField");
+  const location2VinInput = document.getElementById("00NU7000006Knh3");
+  location2Checkbox.addEventListener("change", () => handleAssignVehicle(location2Checkbox, location2VinField, location2VinInput));
+  handleAssignVehicle(location2Checkbox, location2VinField, location2VinInput);
+
+  // Delete Location 2
+  document.getElementById("deleteLocation2Btn")?.addEventListener("click", () => {
+    toggleLocationRequired("location2", false);
+    visibleLocationCount = 1;
+    addBtn.disabled = false;
+    addBtn.classList.remove("opacity-50", "cursor-not-allowed");
+    garageLimitMsg.classList.add("hidden");
+    location2Checkbox.checked = false;
+    handleAssignVehicle(location2Checkbox, location2VinField, location2VinInput);
+  });
+
+  toggleLocationRequired("location2", false);
+
+
+ 
+
+  // Date Validation
+  const dateField = document.getElementById("00NU7000005zuLl");
+  const dateErrorDiv = document.getElementById("00NU7000005zuLl_error");
+  function parseMMDDYYYY(s) {
+    if (!/^(\d{2})\/(\d{2})\/(\d{4})$/.test(s)) return null;
+    const [m,d,y] = s.split("/").map(Number);
+    const date = new Date(y, m-1, d);
+    return (date.getMonth() === m-1 && date.getDate() === d && date.getFullYear() === y) ? date : null;
+  }
+  function showDateError(show) {
+    dateErrorDiv.classList.toggle("hidden", !show);
+    dateField.classList.toggle("error", show);
+  }
+  if (typeof Pikaday !== "undefined" && dateField) {
+    new Pikaday({ field: dateField, format: 'MM/DD/YYYY', onSelect: date => {
+      if (date) dateField.value = `${("0"+(date.getMonth()+1)).slice(-2)}/${("0"+date.getDate()).slice(-2)}/${date.getFullYear()}`;
+      showDateError(false);
+    }});
+  }
+  dateField.addEventListener("input", () => {
+    const valid = !dateField.value || parseMMDDYYYY(dateField.value) !== null;
+    showDateError(!valid);
+  });
+
+  // Form submit handler to set hidden garage checkbox values
+  const form = document.querySelector("form");
+  form?.addEventListener("submit", () => {
+    document.getElementById("garage1AssignHidden").value = location1Checkbox.checked ? "false" : "true";
+    document.getElementById("garage2AssignHidden").value = location2Checkbox.checked ? "false" : "true";
+  });
+});
+
+const form = document.getElementById("mainForm");
+
+  // Add hidden inputs for captured and missing data if not present
+  let formDataJsonInput = document.getElementById("formDataJson");
+  if (!formDataJsonInput) {
+    formDataJsonInput = document.createElement("input");
+    formDataJsonInput.type = "hidden";
+    formDataJsonInput.id = "formDataJson";
+    formDataJsonInput.name = "Form_Captured_Data__c";
+    form.appendChild(formDataJsonInput);
+  }
+  let missingFormDataInput = document.getElementById("missingFormData");
+  if (!missingFormDataInput) {
+    missingFormDataInput = document.createElement("input");
+    missingFormDataInput.type = "hidden";
+    missingFormDataInput.id = "missingFormData";
+    missingFormDataInput.name = "Form_Missing_Data__c";
+    form.appendChild(missingFormDataInput);
+  }
+
+  // Define fields to validate and capture (add others as needed)
+  const fieldData = [
+    { id: "email", label: "Email", type: "email" },
+  { id: "Is_this_a_quote_or_a_change_request__c", label: "Request Type", type: "radio" },
+  { id: "00NU7000005zuX3", label: "Policy Number", type: "text" },
+  { id: "00NU7000005zuLl", label: "Effective Date", type: "date" },
+
+ // Mailing Address Information (validate if mailingSection visible)
+  { id: "00NU7000006YRFF", label: "Address Line 1", type: "text", sectionId: "mailingSection" },
+ // { id: "00NU7000006YTXB", label: "Address Line 2", type: "text", sectionId: "mailingSection" },
+  { id: "00NU7000006cbfp", label: "Zip Code", type: "text", sectionId: "mailingSection" },
+  { id: "00NU7000005zvUj", label: "City", type: "text", sectionId: "mailingSection" },
+  { id: "00NU7000005zvWL", label: "State", type: "select", sectionId: "mailingSection" },
+
+  // Phone Email Section (validate if phoneSection visible)
+  { id: "00NU7000006qtBR", label: "Primary Phone Number", type: "tel", sectionId: "phoneSection" },
+  { id: "00NU7000006qr9e", label: "Email Address", type: "email", sectionId: "phoneSection" },
+
+ { id: "00NU7000006qtOL", label: "Address Line 1", type: "text", sectionId: "location1" },
+//{ id: "00NU7000006qtTB", label: "Address Line 2", type: "text", sectionId: "location1" },
+{ id: "00NU7000006qtZd", label: "ZIP Code",        type: "text",  sectionId: "location1" },
+{ id: "00NU7000006qtcr", label: "City",            type: "text",  sectionId: "location1" },
+{ id: "00NU7000006qteT", label: "State",           type: "select",sectionId: "location1" },
+{ id: "00NU700000736sr", label: "Do you want to assign any Vehicle to this Garaged Location 1?", type: "checkbox", sectionId: "location1" },
+{ id: "00NU700000616Sv", label: "Vehicle VIN",     type: "text",  sectionId: "location1" },
+
+// Garage Location 2
+{ id: "00NU7000006qtg5", label: "Address Line 1", type: "text",   sectionId: "location2" },
+//{ id: "00NU7000006qthh", label: "Address Line 2", type: "text",   sectionId: "location2" },
+{ id: "00NU7000006qtjJ", label: "ZIP Code",       type: "text",   sectionId: "location2" },
+{ id: "00NU7000006qsRW", label: "City",           type: "text",   sectionId: "location2" },
+{ id: "00NU7000006quYv", label: "State",          type: "select", sectionId: "location2" },
+{ id: "00NU70000074Dtt", label: "Do you want to assign any Vehicle to this Garaged Location 2?", type: "checkbox", sectionId: "location2" },
+{ id: "00NU7000006Knh3", label: "Vehicle VIN",    type: "text",   sectionId: "location2" }
+    // Add other required fields with ids here
+  ];
+
+  // Create a simple modal dialog for confirmation (insert if needed)
+  if (!document.getElementById("dialog")) {
+    const dialogHTML = `
+      <div id="dialog" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full text-gray-800">
+          <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+          <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+          <div class="flex justify-end space-x-3">
+            <button id="proceedBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium">Proceed to Submit</button>
+            <button id="editBtn" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium">Edit</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML("beforeend", dialogHTML);
+  }
+
+  const dialog = document.getElementById("dialog");
+  const dialogTitle = document.getElementById("dialogTitle");
+  const missingFieldsList = document.getElementById("missingFieldsList");
+  const proceedBtn = document.getElementById("proceedBtn");
+  const editBtn = document.getElementById("editBtn");
+
+  // Validation logic
+  function validateFields() {
+    const missing = [];
+
+   fieldData.forEach(field => {
+  // Check section visibility if field has sectionId
+  if (field.sectionId) {
+    const section = document.getElementById(field.sectionId);
+    // If section is missing OR hidden, skip validation for this field
+    if (!section || section.classList.contains("hidden") || section.style.display === "none") {
+      return; // Do not validate this field
+    }
+  }
+ if (field.id === "00NU700000616Sv") { // VIN for Garage 1
+      const chk1 = document.getElementById("00NU700000736sr");
+      if (!chk1 || !chk1.checked) {
+        return; // skip VIN 1 if checkbox not checked
+      }
+    }
+    if (field.id === "00NU7000006Knh3") { // VIN for Garage 2
+      const chk2 = document.getElementById("00NU70000074Dtt");
+      if (!chk2 || !chk2.checked) {
+        return; // skip VIN 2 if checkbox not checked
+      }
+    }
+  
+      if (field.type === "email") {
+        const input = document.getElementById(field.id);
+        if (!input || !input.value.trim() || !input.checkValidity()) {
+          missing.push(field.label);
+        }
+      } else if (field.type === "radio") {
+        // For radio groups validate that one option is checked
+        const radios = document.querySelectorAll(`input[name="${field.id}"]`);
+        let checked = false;
+        radios.forEach(radio => { if (radio.checked) checked = true; });
+        if (!checked) missing.push(field.label);
+      } else {
+        const input = document.getElementById(field.id);
+        if (!input || !input.value.trim()) {
+          missing.push(field.label);
+        }
+      }
+    });
+
+    return missing;
+  }
+
+  // Review and submit button handler
+  const reviewBtn = document.createElement("button");
+  reviewBtn.type = "button";
+  reviewBtn.textContent = "Review and Submit";
+  reviewBtn.className = "bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition w-full mt-4";
+  form.appendChild(reviewBtn);
+
+  reviewBtn.addEventListener("click", () => {
+    const missing = validateFields();
+
+    const completedData = [];
+    fieldData.forEach(field => {
+      if (field.type === "radio") {
+        const radios = document.querySelectorAll(`input[name="${field.id}"]`);
+        radios.forEach(radio => {
+          if (radio.checked) completedData.push(`${field.label} = ${radio.value}`);
+        });
+      } else {
+        const input = document.getElementById(field.id);
+        if (input && input.value.trim() && !missing.includes(field.label)) {
+          completedData.push(`${field.label} = ${input.value.trim()}`);
+        }
+      }
+    });
+
+    formDataJsonInput.value = completedData.join("\n");
+    missingFormDataInput.value = missing.join("\n");
+
+    if (missing.length) {
+      dialogTitle.textContent = "Below Mandatory Fields are missing and the Team will contact you shortly.";
+      missingFieldsList.innerHTML = missing.map(f => `<li>${f}</li>`).join("");
+    } else {
+      dialogTitle.textContent = "All mandatory fields completed. Ready to submit?";
+      missingFieldsList.innerHTML = "";
+    }
+
+    dialog.classList.remove("hidden");
+  });
+
+  editBtn.addEventListener("click", () => {
+    dialog.classList.add("hidden");
+  });
+
+  proceedBtn.addEventListener("click", () => {
+    dialog.classList.add("hidden");
+    form.submit();
+  });
+
+  // Close dialog on background click or ESC
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.classList.add("hidden");
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !dialog.classList.contains("hidden")) dialog.classList.add("hidden");
+  });
+</script>
+
+
+  </form>
+</body>
+</html>

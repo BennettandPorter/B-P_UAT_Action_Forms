@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safeco Web-to-Lead Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+  <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+  <style>
+    .hidden { display: none; }
+    .error { border-color: #ef4444; }
+    .error-message {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    .sf-date-field {
+      color: #000 !important;
+    }
+    .sf-date-field::placeholder {
+      color: #a0aec0 !important;
+      opacity: 1;
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 320px;
+      background-color: #f9fafb;
+      color: #1f2937;
+      text-align: left;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid #d1d5db;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -160px;
+      font-size: 0.85rem;
+      line-height: 1.3;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+    }
+    .tooltip:hover .tooltiptext,
+    .tooltip:focus-within .tooltiptext {
+      visibility: visible;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+  <form
+    action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&amp;orgId=00DVD000007JpKX"
+    method="POST"
+    class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-6"
+    id="mainForm"
+    autocomplete="off" novalidate 
+  >
+    <h2 class="text-2xl font-bold text-center text-gray-800">Safeco EOI Form</h2>
+    <!-- Hidden Fields -->
+    <input type="hidden" name="oid" value="00DVD000007JpKX" />
+ <!--   <input type="hidden" name="recordType" value="012U7000003Ie25IAC" />-->
+    <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+    <input type="hidden" name="first_name" value="EOIRequest" />
+    <input type="hidden" name="last_name" value="Lead" />
+    <input type="hidden" name="status" value="New" />
+    <input type="hidden" name="phone" value="2367236712" />
+    <input type="hidden" name="lead_source" value="Web Form" />
+    <input type="hidden" name="company" value="Caelius Test Safeco New" />
+    <input type="hidden" id="loanDeleteCount" name="loanDeleteCount__c" value="0" />
+<input type="hidden" id="interestAddCount" name="interestAddCount__c" value="1" />
+    <input type="hidden" name="delete_Action_Form__c" value="1" />
+     <input type="hidden" id="formDataJson" name="Form_Captured_Data__c" value="" />
+    <input type="hidden" id="formMissingData" name="Form_Missing_Data__c" value="" />
+                        <input type="hidden" name="Carrier__c" value ="Safeco">
+
+     <input
+          type="hidden"
+          id="00NU7000005zuNN"
+          name="Policy_Action__c"
+          value="EOI"
+        />
+<!--<input type="hidden" name="debug" value=1>                            
+<input type="hidden" name="debugEmail" value="annie.rawal@caeliusconsulting.com"> -->
+
+
+    <!-- Policy Changes Section (email, request type, policy action) -->
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">
+          Email<span class="text-red-600">*</span>
+        </label>
+        <input
+          type="email" id="email" name="email"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          autocomplete="off"
+          
+        />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="text-red-600">*</span></label>
+        <div class="flex space-x-4 mb-2">
+          <label class="inline-flex items-center ">
+            <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Quote"  class="mr-2 " />Quote
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Endorse"  class="mr-2" />Endorsement
+          </label>
+        </div>
+        <div id="quotePolicyError" class="error-message hidden ">Please select an option</div>
+      </div>
+     <!-- <div>
+        <label for="policyAction" class="block text-sm font-medium text-g
+        
+        ray-700 mt-4 ">Policy Action</label>
+        <select id="00NU7000005zuNN" name="00NU7000005zuNN" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2">
+          <option value="">None</option>
+          <option value="Replace Vehicle">Replace Vehicle</option>
+          <option value="Add Vehicle">Add Vehicle</option>
+          <option value="Remove Vehicle">Remove Vehicle</option>
+          <option value="Add Driver">Add Driver</option>
+          <option value="Remove Driver">Remove Driver</option>
+          <option value="Update Address">Update Address</option>
+        </select>
+        <div id="policyActionError" class="error-message hidden">Please select a policy action</div>
+      </div> -->
+      <!-- Moved fields: Policy Number, Line of Business, Effective Date -->
+      <div class = "space-y-4 mt-2">
+        <div>
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">Policy Number<span class="text-red-600">*</span></label>
+          <input
+            type="text"
+            id="00NU7000005zuX3"
+            name="Policy_Number__c"
+            
+           
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            title="Policy Number must start with 'OY' and be 9 characters total (e.g., OY1234567)"
+          />
+          <div id="policyNumberError" class="error-message hidden">Policy Number must start with 'OY' and be 9 digits total (e.g., OY1234567).</div>
+        </div>
+       <!-- <div>
+          <label for="00NU7000006Hi7d" class="block text-sm font-medium text-gray-700">Line of Business</label>
+          <select id="00NU7000006Hi7d" name="00NU7000006Hi7d" required class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--None--</option>
+            <option value="Auto (includes motorhome, trailer &amp; antique or classic)">Auto</option>
+            <option value="Home">Home</option>
+            <option value="Fire">Fire</option>
+            <option value="Motorcycle">Motorcycle</option>
+            <option value="Off-Road Rec Vehicle">Off-Road Rec Vehicle</option>
+            <option value="Umbrella">Umbrella</option>
+            <option value="Watercraft">Watercraft</option>
+          </select>
+        </div>
+        -->
+        <div>
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">Effective Date<span class="text-red-600">*</span></label>
+          <input 
+            type="text" 
+            id="00NU7000005zuLl" 
+            name="Date__c"
+            placeholder="MM/DD/YYYY"
+            autocomplete="off"
+            
+            class="mt-1 w-full p-2 border border-gray-700 rounded-lg shadow-sm sf-date-field" />
+          <div id="00NU7000005zuLl_error" class="error-message hidden">Enter a valid MM/DD/YYYY date.</div>
+        </div>
+      </div>
+    </section>
+    <!-- Additional Details Section (Only First/Last/Middle name) -->
+     <div id="additionalInterestContainer">
+
+
+<section class="bg-gray-50 border rounded-xl p-6 shadow-inner mb-6" aria-label="Delete Existing Interests">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Delete Existing Interests</h3>
+
+  <!-- New checkbox -->
+  <div class="mt-2">
+    <label for="deleteInterestToggle" class="inline-flex items-center text-sm font-medium text-gray-700">
+      <input type="checkbox" id="deleteInterestToggle" class="mr-2">
+      Do you want to delete any interest?
+    </label>
+  </div>
+
+  <!-- Wrapper that will be shown/hidden based on checkbox -->
+  <div id="deleteInterestContainerWrapper" class="mt-4 hidden">
+    <div id="deleteInterestContainer" class="space-y-4">
+      <div class="interest-type-row flex flex-col gap-1 mt-2">
+        <label for="interestType0" class="block text-sm font-medium text-gray-700">
+          Which interest type you want to delete?<span class="text-red-600">*</span>
+        </label>
+
+        <div class="flex items-center gap-2">
+         <select id="Delete_Interest_Type_1__c"
+        name="Delete_Interest_Type_1__c"
+        class="w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">-- Select an option --</option>
+            <option value="1">Mortgage Servicing Agency for 1st Mortgagee</option>
+            <option value="2">Second Mortgagee</option>
+            <option value="3">Home Equity Line of Credit</option>
+          </select>
+          <!-- delete button for rows > 0 via JS -->
+        </div>
+      </div>
+    </div>
+
+    <button type="button"
+            id="addMoreInterestBtn"
+            class="hidden bg-teal-700 hover:bg-teal-800 text-white px-4 py-2 rounded-lg mt-4 shadow"
+            disabled>
+      Add More
+    </button>
+  </div>
+</section>
+
+
+
+  <section class="bg-gray-50 border rounded-xl p-6 shadow-inner mb-6" id="additionalInterest1">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Additional Interest 1</h3>
+
+  
+ <div>
+      <label for="name_1" class="block text-sm font-semibold mb-1">Name<span class="text-red-600">*</span></label>
+      <input type="text" id="name_1" name="name_1__c" class="w-full p-2 border border-gray-300 rounded-lg mb-3" />
+    </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+    <div>
+      <label for="name_1_1" class="block text-sm font-semibold mb-1">Name Line 2</label>
+      <select id="name_1_1" name="name_1_1__c" class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+       <option value="">--None--</option>
+      <option value="Its Successors And/Or Assigns">Its Successors And/Or Assigns</option>
+      <option value="As Their Interest May Appear" >As Their Interest May Appear</option>
+      <option value="ISAOA / ATIMA" >ISAOA / ATIMA</option>
+      <option value="Other" >Other</option>
+    </select>
+    </div>
+    <div>
+      <label for="name1_1_1" class="block text-sm font-semibold mb-1">Line 2<span class="text-red-600">*</span></label>
+      <input type="text" id="name1_1_1" name="name1_1_1__c"  maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  </div>
+ 
+    <div>
+      <label for="loanNumber_1" class="block text-sm font-semibold mb-1">Loan Number</label>
+      <input type="text" id="loanNumber_1" name="loanNumber_1__c" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  
+  <div class="mb-2">
+    <label for="address_1" class="block text-sm font-semibold mb-1">Address<span class="text-red-600">*</span></label>
+    <input type="text" id="address_1" name="address_1__c" maxlength="30"  class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="mb-2">
+    <label for="address2_1" class="block text-sm font-semibold mb-1">Address 2</label>
+    <input type="text" id="address2_1" name="address2_1__c" maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+    <div>
+      <label for="city_1" class="block text-sm font-semibold mb-1">City<span class="text-red-600">*</span></label>
+      <input type="text" id="city_1" name="city_1__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+    <div>
+      <label for="state_1" class="block text-sm font-semibold mb-1">State<span class="text-red-600">*</span></label>
+      <select id="state_1" name="state_1__c"  class="w-full p-2 border border-gray-300 rounded-lg">
+        <option value="">--None--</option>
+        <option value="Arizona">Arizona</option>
+        <option value="Alabama">Alabama</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Alberta">Alberta</option>
+        <option value="Arkansas">Arkansas</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="California">California</option>
+        <option value="Colorado">Colorado</option>
+        <option value="Connecticut">Connecticut</option>
+        <option value="Delaware">Delaware</option>
+        <option value="Dist Of Columbia">Dist Of Columbia</option>
+        <option value="Florida">Florida</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Guam">Guam</option>
+        <option value="Hawaii">Hawaii</option>
+        <option value="Idaho">Idaho</option>
+        <option value="Illinois">Illinois</option>
+        <option value="Indiana">Indiana</option>
+        <option value="International">International</option>
+        <option value="Iowa">Iowa</option>
+        <option value="Kansas">Kansas</option>
+        <option value="Kentucky">Kentucky</option>
+        <option value="Louisiana">Louisiana</option>
+        <option value="Maine">Maine</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="Maryland">Maryland</option>
+        <option value="Massachusetts">Massachusetts</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Michigan">Michigan</option>
+        <option value="Minnesota">Minnesota</option>
+        <option value="Mississippi">Mississippi</option>
+        <option value="Missouri">Missouri</option>
+        <option value="Montana">Montana</option>
+        <option value="Nebraska">Nebraska</option>
+        <option value="Nevada">Nevada</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="New Hampshire">New Hampshire</option>
+        <option value="New Jersey">New Jersey</option>
+        <option value="New Mexico">New Mexico</option>
+        <option value="New York">New York</option>
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="North Carolina">North Carolina</option>
+        <option value="North Dakota">North Dakota</option>
+        <option value="Northwest Territories">Northwest Territories</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Nunavut">Nunavut</option>
+        <option value="Ohio">Ohio</option>
+        <option value="Oklahoma">Oklahoma</option>
+        <option value="Ontario">Ontario</option>
+        <option value="Oregon">Oregon</option>
+        <option value="Pennsylvania">Pennsylvania</option>
+        <option value="Prince Edward Island">Prince Edward Island</option>
+        <option value="Puerto Rico">Puerto Rico</option>
+        <option value="Quebec">Quebec</option>
+        <option value="Rhode Island">Rhode Island</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="South Carolina">South Carolina</option>
+        <option value="South Dakota">South Dakota</option>
+        <option value="Tennessee">Tennessee</option>
+        <option value="Texas">Texas</option>
+        <option value="Utah">Utah</option>
+        <option value="Vermont">Vermont</option>
+        <option value="Virgin Islands">Virgin Islands</option>
+        <option value="Virginia">Virginia</option>
+        <option value="Washington">Washington</option>
+        <option value="West Virginia">West Virginia</option>
+        <option value="Wisconsin">Wisconsin</option>
+        <option value="Wyoming">Wyoming</option>
+        <option value="Yukon Territory">Yukon Territory</option>
+        <option value="District of Columbia">District of Columbia</option>
+      </select>
+    </div>
+    <div>
+      <label for="zip_1" class="block text-sm font-semibold mb-1">Zip Code<span class="text-red-600">*</span></label>
+      <input type="text" id="zip_1" name="zip_1__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  </div>
+  <hr class="border-t border-gray-300 my-4" />
+</section>
+
+
+  <!-- Section 2: start as hidden -->
+  <section class=" hidden bg-gray-50 border rounded-xl p-6 shadow-inner mb-6" id="additionalInterest2">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Additional Interest 2</h3>
+ 
+  
+  <div>
+      <label for="name_2" class="block text-sm font-semibold mb-1">Name<span class="text-red-600">*</span></label>
+      <input type="text" id="name_2" name="name_2__c" class="w-full p-2 border border-gray-300 rounded-lg mb-3" />
+    </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+    <div>
+      <label for="name_2_2" class="block text-sm font-semibold mb-1">Name Line 2</label>
+      <select id="name_2_2" name="name_2_2__c" class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+        <option value="">--None--</option>
+      <option value="Its Successors And/Or Assigns">Its Successors And/Or Assigns</option>
+      <option value="As Their Interest May Appear" >As Their Interest May Appear</option>
+      <option value="ISAOA / ATIMA" >ISAOA / ATIMA</option>
+      <option value="Other" >Other</option>
+    </select>
+    </div>
+    <div>
+      <label for="name2_2_2" class="block text-sm font-semibold mb-1">Line 2<span class="text-red-600">*</span></label>
+      <input type="text" id="name2_2_2" name="name2_2_2__c"  maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  </div>
+  
+    <div>
+      <label for="loanNumber_2" class="block text-sm font-semibold mb-1">Loan Number</label>
+      <input type="text" id="loanNumber_2" name="loanNumber_2__c" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+    
+  
+  <div class="mb-2">
+    <label for="address_2" class="block text-sm font-semibold mb-1">Address<span class="text-red-600">*</span></label>
+    <input type="text" id="address_2" name="address_2__c" maxlength="30"  class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="mb-2">
+    <label for="address2_2" class="block text-sm font-semibold mb-1">Address 2</label>
+    <input type="text" id="address2_2" name="address2_2__c" maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+    <div>
+      <label for="city_2" class="block text-sm font-semibold mb-1">City<span class="text-red-600">*</span></label>
+      <input type="text" id="city_2" name="city_2__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+    <div>
+      <label for="state_2" class="block text-sm font-semibold mb-1">State<span class="text-red-600">*</span></label>
+      <select id="state_2" name="state_2__c"  class="w-full p-2 border border-gray-300 rounded-lg">
+        <option value="">--None--</option>
+        <option value="Arizona">Arizona</option>
+        <option value="Alabama">Alabama</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Alberta">Alberta</option>
+        <option value="Arkansas">Arkansas</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="California">California</option>
+        <option value="Colorado">Colorado</option>
+        <option value="Connecticut">Connecticut</option>
+        <option value="Delaware">Delaware</option>
+        <option value="Dist Of Columbia">Dist Of Columbia</option>
+        <option value="Florida">Florida</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Guam">Guam</option>
+        <option value="Hawaii">Hawaii</option>
+        <option value="Idaho">Idaho</option>
+        <option value="Illinois">Illinois</option>
+        <option value="Indiana">Indiana</option>
+        <option value="International">International</option>
+        <option value="Iowa">Iowa</option>
+        <option value="Kansas">Kansas</option>
+        <option value="Kentucky">Kentucky</option>
+        <option value="Louisiana">Louisiana</option>
+        <option value="Maine">Maine</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="Maryland">Maryland</option>
+        <option value="Massachusetts">Massachusetts</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Michigan">Michigan</option>
+        <option value="Minnesota">Minnesota</option>
+        <option value="Mississippi">Mississippi</option>
+        <option value="Missouri">Missouri</option>
+        <option value="Montana">Montana</option>
+        <option value="Nebraska">Nebraska</option>
+        <option value="Nevada">Nevada</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="New Hampshire">New Hampshire</option>
+        <option value="New Jersey">New Jersey</option>
+        <option value="New Mexico">New Mexico</option>
+        <option value="New York">New York</option>
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="North Carolina">North Carolina</option>
+        <option value="North Dakota">North Dakota</option>
+        <option value="Northwest Territories">Northwest Territories</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Nunavut">Nunavut</option>
+        <option value="Ohio">Ohio</option>
+        <option value="Oklahoma">Oklahoma</option>
+        <option value="Ontario">Ontario</option>
+        <option value="Oregon">Oregon</option>
+        <option value="Pennsylvania">Pennsylvania</option>
+        <option value="Prince Edward Island">Prince Edward Island</option>
+        <option value="Puerto Rico">Puerto Rico</option>
+        <option value="Quebec">Quebec</option>
+        <option value="Rhode Island">Rhode Island</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="South Carolina">South Carolina</option>
+        <option value="South Dakota">South Dakota</option>
+        <option value="Tennessee">Tennessee</option>
+        <option value="Texas">Texas</option>
+        <option value="Utah">Utah</option>
+        <option value="Vermont">Vermont</option>
+        <option value="Virgin Islands">Virgin Islands</option>
+        <option value="Virginia">Virginia</option>
+        <option value="Washington">Washington</option>
+        <option value="West Virginia">West Virginia</option>
+        <option value="Wisconsin">Wisconsin</option>
+        <option value="Wyoming">Wyoming</option>
+        <option value="Yukon Territory">Yukon Territory</option>
+        <option value="District of Columbia">District of Columbia</option>
+      </select>
+    </div>
+    <div>
+      <label for="zip_2" class="block text-sm font-semibold mb-1">Zip Code<span class="text-red-600">*</span></label>
+      <input type="text" id="zip_2" name="zip_2__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+
+    
+  </div>
+  <hr class="border-t border-gray-300 my-4" />
+  <button type="button" 
+        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow mt-2 delete-btn"
+        data-target="additionalInterest2">
+  Delete this item
+</button>
+</section>
+
+  <!-- Section 3: start as hidden -->
+  <section class=" hidden bg-gray-50 border rounded-xl p-6 shadow-inner mb-6" id="additionalInterest3">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Additional Interest 3</h3>
+  
+  
+  <div>
+      <label for="name_3" class="block text-sm font-semibold mb-1">Name<span class="text-red-600">*</span></label>
+      <input type="text" id="name_3" name="name_3__c" class="w-full p-2 border border-gray-300 rounded-lg mb-3" />
+    </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+    <div>
+      <label for="name_3_3" class="block text-sm font-semibold mb-1">Name Line 2</label>
+      <select id="name_3_3" name="name_3_3__c" class="w-full p-2 border border-gray-300 rounded-lg mb-2">
+        <option value="">--None--</option>
+      <option value="Its Successors And/Or Assigns">Its Successors And/Or Assigns</option>
+      <option value="As Their Interest May Appear" >As Their Interest May Appear</option>
+      <option value="ISAOA / ATIMA" >ISAOA / ATIMA</option>
+      <option value="Other" >Other</option>
+    </select>
+    </div>
+    <div>
+      <label for="name3_3_3" class="block text-sm font-semibold mb-1">Line 2<span class="text-red-600">*</span></label>
+      <input type="text" id="name3_3_3" name="name3_3_3__c" maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  </div>
+  
+    <div>
+      <label for="loanNumber_3" class="block text-sm font-semibold mb-1">Loan Number</label>
+      <input type="text" id="loanNumber_3" name="loanNumber_3__c" class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+    
+  
+  <div class="mb-2">
+    <label for="address_3" class="block text-sm font-semibold mb-1">Address<span class="text-red-600">*</span></label>
+    <input type="text" id="address_3" name="address_3__c" maxlength="30"  class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="mb-2">
+    <label for="address2_3" class="block text-sm font-semibold mb-1">Address 2</label>
+    <input type="text" id="address2_3" name="address2_3__c" maxlength="30" class="w-full p-2 border border-gray-300 rounded-lg" />
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
+    <div>
+      <label for="city_3" class="block text-sm font-semibold mb-1">City<span class="text-red-600">*</span></label>
+      <input type="text" id="city_3" name="city_3__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+    <div>
+      <label for="state_3" class="block text-sm font-semibold mb-1">State<span class="text-red-600">*</span></label>
+      <select id="state_3" name="state_3__c"  class="w-full p-2 border border-gray-300 rounded-lg">
+        <option value="">--None--</option>
+        <option value="Arizona">Arizona</option>
+        <option value="Alabama">Alabama</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Alberta">Alberta</option>
+        <option value="Arkansas">Arkansas</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="California">California</option>
+        <option value="Colorado">Colorado</option>
+        <option value="Connecticut">Connecticut</option>
+        <option value="Delaware">Delaware</option>
+        <option value="Dist Of Columbia">Dist Of Columbia</option>
+        <option value="Florida">Florida</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Guam">Guam</option>
+        <option value="Hawaii">Hawaii</option>
+        <option value="Idaho">Idaho</option>
+        <option value="Illinois">Illinois</option>
+        <option value="Indiana">Indiana</option>
+        <option value="International">International</option>
+        <option value="Iowa">Iowa</option>
+        <option value="Kansas">Kansas</option>
+        <option value="Kentucky">Kentucky</option>
+        <option value="Louisiana">Louisiana</option>
+        <option value="Maine">Maine</option>
+        <option value="Manitoba">Manitoba</option>
+        <option value="Maryland">Maryland</option>
+        <option value="Massachusetts">Massachusetts</option>
+        <option value="Mexico">Mexico</option>
+        <option value="Michigan">Michigan</option>
+        <option value="Minnesota">Minnesota</option>
+        <option value="Mississippi">Mississippi</option>
+        <option value="Missouri">Missouri</option>
+        <option value="Montana">Montana</option>
+        <option value="Nebraska">Nebraska</option>
+        <option value="Nevada">Nevada</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="New Hampshire">New Hampshire</option>
+        <option value="New Jersey">New Jersey</option>
+        <option value="New Mexico">New Mexico</option>
+        <option value="New York">New York</option>
+        <option value="Newfoundland">Newfoundland</option>
+        <option value="North Carolina">North Carolina</option>
+        <option value="North Dakota">North Dakota</option>
+        <option value="Northwest Territories">Northwest Territories</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Nunavut">Nunavut</option>
+        <option value="Ohio">Ohio</option>
+        <option value="Oklahoma">Oklahoma</option>
+        <option value="Ontario">Ontario</option>
+        <option value="Oregon">Oregon</option>
+        <option value="Pennsylvania">Pennsylvania</option>
+        <option value="Prince Edward Island">Prince Edward Island</option>
+        <option value="Puerto Rico">Puerto Rico</option>
+        <option value="Quebec">Quebec</option>
+        <option value="Rhode Island">Rhode Island</option>
+        <option value="Saskatchewan">Saskatchewan</option>
+        <option value="South Carolina">South Carolina</option>
+        <option value="South Dakota">South Dakota</option>
+        <option value="Tennessee">Tennessee</option>
+        <option value="Texas">Texas</option>
+        <option value="Utah">Utah</option>
+        <option value="Vermont">Vermont</option>
+        <option value="Virgin Islands">Virgin Islands</option>
+        <option value="Virginia">Virginia</option>
+        <option value="Washington">Washington</option>
+        <option value="West Virginia">West Virginia</option>
+        <option value="Wisconsin">Wisconsin</option>
+        <option value="Wyoming">Wyoming</option>
+        <option value="Yukon Territory">Yukon Territory</option>
+        <option value="District of Columbia">District of Columbia</option>
+      </select>
+    </div>
+    <div>
+      <label for="zip_3" class="block text-sm font-semibold mb-1">Zip Code<span class="text-red-600">*</span></label>
+      <input type="text" id="zip_3" name="zip_3__c"  class="w-full p-2 border border-gray-300 rounded-lg" />
+    </div>
+  </div>
+  <hr class="border-t border-gray-300 my-4" />
+  <hr class="border-t border-gray-300 my-4" />
+<button type="button" 
+        class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow mt-2 delete-btn"
+        data-target="additionalInterest3">
+  Delete this item
+</button>
+</section>
+
+
+  <button 
+    id="addAdditionalInterestBtn" 
+    type="button"
+    class="bg-teal-700 hover:bg-teal-700 text-white px-5 py-2 rounded-lg flex items-center gap-2 mt-4 shadow"
+  >
+    <span class="text-lg font-bold">+</span>
+    <span>Add a New Item</span>
+  </button>
+  <p id="additionalInterestLimitMsg" class="text-red-600 text-sm mt-2 hidden">
+    More than 3 interests are not allowed.
+  </p>
+</div>
+
+
+
+    <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Payor Information">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">Payor Information</h3>
+      <div>
+  <label for="Send_Bill_To" class="block text-sm font-medium text-gray-700">Send Bill To<span class="text-red-600">*</span></label>
+  <select id="Send_Bill_To" name="Send_Bill_To__c"  
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-3">
+    <option value="">--None--</option>
+    <option value="Mortgagee with copy to Insured">Mortgagee with copy to Insured</option>
+    <option value="Insured with copy to Mortgagee">Insured with copy to Mortgagee</option>
+  </select>
+</div>
+
+<div id="billByMailContainer" style="display: none;">
+  <div>
+    <label for="Bill_By_Mail" class="block text-sm font-medium text-gray-700">Bill By Mail<span class="text-red-600">*</span></label>
+    <select id="Bill_By_Mail" name="Bill_By_Mail__c"  
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+      <option value="">--None--</option>
+      <option value="Full Pay">Full Pay</option>
+      <option value="2-Pay">2-Pay</option>
+      <option value="4-Pay">4-Pay</option>
+      <option value="Monthly Pay">Monthly Pay</option>
+    </select>
+  </div>
+</div>
+
+    </section>
+
+
+    <div class="pt-4">
+     <button
+  type="button"
+  id="reviewBtn"
+  class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow"
+>
+           Review and Submit
+
+</button>
+    </div>
+     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const deleteInterestToggle = document.getElementById("deleteInterestToggle");
+const deleteInterestContainerWrapper = document.getElementById("deleteInterestContainerWrapper");
+
+function setDeleteInterestRequired(isRequired) {
+  const names = [
+    "Delete_Interest_Type_1__c",
+    "Delete_Interest_Type_2__c",
+    "Delete_Interest_Type_3__c"
+  ];
+  names.forEach((name) => {
+    const el = document.querySelector(`select[name="${name}"]`);
+    if (el) {
+      if (isRequired) {
+        el.setAttribute("required", "required");
+      } else {
+        el.removeAttribute("required");
+        el.setCustomValidity("");
+      }
+    }
+  });
+}
+
+deleteInterestToggle.addEventListener("change", function () {
+  if (this.checked) {
+    deleteInterestContainerWrapper.classList.remove("hidden");
+    // ensure at least one row exists
+    if (!container.querySelector(".interest-type-row")) {
+      rebuildSelects();
+    }
+    setDeleteInterestRequired(true);
+    updateAddMoreBtn();
+  } else {
+    deleteInterestContainerWrapper.classList.add("hidden");
+    // clear and relax requirements
+    container.querySelectorAll("select").forEach((s) => { s.value = ""; });
+    setDeleteInterestRequired(false);
+    addMoreBtn.disabled = true;
+    addMoreBtn.classList.add("hidden");
+  }
+});
+
+// initial state on page load
+if (deleteInterestToggle.checked) {
+  deleteInterestContainerWrapper.classList.remove("hidden");
+  setDeleteInterestRequired(true);
+  updateAddMoreBtn();
+} else {
+  deleteInterestContainerWrapper.classList.add("hidden");
+  setDeleteInterestRequired(false);
+}
+        const interestFieldApiNames = [
+  "Delete_Interest_Type_1__c",
+  "Delete_Interest_Type_2__c",
+  "Delete_Interest_Type_3__c"
+];
+      const formEl = document.getElementById("mainForm");
+const reviewBtn = document.getElementById("reviewBtn");
+const dialog = document.getElementById("dialog");
+const dialogTitle = document.getElementById("dialogTitle");
+const missingFieldsList = document.getElementById("missingFieldsList");
+const proceedBtn = document.getElementById("proceedBtn");
+const editBtn = document.getElementById("editBtn");
+
+
+
+        const sendBillTo = document.getElementById("Send_Bill_To");
+  const billByMailContainer = document.getElementById("billByMailContainer");
+  sendBillTo.addEventListener("change", function () {
+    if (sendBillTo.value === "Insured with copy to Mortgagee") {
+      billByMailContainer.style.display = "block";
+    } else {
+      billByMailContainer.style.display = "none";
+      billByMailContainer.querySelectorAll("select, input").forEach(f => f.value = "");
+    }
+  });
+  // Optional: trigger on load for correct initial state
+  if (sendBillTo.value === "Insured with copy to Mortgagee") {
+    billByMailContainer.style.display = "block";
+  } else {
+    billByMailContainer.style.display = "none";
+  }
+
+
+
+
+      const container = document.getElementById("deleteInterestContainer");
+  const addMoreBtn = document.getElementById("addMoreInterestBtn");
+
+  const maxOptions = [
+    { value: "1", text: "Mortgage Servicing Agency for 1st Mortgagee" },
+    { value: "2", text: "Second Mortgagee" },
+    { value: "3", text: "Home Equity Line of Credit" },
+  ];
+
+  function getSelectedValues() {
+    const selects = container.querySelectorAll("select");
+    return Array.from(selects)
+      .map((s) => s.value)
+      .filter((v) => v !== "");
+  }
+
+  function getRemainingOptions() {
+    const selected = getSelectedValues();
+    return maxOptions.filter((o) => !selected.includes(o.value));
+  }
+
+  function updateAddMoreBtn() {
+  const rows = container.querySelectorAll(".interest-type-row");
+  const rowCount = rows.length;
+
+  // If already 3 rows, force‑disable and hide Add More
+  if (rowCount >= 3) {
+    addMoreBtn.disabled = true;
+    addMoreBtn.classList.add("hidden");
+    return;
+  }
+
+  const lastSelect = container.querySelector("select:last-of-type");
+  const hasValue = lastSelect && lastSelect.value !== "";
+  const remainingOptions = getRemainingOptions();
+
+  // Enable only when last has value, there are options left, and < 3 rows
+  const canAddMore = hasValue && remainingOptions.length > 0;
+  addMoreBtn.disabled = !canAddMore;
+  addMoreBtn.classList.toggle("hidden", !canAddMore);
+}
+
+
+ function createInterestSelect(idx, selectedValue = "") {
+  const row = document.createElement("div");
+  row.className = "interest-type-row flex flex-col gap-1 mt-2";
+  row.dataset.idx = idx;
+
+  const label = document.createElement("label");
+  label.className = "block text-sm font-medium text-gray-700";
+  label.setAttribute("for", `interestType${idx}`);
+label.innerHTML = 'Which interest type you want to delete?<span class="text-red-600">*</span>';
+
+  const controlWrap = document.createElement("div");
+  controlWrap.className = "flex items-center gap-2";
+
+  const select = document.createElement("select");
+const apiName = interestFieldApiNames[idx] || interestFieldApiNames[interestFieldApiNames.length - 1];
+select.id = apiName;
+select.name = apiName;
+select.className = "w-full p-2 border border-gray-300 rounded-lg shadow-sm";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "-- Select an option --";
+  select.appendChild(defaultOption);
+
+  const selectedInThisRow = selectedValue ? [selectedValue] : [];
+  const selectedOverall = getSelectedValues();
+
+  maxOptions.forEach((opt) => {
+    if (!selectedOverall.includes(opt.value) || selectedInThisRow.includes(opt.value)) {
+      const option = document.createElement("option");
+      option.value = opt.value;
+      option.textContent = opt.text;
+      if (opt.value === selectedValue) option.selected = true;
+      select.appendChild(option);
+    }
+  });
+
+  controlWrap.appendChild(select);
+
+  if (idx > 0) {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg shadow delete-btn";
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", function () {
+      row.remove();
+      updateAddMoreBtn();
+    });
+    controlWrap.appendChild(deleteBtn);
+  }
+
+  select.addEventListener("change", function () {
+    updateAddMoreBtn();
+    rebuildSelects();
+  });
+
+  row.appendChild(label);
+  row.appendChild(controlWrap);
+
+  return row;
+}
+
+  function rebuildSelects() {
+    const selectedValues = getSelectedValues();
+
+    container.innerHTML = "";
+    selectedValues.forEach((val, index) => {
+      const selectDiv = createInterestSelect(index, val);
+      container.appendChild(selectDiv);
+    });
+
+    if (selectedValues.length === 0) {
+      const firstSelect = createInterestSelect(0);
+      container.appendChild(firstSelect);
+    }
+
+    updateAddMoreBtn();
+  }
+
+  rebuildSelects();
+
+  addMoreBtn.addEventListener("click", function () {
+    const currentCount = container.querySelectorAll(".interest-type-row").length;
+    if (getRemainingOptions().length === 0) {
+      return;
+    }
+    const newSelect = createInterestSelect(currentCount);
+    container.appendChild(newSelect);
+    updateAddMoreBtn();
+  });
+
+        
+        // Handle enabling/disabling "Other" input field in Additional Interest Name Line 2
+        const mappings = [
+          { selectId: "name_1_1", inputId: "name1_1_1" },
+          { selectId: "name_2_2", inputId: "name2_2_2" },
+          { selectId: "name_3_3", inputId: "name3_3_3" },
+        ];
+        mappings.forEach(({ selectId, inputId }) => {
+          const selectElem = document.getElementById(selectId);
+          const inputElem = document.getElementById(inputId);
+          if (selectElem && inputElem) {
+            function toggleInput() {
+              if (selectElem.value === "Other") {
+                inputElem.disabled = false;
+                inputElem.classList.remove("bg-gray-100", "cursor-not-allowed");
+              } else {
+                inputElem.disabled = true;
+                inputElem.value = "";
+                inputElem.classList.add("bg-gray-100", "cursor-not-allowed");
+              }
+            }
+            toggleInput();
+            selectElem.addEventListener("change", toggleInput);
+          }
+        });
+
+        // Add/Remove Additional Interest handling
+        function toggleRequiredFields(sectionId, isRequired) {
+    const section = document.getElementById(sectionId);
+    if (!section) return;
+    const index = sectionId.slice(-1); // '1', '2', or '3'
+    const fields = [
+      `name_${index}`,        // Name text input    
+      `name_${index}_1_1`,     // Line 2 "Other" text input
+      `city_${index}`,        // City input
+      `state_${index}`,       // State select
+      `zip_${index}`,         // Zip input
+      `address_${index}`      // Address line 1 input
+    ];
+    fields.forEach(id => {
+      const elem = section.querySelector(`#${id}`);
+      if (elem) {
+        if (isRequired) {
+          elem.setAttribute("required", "required");
+          elem.setCustomValidity("");
+        } else {
+          elem.removeAttribute("required");
+          elem.setCustomValidity("");
+        }
+      }
+    });
+  }
+
+  // Initialize Additional Interest 1 required on page load (always visible)
+  toggleRequiredFields("additionalInterest1", true);
+
+  let currentInterest = 1;
+  const addBtn = document.getElementById("addAdditionalInterestBtn");
+
+  addBtn.addEventListener("click", function () {
+    if (currentInterest === 1) {
+      document.getElementById("additionalInterest2").classList.remove("hidden");
+      toggleRequiredFields("additionalInterest2", true);
+      currentInterest++;
+    } else if (currentInterest === 2) {
+      document.getElementById("additionalInterest3").classList.remove("hidden");
+      toggleRequiredFields("additionalInterest3", true);
+      currentInterest++;
+    } else {
+      document.getElementById("additionalInterestLimitMsg").classList.remove("hidden");
+      this.disabled = true;
+      this.classList.add("opacity-50", "cursor-not-allowed");
+    }
+  });
+
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      const targetId = btn.getAttribute("data-target");
+      const section = document.getElementById(targetId);
+      if (section) {
+        section.classList.add("hidden");
+        section.querySelectorAll("input, select, textarea").forEach(f => {
+          f.value = "";
+          f.removeAttribute("required");
+          f.setCustomValidity("");
+        });
+        toggleRequiredFields(targetId, false);
+        if (currentInterest > 1) currentInterest--;
+        if (addBtn.disabled) {
+          addBtn.disabled = false;
+          addBtn.classList.remove("opacity-50", "cursor-not-allowed");
+        }
+        document.getElementById("additionalInterestLimitMsg").classList.add("hidden");
+      }
+    });
+  });
+
+
+        // Pikaday Setup and Date validation for Effective Date
+        function parseMMDDYYYY(s) {
+          if (!/^(\d{2})\/(\d{2})\/(\d{4})$/.test(s)) return null;
+          const [m, d, y] = s.split('/').map(Number);
+          if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+          const date = new Date(y, m - 1, d);
+          if (date.getMonth() !== m - 1 || date.getDate() !== d || date.getFullYear() !== y) return null;
+          return date;
+        }
+        document.querySelectorAll('.sf-date-field').forEach(function(field) {
+          new Pikaday({
+            field: field,
+            format: 'MM/DD/YYYY',
+            onSelect: function(date) {
+              if (date) {
+                field.value = ("0" + (date.getMonth()+1)).slice(-2) + "/" +
+                              ("0" + date.getDate()).slice(-2) + "/" + date.getFullYear();
+                showDateError(field, false);
+              }
+            }
+          });
+          function validateDate() {
+            const valid = !field.value || parseMMDDYYYY(field.value);
+            showDateError(field, !valid);
+            field.setCustomValidity(valid ? "" : "Invalid date format (MM/DD/YYYY)");
+          }
+          field.addEventListener('input', validateDate);
+          field.addEventListener('blur', validateDate);
+        });
+        function showDateError(field, show) {
+          const errorDiv = document.getElementById(field.id + "_error");
+          if(errorDiv) errorDiv.classList.toggle("hidden", !show);
+          field.classList.toggle("error", show);
+        }
+
+    
+  
+
+
+   function updateCounts() {
+  // 1) Loan delete count = number of delete‑interest rows when toggle ON
+  const deleteInterestToggle = document.getElementById('deleteInterestToggle');
+  const deleteInterestContainer = document.getElementById('deleteInterestContainer');
+  let loanDeleteVisible = 0;
+
+  if (deleteInterestToggle && deleteInterestToggle.checked && deleteInterestContainer) {
+    loanDeleteVisible = deleteInterestContainer.querySelectorAll('.interest-type-row').length;
+  }
+  const loanDeleteHidden = document.getElementById('loanDeleteCount');
+  if (loanDeleteHidden) {
+    loanDeleteHidden.value = loanDeleteVisible;
+  }
+
+  // 2) Additional interest count = visible Additional Interest sections
+  let interestAddCount = 0;
+  for (let i = 1; i <= 3; i++) {
+    const section = document.getElementById(`additionalInterest${i}`);
+    if (section && !section.classList.contains('hidden')) {
+      interestAddCount++;
+    }
+  }
+  const interestAddHidden = document.getElementById('interestAddCount');
+  if (interestAddHidden) {
+    interestAddHidden.value = interestAddCount;
+  }
+}
+
+
+// When user toggles delete‑interest
+document.getElementById('deleteInterestToggle')?.addEventListener('change', () => {
+  setTimeout(updateCounts, 50);
+});
+
+// When user clicks "Add More" in delete‑interest section
+document.getElementById('addMoreInterestBtn')?.addEventListener('click', () => {
+  setTimeout(updateCounts, 50);
+});
+
+// When user deletes a delete‑interest row
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-btn') &&
+      e.target.closest('#deleteInterestContainer')) {
+    setTimeout(updateCounts, 50);
+  }
+});
+
+// When user adds an Additional Interest section
+document.getElementById('addAdditionalInterestBtn')?.addEventListener('click', () => {
+  setTimeout(updateCounts, 50);
+});
+
+// When user deletes an Additional Interest section
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete-btn') &&
+      e.target.closest('section[id^="additionalInterest"]')) {
+    setTimeout(updateCounts, 50);
+  }
+});
+
+// Initial sync on load
+updateCounts();
+
+  // ================= SHARED VALIDATION + CAPTURE/MISSING =================
+
+  // Central list of fields to validate
+const fieldData = [
+ // Policy Changes
+  { id: "email", label: "Email", type: "email" },
+  { id: "Is_this_a_quote_or_a_change_request__c", label: "Request Type", type: "radio" },
+  { id: "00NU7000005zuX3", label: "Policy Number" },
+  { id: "00NU7000005zuLl", label: "Effective Date", type: "date" },
+  { id: "Delete_Interest_Type_1__c", label: "Which Interest type you want to delete 1", sectionId: "deleteInterestContainerWrapper" },
+{ id: "Delete_Interest_Type_2__c", label: "Which Interest type you want to delete 2", sectionId: "deleteInterestContainerWrapper" },
+{ id: "Delete_Interest_Type_3__c", label: "Which Interest type you want to delete 3", sectionId: "deleteInterestContainerWrapper" },
+
+  // Additional Interest 1 (always visible)
+  { id: "name_1", label: "Name" },
+  { id: "name1_1_1", label: "Line 2" },
+  { id: "address_1", label: "Address" },
+  { id: "city_1", label: "City" },
+  { id: "state_1", label: "State" },
+  { id: "zip_1", label: "Zip Code" },
+
+  // Additional Interest 2 (only when section visible)
+  { id: "name_2", label: "Name", sectionId: "additionalInterest2" },
+  { id: "name2_2_2", label: "Line 2", sectionId: "additionalInterest2" },
+  { id: "address_2", label: "Address", sectionId: "additionalInterest2" },
+  { id: "city_2", label: "City", sectionId: "additionalInterest2" },
+  { id: "state_2", label: "State", sectionId: "additionalInterest2" },
+  { id: "zip_2", label: "Zip Code", sectionId: "additionalInterest2" },
+
+  // Additional Interest 3 (only when section visible)
+  { id: "name_3", label: "Name", sectionId: "additionalInterest3" },
+  { id: "name3_3_3", label: "Line 2", sectionId: "additionalInterest3" },
+  { id: "address_3", label: "Address", sectionId: "additionalInterest3" },
+  { id: "city_3", label: "City", sectionId: "additionalInterest3" },
+  { id: "state_3", label: "State", sectionId: "additionalInterest3" },
+  { id: "zip_3", label: "Zip Code", sectionId: "additionalInterest3" },
+
+  // Payor Information
+  { id: "Send_Bill_To", label: "Send Bill To" },
+  {id: "Bill_By_Mail", label: "Bill By Mail", sectionId: "billByMailContainer"}
+]
+
+function validateAllFields() {
+    const missingLabels = [];
+    const missingData = [];
+    const completedData = [];
+
+    fieldData.forEach(field => {
+      let val = "";
+      let isMissing = false;
+
+      // skip if section not visible
+      if (field.sectionId) {
+        const section = document.getElementById(field.sectionId);
+        if (
+          !section ||
+          section.classList.contains("hidden") ||
+          section.style.display === "none"
+        ) {
+          return;
+        }
+      }
+
+      if (field.type === "radio") {
+        const radios = document.querySelectorAll(`input[name="${field.id}"]`);
+        const chosen = Array.from(radios).find(r => r.checked);
+        val = chosen ? chosen.value : "";
+        isMissing = !val;
+      } else {
+        const input = document.getElementById(field.id);
+        if (!input || input.disabled) return;
+
+        val = (input.value || "").trim();
+
+        if (field.type === "email") {
+          isMissing = !val || !/.+@.+\..+/.test(val);
+        } else if (field.type === "date") {
+          isMissing = !val || !parseMMDDYYYY(val);
+        } else {
+          isMissing = !val;
+        }
+      }
+
+      if (isMissing) {
+        missingLabels.push(field.label);
+        missingData.push(field.label);
+      } else {
+        completedData.push(`${field.label} = ${val}`);
+      }
+    });
+
+    return { missingLabels, missingData, completedData };
+  }
+
+
+reviewBtn.addEventListener("click", function () {
+  const { missingLabels, missingData, completedData } = validateAllFields();
+
+  // write captured/missing strings
+const capturedStr = completedData.join('\n');   // e.g. Policy Number = 9999999
+const missingStr  = missingData.join('\n');     // e.g. Email
+
+const capHidden = document.getElementById('formDataJson');
+const missHidden = document.getElementById('formMissingData');
+if (capHidden) capHidden.value = capturedStr;
+if (missHidden) missHidden.value = missingStr;
+
+  if (missingLabels.length) {
+    dialogTitle.textContent = " Below Mandatory Fields are missing and the Team will contact you shortly.";
+    missingFieldsList.innerHTML = missingLabels
+      .map(l => `<li>${l}</li>`)
+      .join("");
+  } else {
+    dialogTitle.textContent =
+      "All mandatory fields are completed. Ready to submit your request?";
+    missingFieldsList.innerHTML = "";
+  }
+
+  dialog.classList.remove("hidden");
+});
+
+editBtn.addEventListener("click", () => {
+  dialog.classList.add("hidden");
+});
+
+proceedBtn.addEventListener("click", function() {
+  dialog.classList.add("hidden");
+  formEl.submit();  // Explicit form submit call
+});
+
+      });
+    </script>
+  </form>
+  <div
+  id="dialog"
+  class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="dialogTitle"
+>
+  <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+    <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+    <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+    <div class="flex justify-end space-x-3">
+      <button
+        id="proceedBtn"
+        class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+      >
+        Proceed to End Request
+      </button>
+      <button
+        id="editBtn"
+        class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+      >
+        Edit
+      </button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
