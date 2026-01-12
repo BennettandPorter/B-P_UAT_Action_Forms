@@ -190,40 +190,17 @@
           { id: "driverName", label: "Driver Name" },
           { id: "reasonToDelete", label: "Reason to delete driver" },
           { id: "additionalRemarks", label: "Additional Remarks" },
-          { id: "reqType", label: "Request Type", type: "radio" }
+          // Match ID to the HTML 'name' attribute for radio processing
+          { id: "Is_this_a_quote_or_a_change_request__c", label: "Request Type", type: "radio" }
         ];
 
-        function getSelectedRadioValue() {
-          const selected = document.querySelector('input[name="Is_this_a_quote_or_a_change_request__c"]:checked');
+        function getSelectedRadioValue(name) {
+          const selected = document.querySelector(`input[name="${name}"]:checked`);
           return selected ? selected.value : null;
         }
 
-        function validateFields() {
-          const missing = [];
-          fieldData.forEach((field) => {
-            if (field.type === "radio") {
-              if (!getSelectedRadioValue()) missing.push(field.label);
-            } else if (field.id === "additionalRemarks") {
-              if (!additionalRemarksDiv.classList.contains("hidden") && !additionalRemarks.value.trim()) {
-                missing.push(field.label);
-              }
-            } else {
-              const input = document.getElementById(field.id);
-              if (input) {
-                const val = input.value.trim();
-                if (!val) {
-                  missing.push(field.label);
-                } else if (field.type === "email" && !input.checkValidity()) {
-                  missing.push(field.label);
-                }
-              }
-            }
-          });
-          return missing;
-        }
-
         reasonToDelete.addEventListener("change", function () {
-          const showRemarks = ["Still in household, but re-written with another company", "Other"].includes(reasonToDelete.value);
+          const showRemarks = ["Still in household, but re-written with another company", "Other"].includes(this.value);
           if (showRemarks) {
             additionalRemarksDiv.classList.remove("hidden");
             additionalRemarks.setAttribute("required", "required");
@@ -234,52 +211,53 @@
           }
         });
 
-      reviewBtn.addEventListener("click", () => {
-  const missing = validateFields();
-  const missingData = [];
-  const completedData = [];
+        reviewBtn.addEventListener("click", () => {
+          const missingData = [];
+          const completedData = [];
 
-  fieldData.forEach(field => {
-    let val = "";
-    let isMissing = false;
+          fieldData.forEach(field => {
+            let val = "";
+            let isMissing = false;
 
-    if (field.type === "radio") {
-      // Correctly find the value for the radio group
-      val = getSelectedRadioValue();
-      isMissing = !val;
-    } else {
-      const el = document.getElementById(field.id);
-      if (!el) return;
-      
-      val = el.value.trim();
-      const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
-      
-      // If it's a hidden remark, it's not actually "missing"
-      if (!val && !isHidden) isMissing = true;
-      else if (val && field.type === "email" && !el.checkValidity()) isMissing = true;
-    }
+            if (field.type === "radio") {
+              // Retrieve value using the 'name' stored in 'field.id'
+              val = getSelectedRadioValue(field.id);
+              isMissing = !val;
+            } else {
+              const el = document.getElementById(field.id);
+              if (!el) return;
+              
+              val = el.value.trim();
+              const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
+              
+              if (!val && !isHidden) {
+                isMissing = true;
+              } else if (val && field.type === "email" && !el.checkValidity()) {
+                isMissing = true;
+              }
+            }
 
-    if (isMissing) {
-      missingData.push(field.label);
-    } else if (val) {
-      completedData.push(`${field.label} = ${val}`);
-    }
-  });
+            if (isMissing) {
+              missingData.push(field.label);
+            } else if (val) {
+              completedData.push(`${field.label} = ${val}`);
+            }
+          });
 
-  // Write to hidden fields for Salesforce
-  document.getElementById("formDataJson").value = completedData.join("\n");
-  document.getElementById("formMissingData").value = missingData.join("\n");
+          // Write captured and missing data to hidden fields
+          document.getElementById("formDataJson").value = completedData.join("\n");
+          document.getElementById("formMissingData").value = missingData.join("\n");
 
-  // Dialog UI
-  if (missingData.length > 0) {
-    dialogTitle.textContent = "Mandatory Fields Missing:";
-    missingFieldsList.innerHTML = missingData.map(f => `<li>${f}</li>`).join("");
-  } else {
-    dialogTitle.textContent = "Ready to submit your request?";
-    missingFieldsList.innerHTML = "";
-  }
-  dialog.classList.remove("hidden");
-});
+          // Update Dialog UI
+          if (missingData.length > 0) {
+            dialogTitle.textContent = "Mandatory Fields Missing:";
+            missingFieldsList.innerHTML = missingData.map(f => `<li>${f}</li>`).join("");
+          } else {
+            dialogTitle.textContent = "Ready to submit your request?";
+            missingFieldsList.innerHTML = "";
+          }
+          dialog.classList.remove("hidden");
+        });
 
         editBtn.addEventListener("click", () => dialog.classList.add("hidden"));
         proceedBtn.addEventListener("click", () => form.submit());
@@ -287,4 +265,3 @@
     </script>
   </body>
 </html>
-
