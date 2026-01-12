@@ -234,40 +234,52 @@
           }
         });
 
-        reviewBtn.addEventListener("click", () => {
-          const missing = validateFields();
-          const missingData = [];
-          const completedData = [];
+      reviewBtn.addEventListener("click", () => {
+  const missing = validateFields();
+  const missingData = [];
+  const completedData = [];
 
-          // Radio processing
-          const radioVal = getSelectedRadioValue();
-          if (!radioVal) missingData.push("Request Type");
-          else completedData.push(`Request Type = ${radioVal}`);
+  fieldData.forEach(field => {
+    let val = "";
+    let isMissing = false;
 
-          // Other fields
-          fieldData.forEach(field => {
-            if (field.type === "radio") return;
-            const el = document.getElementById(field.id);
-            if (!el) return;
-            const val = el.value.trim();
-            const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
+    if (field.type === "radio") {
+      // Correctly find the value for the radio group
+      val = getSelectedRadioValue();
+      isMissing = !val;
+    } else {
+      const el = document.getElementById(field.id);
+      if (!el) return;
+      
+      val = el.value.trim();
+      const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
+      
+      // If it's a hidden remark, it's not actually "missing"
+      if (!val && !isHidden) isMissing = true;
+      else if (val && field.type === "email" && !el.checkValidity()) isMissing = true;
+    }
 
-            if (!val && !isHidden) missingData.push(field.label);
-            else if (val) completedData.push(`${field.label} = ${val}`);
-          });
+    if (isMissing) {
+      missingData.push(field.label);
+    } else if (val) {
+      completedData.push(`${field.label} = ${val}`);
+    }
+  });
 
-          document.getElementById("formDataJson").value = completedData.join("\n");
-          document.getElementById("formMissingData").value = missingData.join("\n");
+  // Write to hidden fields for Salesforce
+  document.getElementById("formDataJson").value = completedData.join("\n");
+  document.getElementById("formMissingData").value = missingData.join("\n");
 
-          if (missing.length > 0) {
-            dialogTitle.textContent = "Mandatory Fields Missing:";
-            missingFieldsList.innerHTML = missing.map(f => `<li>${f}</li>`).join("");
-          } else {
-            dialogTitle.textContent = "Ready to submit your request?";
-            missingFieldsList.innerHTML = "";
-          }
-          dialog.classList.remove("hidden");
-        });
+  // Dialog UI
+  if (missingData.length > 0) {
+    dialogTitle.textContent = "Mandatory Fields Missing:";
+    missingFieldsList.innerHTML = missingData.map(f => `<li>${f}</li>`).join("");
+  } else {
+    dialogTitle.textContent = "Ready to submit your request?";
+    missingFieldsList.innerHTML = "";
+  }
+  dialog.classList.remove("hidden");
+});
 
         editBtn.addEventListener("click", () => dialog.classList.add("hidden"));
         proceedBtn.addEventListener("click", () => form.submit());
@@ -275,3 +287,4 @@
     </script>
   </body>
 </html>
+
