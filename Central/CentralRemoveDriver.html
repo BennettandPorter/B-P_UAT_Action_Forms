@@ -211,53 +211,56 @@
           }
         });
 
-        reviewBtn.addEventListener("click", () => {
-          const missingData = [];
-          const completedData = [];
+reviewBtn.addEventListener("click", () => {
+    const missingData = [];
+    const completedData = [];
 
-          fieldData.forEach(field => {
-            let val = "";
-            let isMissing = false;
+    fieldData.forEach(field => {
+        let val = "";
+        let isMissing = false;
 
-            if (field.type === "radio") {
-              // Retrieve value using the 'name' stored in 'field.id'
-              val = getSelectedRadioValue(field.id);
-              isMissing = !val;
-            } else {
-              const el = document.getElementById(field.id);
-              if (!el) return;
-              
-              val = el.value.trim();
-              const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
-              
-              if (!val && !isHidden) {
+        if (field.type === "radio") {
+            // Retrieve value using the radio group name (stored in field.id)
+            val = getSelectedRadioValue(field.id);
+            if (!val) {
                 isMissing = true;
-              } else if (val && field.type === "email" && !el.checkValidity()) {
+            }
+        } else {
+            const el = document.getElementById(field.id);
+            if (!el) return; // Skip if element doesn't exist
+
+            val = el.value.trim();
+            const isHidden = (field.id === "additionalRemarks" && additionalRemarksDiv.classList.contains("hidden"));
+
+            if (!val && !isHidden) {
                 isMissing = true;
-              }
+            } else if (val && field.type === "email" && !el.checkValidity()) {
+                isMissing = true;
             }
+        }
 
-            if (isMissing) {
-              missingData.push(field.label);
-            } else if (val) {
-              completedData.push(`${field.label} = ${val}`);
-            }
-          });
+        // Only add to one list or the other, never both
+        if (isMissing) {
+            missingData.push(field.label);
+        } else if (val) {
+            completedData.push(`${field.label} = ${val}`);
+        }
+    });
 
-          // Write captured and missing data to hidden fields
-          document.getElementById("formDataJson").value = completedData.join("\n");
-          document.getElementById("formMissingData").value = missingData.join("\n");
+    // Write captured and missing data to hidden fields
+    document.getElementById("formDataJson").value = completedData.join("\n");
+    document.getElementById("formMissingData").value = missingData.join("\n");
 
-          // Update Dialog UI
-          if (missingData.length > 0) {
-            dialogTitle.textContent = "Mandatory Fields Missing:";
-            missingFieldsList.innerHTML = missingData.map(f => `<li>${f}</li>`).join("");
-          } else {
-            dialogTitle.textContent = "Ready to submit your request?";
-            missingFieldsList.innerHTML = "";
-          }
-          dialog.classList.remove("hidden");
-        });
+    // Update Dialog UI based on the newly generated missingData list
+    if (missingData.length > 0) {
+        dialogTitle.textContent = "Mandatory Fields Missing:";
+        missingFieldsList.innerHTML = missingData.map(f => `<li>${f}</li>`).join("");
+    } else {
+        dialogTitle.textContent = "Ready to submit your request?";
+        missingFieldsList.innerHTML = "";
+    }
+    dialog.classList.remove("hidden");
+});
 
         editBtn.addEventListener("click", () => dialog.classList.add("hidden"));
         proceedBtn.addEventListener("click", () => form.submit());
@@ -265,3 +268,4 @@
     </script>
   </body>
 </html>
+
