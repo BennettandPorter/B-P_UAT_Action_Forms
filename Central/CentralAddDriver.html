@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Central Insurance Form</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css"
+         />
+      <style>
+         .hidden {
+         display: none;
+         }
+         .star {
+         color: #ef4444;
+         margin-left: 2px;
+         }
+         .modal-bg {
+         background: rgba(0, 0, 0, 0.4);
+         }
+      </style>
+   </head>
+   <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">                          
+      <form
+         id="mainForm"
+         action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DVD000007JpKX"
+         method="POST"
+         class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8 relative"
+         autocomplete="off"
+         >
+         <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">
+        Add Driver Central Insurance Form
+         </h2>
+         <div class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+            <!-- Email -->
+            <div class="mb-3">
+               <label for="email" class="block text-sm font-medium text-gray-700">
+               Email<span class="star">*</span>
+               </label>
+               <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  
+                  />
+            </div>
+            <div>
+               <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="star">*</span></label>
+               <!-- Radios: Keep for UI, but add hidden input for Salesforce as checkbox -->
+               <div class="flex space-x-4 mb-2">
+                  <label class="inline-flex items-center ">
+                  <input type="radio" id="00NU7000006IOzh" name="Is_this_a_quote_or_a_change_request__c" value="Quote"  class="mr-2" />Quote
+                  </label>
+                  <label class="inline-flex items-center">
+                  <input type="radio" id="00NU7000006IOzh" name="Is_this_a_quote_or_a_change_request__c" value="Endorsement" class="mr-2" />Endorsement
+                  </label>
+               </div>
+               <!-- Hidden Salesforce fields for checkbox mapping -->
+               <input type="hidden" name="Is_this_a_quote_or_a_change_request__c" id="sfQuote" value="false" />
+               <input type="hidden" name="Is_this_a_quote_or_a_change_request__c" id="sfEndorsement" value="false" />
+               <div id="quotePolicyError" class="error-message hidden ">Please select an option</div>
+            </div>
+            <!-- Policy Action -->
+           
+            <!-- Policy Number -->
+            <div class="mb-3">
+               <label
+                  for="00NU7000005zuX3"
+                  class="block text-sm font-medium text-gray-700"
+                  >
+               Policy Number<span class="star">*</span>
+               </label>
+               <input
+                  type="text"
+                  id="00NU7000005zuX3"
+                  name="Policy_Number__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+                  autocomplete="off"
+                  />
+            </div>
+            <!-- Effective Date -->
+            <div class="mb-3">
+               <label
+                  for="00NU7000005zuLl"
+                  class="block text-sm font-medium text-gray-700"
+                  >
+               Effective Date<span class="star">*</span>
+               </label>
+               <input
+                  type="text"
+                  id="00NU7000005zuLl"
+                  name="Date__c"
+                  placeholder="MM/DD/YYYY"
+                  maxlength="10"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  />
+            </div>
+         </div>
+         <div class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Driver Details</h3>
+            <div class="flex gap-4 mb-3">
+               <!-- First Name -->
+               <div class="w-1/2">
+                  <label for="00NU7000005zuOz" class="block text-sm font-medium text-gray-700">
+                  First Name<span class="star">*</span>
+                  </label>
+                  <input
+                     type="text"
+                     id="00NU7000005zuOz"
+                     name="First_Name__c"
+                     class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                     autocomplete="off"
+                     
+                     />
+               </div>
+               <!-- Last Name -->
+               <div class="w-1/2">
+                  <label for="00NU7000005zuQb" class="block text-sm font-medium text-gray-700">
+                  Last Name<span class="star">*</span>
+                  </label>
+                  <input
+                     type="text"
+                     id="00NU7000005zuQb"
+                     name="Last_Name__c"
+                     class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                     autocomplete="off"
+                     
+                     />
+               </div>
+            </div>
+            <!-- For Driver Details -->
+<div class="flex gap-4 mb-3">
+  <!-- Date of Birth -->
+  <div class="w-1/2">
+    <label for="00NU7000005zuSD" class="block text-sm font-medium text-gray-700">
+      Date of Birth<span class="star">*</span>
+    </label>
+    <input
+      type="text"
+      id="00NU7000005zuSD"
+      name="Date_of_Birth__c"
+      placeholder="MM/DD/YYYY"
+      maxlength="10"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      autocomplete="off"
+          />
+  </div>
+
+  <!-- Driver Sex -->
+  <div class="w-1/2">
+    <label for="00NU7000005zqRr" class="block text-sm font-medium text-gray-700">
+      Driver Sex<span class="star">*</span>
+    </label>
+    <select
+      id="00NU7000005zqRr"
+      name="Gender__c"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+      autocomplete="off"
+      
+    >
+      <option value="">--None--</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+  </div>
+</div>
+
+<!-- Relationship To Insured and Marital Status -->
+<div class="flex gap-4 mb-3">
+  <div class="w-1/2">
+    <label for="00NU7000007Cw0z" class="block text-sm font-medium text-gray-700">
+      Relationship To Insured<span class="star">*</span>
+    </label>
+    <select
+      id="00NU7000007Cw0z"
+      name="Relationship_To_Insured_Central__c"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+      autocomplete="off"
+      
+    >
+      <option value="">--None--</option>
+      <option value="Spouse">Spouse</option>
+      <option value="Child">Child</option>
+      <option value="Relative">Relative</option>
+      <option value="Not Relative">Not Relative</option>
+    </select>
+  </div>
+  <div class="w-1/2">
+    <label for="00NU7000007Cw4D" class="block text-sm font-medium text-gray-700">
+      Marital Status<span class="star">*</span>
+    </label>
+    <select
+      id="00NU7000007Cw4D"
+      name="Marital_Status_Central__c"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+      autocomplete="off"
+      
+    >
+      <option value="">--Select--</option>
+      <option value="Single">Single</option>
+      <option value="Married">Married</option>
+      <option value="Divorced">Divorced</option>
+      <option value="Widowed">Widowed</option>
+      <option value="Parted">Parted</option>
+      <option value="Unknown">Unknown</option>
+    </select>
+  </div>
+</div>
+
+            <!-- Driver Information -->
+            <div class="mb-3">
+               <label for="00NU7000007CvbC" class="block text-sm font-medium text-gray-700">
+               Driver Information<span class="star">*</span>
+               </label>
+               <select
+                  id="00NU7000007CvbC"
+                  name="Driver_Information__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+                  autocomplete="off"
+                  
+                  >
+                  <option value="">--None--</option>
+                  <option value="Operator">Operator</option>
+                  <option value="Learner Permit">Learner Permit</option>
+                  <option value="Learner Permit">Not Licensed</option>
+               </select>
+            </div>
+            <!-- Learners Permit Date (Hidden by default) -->
+            <div class="mb-3 hidden" id="LearnersPermitDateField">
+               <label
+                  for="00NU7000007Cw93"
+                  class="block text-sm font-medium text-gray-700"
+                  >
+               Learners Permit Date<span class="star">*</span>
+               </label>
+               <input
+                  type="text"
+                  id="00NU7000007Cw93"
+                  name="Learners_Permit_Date__c"
+                  placeholder="MM/DD/YYYY"
+                  maxlength="10"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  
+                  />
+            </div>
+            <div class="flex gap-4 mb-3">
+             <div class="w-1/2">
+               <label for="00NU7000007CwFV" class="block text-sm font-medium text-gray-700">
+               Licence State<span class="star">*</span>
+               </label>
+               <select
+                  id="00NU7000007CwFV"
+                  name="License_State_Central__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+                  autocomplete="off"
+                  
+                  >
+                  <option value="">--Select--</option>
+                  <option value="AF AMERICAS">AF AMERICAS</option>
+                  <option value="AF OTHER">AF OTHER</option>
+                  <option value="AF PACIFIC">AF PACIFIC</option>
+                  <option value="ALABAMA">ALABAMA</option>
+                  <option value="ALASKA">ALASKA</option>
+                  <option value="ALBERTA">ALBERTA</option>
+                  <option value="AM SAMOA">AM SAMOA</option>
+                  <option value="ARIZONA">ARIZONA</option>
+                  <option value="ARKANSAS">ARKANSAS</option>
+                  <option value="BRITISH COLUMB">BRITISH COLUMB</option>
+                  <option value="CALIFORNIA">CALIFORNIA</option>
+                  <option value="COLORADO">COLORADO</option>
+                  <option value="CONNECTICUT">CONNECTICUT</option>
+                  <option value="DELAWARE">DELAWARE</option>
+                  <option value="DIST OF COL">DIST OF COL</option>
+                  <option value="FLORIDA">FLORIDA</option>
+                  <option value="GEORGIA">GEORGIA</option>
+                  <option value="HAWAII">HAWAII</option>
+                  <option value="IDAHO">IDAHO</option>
+                  <option value="ILLINOIS">ILLINOIS</option>
+                  <option value="INDIANA">INDIANA</option>
+                  <option value="IOWA">IOWA</option>
+                  <option value="KANSAS">KANSAS</option>
+                  <option value="KENTUCKY">KENTUCKY</option>
+                  <option value="LOUISIANA">LOUISIANA</option>
+                  <option value="MAINE">MAINE</option>
+                  <option value="MANITOBA">MANITOBA</option>
+                  <option value="MARSHALL ISL">MARSHALL ISL</option>
+                  <option value="MARYLAND">MARYLAND</option>
+                  <option value="MASSACHUSETTS">MASSACHUSETTS</option>
+                  <option value="MICHIGAN">MICHIGAN</option>
+                  <option value="MICRONESIA">MICRONESIA</option>
+                  <option value="MINNESOTA">MINNESOTA</option>
+                  <option value="MISSISSIPPI">MISSISSIPPI</option>
+                  <option value="MISSOURI">MISSOURI</option>
+                  <option value="MONTANA">MONTANA</option>
+                  <option value="N MARIANA ISL">N MARIANA ISL</option>
+                  <option value="NEBRASKA">NEBRASKA</option>
+                  <option value="NEVADA">NEVADA</option>
+                  <option value="NEW BRUNSWICK">NEW BRUNSWICK</option>
+                  <option value="NEW HAMPSHIRE">NEW HAMPSHIRE</option>
+                  <option value="NEW JERSEY">NEW JERSEY</option>
+                  <option value="NEW MEXICO">NEW MEXICO</option>
+                  <option value="NEW YORK">NEW YORK</option>
+                  <option value="NEWFOUNDLAND">NEWFOUNDLAND</option>
+                  <option value="NORTH CAROLINA">NORTH CAROLINA</option>
+                  <option value="NORTH DAKOTA">NORTH DAKOTA</option>
+                  <option value="NOVA SCOTIA">NOVA SCOTIA</option>
+                  <option value="NW TERRITORY">NW TERRITORY</option>
+                  <option value="OHIO">OHIO</option>
+                  <option value="OKLAHOMA">OKLAHOMA</option>
+                  <option value="ONTARIO">ONTARIO</option>
+                  <option value="OREGON">OREGON</option>
+                  <option value="PALAU">PALAU</option>
+                  <option value="PENNSYLVANIA">PENNSYLVANIA</option>
+                  <option value="PRINCE EDWARD">PRINCE EDWARD</option>
+                  <option value="PUERTO RICO">PUERTO RICO</option>
+                  <option value="QUEBEC">QUEBEC</option>
+                  <option value="RHODE ISLAND">RHODE ISLAND</option>
+                  <option value="SASKACTHEWAN">SASKACTHEWAN</option>
+                  <option value="SOUTH CAROLINA">SOUTH CAROLINA</option>
+                  <option value="SOUTH DAKOTA">SOUTH DAKOTA</option>
+                  <option value="TENNESSEE">TENNESSEE</option>
+                  <option value="TEXAS">TEXAS</option>
+                  <option value="UTAH">UTAH</option>
+                  <option value="VERMONT">VERMONT</option>
+                  <option value="VIRGIN ISLANDS">VIRGIN ISLANDS</option>
+                  <option value="VIRGINIA">VIRGINIA</option>
+                  <option value="WASHINGTON">WASHINGTON</option>
+                  <option value="WEST VIRGINIA">WEST VIRGINIA</option>
+                  <option value="WISCONSIN">WISCONSIN</option>
+                  <option value="WYOMING">WYOMING</option>
+                  <option value="YUKON TERRITOR">YUKON TERRITOR</option>
+               </select>
+            </div>
+            <div class="mb-3">
+               <label for="00NU7000005zuK9" class="block text-sm font-medium text-gray-700">
+               Driver License Number<span class="star">*</span>
+               </label>
+               <input
+                  type="Text"
+                  id="00NU7000005zuK9"
+                  name="Drivers_license_number__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  
+                  />
+            </div>
+            </div>
+            <!-- Policy Action -->
+            <input
+               type="hidden"
+               id="AddDriver"
+               name="Policy_Action__c"
+               value="Add Driver"
+               />
+            <!-- Additional Remarks (conditionally shown) -->
+           <!-- <div class="mb-3 hidden" id="additionalRemarksDiv">
+               <label for="additionalRemarks" class="block text-sm font-medium text-gray-700">
+               Additional Remarks
+               </label>
+               <input
+                  type="text"
+                  id="additionalRemarks"
+                  name="additionalRemarks__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+                  autocomplete="off"
+                  />
+            </div>-->
+         </div>
+         <div class="bg-gray-50 border rounded-xl p-6 shadow-inner hidden" id="CoApplicantDetails">
+            <h3 class="text-xl font-semibold mb-4 text-gray-700">Co-Applicant Details</h3>
+            <div class="flex gap-4 mb-3">
+               <!-- Co-Applicant First Name -->
+               <div class="w-1/2">
+                  <label for="00NU7000007CwKL" class="block text-sm font-medium text-gray-700">
+                  Co-Applicant First Name<span class="star">*</span>
+                  </label>
+                  <input
+                     type="text"
+                     id="00NU7000007CwKL"
+                     name="Co_Applicant_First_Name__c"
+                     class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                     autocomplete="off"
+                     
+                     />
+               </div>
+               <!-- Co-Applicant Last Name -->
+               <div class="w-1/2">
+                  <label for="00NU7000007CwLx" class="block text-sm font-medium text-gray-700">
+                  Co-Applicant Last Name<span class="star">*</span>
+                  </label>
+                  <input
+                     type="text"
+                     id="00NU7000007CwLx"
+                     name="Co_Applicant_Last_Name__c"
+                     class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                     autocomplete="off"
+                     
+                     />
+               </div>
+            </div>
+            <div class="mb-3">
+               <label for="00NU7000007CwNZ" class="block text-sm font-medium text-gray-700">
+               Reason for adding co-applicant<span class="star">*</span>
+               </label>
+               <textarea
+                  type="Text"
+                  id="00NU7000007CwNZ"
+                  name="Reason_for_adding_co_applicant__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  
+                  ></textarea>
+            </div>
+            <div class="mb-3">
+               <label
+                  for="00NU7000007CwPB"
+                  class="block text-sm font-medium text-gray-700"
+                  >
+               Co-Applicant Date of Birth<span class="star">*</span>
+               </label>
+               <input
+                  type="Text"
+                  id="00NU7000007CwPB"
+                  name="Co_Applicant_Date_of_Birth__c"
+                  maxlength="10"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  placeholder="MM/DD/YYYY"
+                  
+                  />
+            </div>
+            <div class="mb-3">
+               <label for="00NU7000007CwYr" class="block text-sm font-medium text-gray-700">
+               Co-Applicant Occupation<span class="star">*</span>
+               </label>
+               <input
+                  type="Text"
+                  id="00NU7000007CwYr"
+                  name="Co_Applicant_Occupation__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="off"
+                  
+                  />
+            </div>
+            <div class="mb-3">
+               <label for="00NU7000007CwXF" class="block text-sm font-medium text-gray-700">
+               Co-Applicant Marital Status<span class="star">*</span>
+               </label>
+               <select
+                  id="00NU7000007CwXF"
+                  name="Co_Applicant_Marital_Status__c"
+                  class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+                  autocomplete="off"
+                  
+                  >
+                  <option value="">--None--</option>
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Parted">Parted</option>
+                  <option value="Unknown">Unknown</option>
+               </select>
+            </div>
+         </div>
+         <!-- Hidden Salesforce fields -->
+         <input type=hidden name="oid" value="00DVD000007JpKX">
+       <!--  <input
+            type="hidden"
+            name="recordType"
+            id="recordType"
+            value="012U7000003IoO1IAK"
+            />-->
+         
+         <input
+            type="hidden"
+            name="first_name"
+            value="Central Add Driver"
+            />
+         <input type="hidden" name="last_name" value=" Demo 4" />
+         <input type="hidden" name="status" value="New" />
+         <input type="hidden" name="phone" value="2843683729" />
+         <input type="hidden" name="lead_source" value="Web Form" />
+         <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+         <input type="hidden" name="delete_Action_Form__c" value="1" />
+               <input type="hidden" id="formDataJson" name="Form_Captured_Data__c" value="" />
+               <input type="hidden" id="formMissingData" name="Form_Missing_Data__c" value="" />
+                                   <input type="hidden" name="Carrier__c" value ="Central Insurance">
+
+
+
+         <input
+            type="hidden"
+            name="company"
+            value="Caelius Test Central Add Driver Form"
+            />
+         <input
+            type="hidden"
+            name="Debug_Notes__c"
+            value="Safeco Test: 2025-06-27 07:21AM"
+            />
+      <!--    <input type="hidden" name="debug" value=1>                            
+         <input type="hidden" name="debugEmail" value="annie.rawal@caeliusconsulting.com"> -->
+         <!-- Review and Submit Button -->
+         <button
+  type="button"
+  id="reviewBtn"
+  class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+>
+  Review and Submit
+</button>
+      </form>
+      <!-- Confirmation Dialog -->
+      <div
+         id="dialog"
+         class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="dialogTitle"
+         >
+         <div
+            class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800"
+            >
+            <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+            <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+            <div class="flex justify-end space-x-3" id="dialogButtons">
+               <button
+                  id="proceedBtn"
+                  class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+                  >
+               Proceed to End Request
+               </button>
+               <button
+                  id="editBtn"
+                  class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+                  >
+               Edit
+               </button>
+            </div>
+         </div>
+      </div>
+      <!-- JS -->
+      <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+      <script>
+     document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("mainForm");
+  const dialog = document.getElementById("dialog");
+  const dialogTitle = document.getElementById("dialogTitle");
+  const missingFieldsList = document.getElementById("missingFieldsList");
+  const proceedBtn = document.getElementById("proceedBtn");
+  const editBtn = document.getElementById("editBtn");
+  const formDataJsonInput = document.getElementById("formDataJson");
+  const reviewBtn = document.getElementById("reviewBtn");
+
+  // Co-Applicant and related controls
+  const coApplicantDetails = document.getElementById("CoApplicantDetails");
+  const maritalStatus = document.getElementById("00NU7000007Cw4D");
+  const relationshipToInsured = document.getElementById("00NU7000007Cw0z");
+
+  // Learner Permit and License fields toggling
+  const driverInformation = document.getElementById("00NU7000007CvbC");
+  const learnersPermitField = document.getElementById("LearnersPermitDateField");
+  const learnerInput = learnersPermitField.querySelector("input");
+  const licenseStateField = document.getElementById("00NU7000007CwFV");
+  const licenseNumberField = document.getElementById("00NU7000005zuK9");
+
+  // Initialize Pikaday datepickers for your date fields
+  const dateFieldIds = ["00NU7000005zuLl", "00NU7000005zuSD", "00NU7000007CwPB", "00NU7000007Cw93"];
+  dateFieldIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      new Pikaday({
+        field: el,
+        format: "MM/DD/YYYY",
+        toString(date) {
+          const day = String(date.getDate()).padStart(2, "0");
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const year = date.getFullYear();
+          return `${month}/${day}/${year}`;
+        },
+        parse(dateString) {
+          const [month, day, year] = dateString.split("/");
+          return new Date(year, month - 1, day);
+        },
+      });
+    }
+  });
+
+  // Fix duplicate option for 'Not Licensed' if any (optional cleanup)
+  const licenseOptions = driverInformation.querySelectorAll("option");
+  licenseOptions.forEach(option => {
+    if (option.value === "Learner Permit" && option.textContent.trim() === "Not Licensed") {
+      option.value = "Not Licensed";
+    }
+  });
+
+  // Learner Permit toggling logic
+  driverInformation.addEventListener("change", function () {
+    if (this.value === "Learner Permit") {
+      learnersPermitField.classList.remove("hidden");
+      learnerInput.required = true;
+      learnerInput.disabled = false;
+
+      licenseStateField.parentElement.classList.remove("hidden");
+      licenseNumberField.parentElement.classList.remove("hidden");
+      licenseStateField.required = true;
+      licenseStateField.disabled = false;
+      licenseNumberField.required = true;
+      licenseNumberField.disabled = false;
+    } else if (this.value === "Not Licensed") {
+      learnersPermitField.classList.add("hidden");
+      learnerInput.required = false;
+      learnerInput.disabled = true;
+      learnerInput.value = "";
+
+      licenseStateField.parentElement.classList.add("hidden");
+      licenseNumberField.parentElement.classList.add("hidden");
+      licenseStateField.required = false;
+      licenseStateField.disabled = true;
+      licenseNumberField.required = false;
+      licenseNumberField.disabled = true;
+      licenseStateField.value = "";
+      licenseNumberField.value = "";
+    } else {
+      learnersPermitField.classList.add("hidden");
+      learnerInput.required = false;
+      learnerInput.disabled = true;
+      learnerInput.value = "";
+
+      licenseStateField.parentElement.classList.remove("hidden");
+      licenseNumberField.parentElement.classList.remove("hidden");
+      licenseStateField.required = true;
+      licenseStateField.disabled = false;
+      licenseNumberField.required = true;
+      licenseNumberField.disabled = false;
+    }
+  });
+
+  // Co-Applicant toggling and enabling/disabling inputs
+  function toggleCoApplicant() {
+    if (maritalStatus.value === "Married" && relationshipToInsured.value === "Spouse") {
+      coApplicantDetails.classList.remove("hidden");
+      coApplicantDetails.querySelectorAll("input, select, textarea").forEach(el => {
+        el.disabled = false;
+      });
+    } else {
+      coApplicantDetails.classList.add("hidden");
+      coApplicantDetails.querySelectorAll("input, select, textarea").forEach(el => {
+        el.disabled = true;
+        el.value = "";
+      });
+    }
+  }
+  maritalStatus.addEventListener("change", toggleCoApplicant);
+  relationshipToInsured.addEventListener("change", toggleCoApplicant);
+  toggleCoApplicant();
+
+  // Your defined validation fields for drivers' main fields
+  const fieldData = [
+    { id: "email", label: "Email", type: "email" },
+    { id: "00NU7000005zuX3", label: "Policy Number" },
+    { id: "00NU7000005zuLl", label: "Effective Date (MM/DD/YYYY)" },
+    { id: "00NU7000005zuOz", label: "First Name" },
+    { id: "00NU7000005zuQb", label: "Last Name" },
+    { id: "00NU7000005zuSD", label: "Date of Birth" },
+    { id: "00NU7000005zqRr", label: "Driver Sex" },
+    { id: "00NU7000007Cw0z", label: "Relationship To Insured" },
+    { id: "00NU7000007Cw4D", label: "Marital Status" },
+    { id: "00NU7000007CvbC", label: "Driver Information" },
+    { id: "00NU7000007Cw93", label: "Learners Permit Date", dependsOn: "Learner Permit" },
+    { id: "00NU7000007CwFV", label: "Licence State" },
+    { id: "00NU7000005zuK9", label: "Driver License Number" }
+  ];
+
+  // Additional dynamic co-applicant fields (validate only if co-applicant visible)
+  function getCoApplicantFields() {
+    if (!coApplicantDetails.classList.contains("hidden")) {
+      return [
+        { id: "00NU7000007CwKL", label: "Co-Applicant First Name" },
+        { id: "00NU7000007CwLx", label: "Co-Applicant Last Name" },
+        { id: "00NU7000007CwNZ", label: "Reason for adding co-applicant" },
+        { id: "00NU7000007CwPB", label: "Co-Applicant Date of Birth" },
+        { id: "00NU7000007CwYr", label: "Co-Applicant Occupation" },
+        { id: "00NU7000007CwXF", label: "Co-Applicant Marital Status" }
+      ];
+    }
+    return [];
+  }
+
+  // Helper to validate MM/DD/YYYY format
+  function isValidDateFormat(value) {
+    return /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/.test(value);
+  }
+
+  // Get radio value of Request Type
+  function getRequestType() {
+    const radios = document.querySelectorAll('input[name="Is_this_a_quote_or_a_change_request__c"]');
+    for (const radio of radios) {
+      if (radio.checked) return radio.value;
+    }
+    return "";
+  }
+
+  // Update Salesforce hidden checkbox fields for requestType
+  document.querySelectorAll('input[name="requestType"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+      document.getElementById("sfQuote").value = this.value === "Quote" ? "true" : "false";
+      document.getElementById("sfEndorsement").value = this.value === "Endorsement" ? "true" : "false";
+    });
+  });
+
+  // Review and Submit button click validation and show dialog
+  reviewBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const missing = [];
+    const missingData = [];
+    const completedData = [];
+
+    const requestTypeVal = getRequestType();
+    if (!requestTypeVal) {
+      missing.push("Request Type");
+      missingData.push({ field: "Request Type", value: "" });
+    } else {
+      completedData.push({ field: "Request Type", value: requestTypeVal });
+    }
+
+    // Combine driver and co-applicant fields for validation
+    const allFields = fieldData.concat(getCoApplicantFields());
+
+    allFields.forEach(field => {
+      const input = document.getElementById(field.id);
+      if (!input) return;
+
+      if (input.disabled) return; // Skip disabled inputs
+
+      const val = input.value.trim();
+
+      if (field.dependsOn === "Learner Permit") {
+        const driverInfoVal = document.getElementById("00NU7000007CvbC").value;
+        if (driverInfoVal !== "Learner Permit") return; // skip if condition doesn't match
+      }
+
+      let isMissing = false;
+      if (field.type === "email") {
+        if (!val || !input.checkValidity()) isMissing = true;
+      } else if (
+        (field.label === "Effective Date (MM/DD/YYYY)" || 
+         field.label === "Date of Birth" || 
+         field.label === "Co-Applicant Date of Birth") && val) {
+        if (!isValidDateFormat(val)) isMissing = true;
+      } else {
+        if (!val) isMissing = true;
+      }
+
+      if (isMissing) {
+        missing.push(field.label);
+        missingData.push({ field: field.label, value: val || "" });
+      } else {
+        completedData.push({ field: field.label, value: val });
+      }
+    });
+
+    // Prepare captured data string for hidden input
+    const capturedStr = completedData
+  .map(d => `${d.field} = ${d.value}`)
+  .join("\n");
+
+const missingStr = missingData
+  .map(d => d.field) // only the label in missing list
+  .join("\n");
+
+// Set hidden fields
+formDataJsonInput.value = capturedStr;
+
+const formMissingHidden = document.getElementById("formMissingData");
+if (formMissingHidden) {
+  formMissingHidden.value = missingStr;
+}
+
+    if (missing.length) {
+      dialogTitle.textContent = " Below Mandatory Fields are missing and the Team will contact you shortly.";
+      missingFieldsList.innerHTML = missing.map(f => `<li>${f}</li>`).join("");
+    } else {
+      dialogTitle.textContent = "All mandatory fields are completed. Ready to submit your request?";
+      missingFieldsList.innerHTML = "";
+    }
+
+    dialog.classList.remove("hidden");
+    proceedBtn.classList.remove("hidden");
+  });
+
+  // Modal buttons logic
+  editBtn.addEventListener("click", () => {
+    dialog.classList.add("hidden");
+  });
+
+  proceedBtn.addEventListener("click", () => {
+    dialog.classList.add("hidden");
+    form.submit();
+  });
+
+  // Close dialog on outside click and ESC key press
+  window.addEventListener("click", (e) => {
+    if (e.target === dialog) {
+      dialog.classList.add("hidden");
+    }
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !dialog.classList.contains("hidden")) {
+      dialog.classList.add("hidden");
+    }
+  });
+});
+
+
+      </script>
+   </body>
+</html>
