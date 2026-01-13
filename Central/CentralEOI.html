@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Central Insurance Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" />
+    <style>
+      .hidden { display: none; }
+      .star { color: #ef4444; margin-left: 2px; }
+      .modal-bg { background: rgba(0,0,0,0.4); }
+      .section-title { margin-bottom: 0.75rem; }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    <form
+      id="mainForm"
+      action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DVD000007JpKX"
+      method="POST"
+      class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8 relative"
+      autocomplete="off"
+      novalidate
+    >
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+        EOI Central Insurance Form
+      </h2>
+
+      <!-- Policy Changes Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
+        <h3 class="text-xl font-semibold section-title text-gray-700">Policy Changes</h3>
+
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email<span class="star">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            autocomplete="off"
+          />
+        </div>
+
+        <fieldset class="mb-4">
+          <legend class="block text-sm font-medium text-gray-700 mb-1">
+            Select the Request Type:<span class="star">*</span>
+          </legend>
+          <div class="flex space-x-6">
+            <label class="inline-flex items-center">
+              <input type="radio" name="requestTypeRadios" value="Y" class="mr-2" />Quote
+            </label>
+            <label class="inline-flex items-center">
+              <input type="radio" name="requestTypeRadios" value="N" class="mr-2" />Endorsement
+            </label>
+          </div>
+          <select id="00NU7000006IOzh" name="Is_this_a_quote_or_a_change_request__c" class="hidden">
+            <option value=""></option>
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
+        </fieldset>
+
+
+        <div class="mb-4">
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">
+            Policy Number<span class="star">*</span>
+          </label>
+          <input
+            type="text"
+            id="00NU7000005zuX3"
+            name="Policy_Number__c"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">
+            Effective Date (MM/DD/YYYY)<span class="star">*</span>
+          </label>
+          <input
+            type="text"
+            id="00NU7000005zuLl"
+            name="Date__c"
+            placeholder="MM/DD/YYYY"
+            maxlength="10"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            autocomplete="off"
+          />
+        </div>
+      </section>
+
+      <!-- Remove Mortgagee Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Remove Mortgagee Section">
+        <h3 class="text-xl font-semibold section-title text-gray-700">Remove Mortgagee</h3>
+
+        <div class="mb-4">
+          <label for="removeMortgageeCount" class="block text-sm font-medium text-gray-700">
+            Please select the number of mortgagee you want to delete:<span class="star">*</span>
+          </label>
+          <select
+            id="removeMortgageeCount"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <div id="mortgageeRemoveSection1" class="mb-4 hidden">
+          <label for="00NU7000007cfaq" class="block text-sm font-medium text-gray-700">
+            Please enter the index of Mortgagee to delete:
+          </label>
+          <input
+            type="text"
+            id="00NU7000007cfaq"
+            name="Remove_Mortgagee_Number__c"
+            maxlength="30"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            autocomplete="off"
+          />
+        </div>
+
+        <div id="mortgageeRemoveSection2" class="mb-4 hidden">
+          <label for="00NU7000007cgev" class="block text-sm font-medium text-gray-700">
+            Please enter the index of Mortgagee 2 to delete:
+          </label>
+          <input
+            type="text"
+            id="00NU7000007cgev"
+            name="Remove_Mortgagee_Number_2__c"
+            maxlength="30"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Hidden backend selects -->
+        <select
+          id="00NU7000007cfsm"
+          name="Remove_Mortgagee__c"
+          title="Remove Mortgagee"
+          class="hidden"
+        >
+          <option value=""></option>
+          <option value="Y">Y</option>
+          <option value="N" selected>N</option>
+        </select>
+
+        <select
+          id="00NU7000007cgOn"
+          name="Remove_Mortgagee_2__c"
+          title="Remove Mortgagee 2"
+          class="hidden"
+        >
+          <option value=""></option>
+          <option value="Y">Y</option>
+          <option value="N" selected>N</option>
+        </select>
+      </section>
+
+      <!-- Add Mortgagee Details Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Add Mortgagee Details Section">
+        <h3 class="text-xl font-semibold section-title text-gray-700">Add Mortgagee Details</h3>
+
+        <div class="mb-4">
+          <label for="addMortgageeCount" class="block text-sm font-medium text-gray-700">
+            Please select the number of Mortgagee Details you want to Add:
+          </label>
+          <select
+            id="addMortgageeCount"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <!-- Add Mortgagee 1 Subsection -->
+        <div id="addMortgagee1Section" class="hidden border-t border-gray-200 pt-4 mt-2">
+          <h4 class="font-semibold text-gray-700 mb-3">Add Mortgagee 1</h4>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Name<span class="star">*</span></label>
+            <input id="00NU70000074A4n" name="name_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Name Continued</label>
+            <input id="00NU7000007CBN3" name="Name_Continued__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Address<span class="star">*</span></label>
+            <input id="00NU700000746Z4" name="address_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">City<span class="star">*</span></label>
+            <input id="00NU70000074AG5" name="city_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">State<span class="star">*</span></label>
+            <select id="00NU7000007qKoD" name="State_Central_1__c"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--None--</option>
+<option value="AF AMERICAS">AF AMERICAS</option>
+<option value="YUKON TERRITOR">YUKON TERRITOR</option>
+
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">ZIP<span class="star">*</span></label>
+            <input id="00NU70000074AO9" name="zip_1__c" maxlength="255" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Loan Number<span class="star">*</span></label>
+            <input id="00NU70000074ACr" name="loanNumber_1__c" maxlength="255" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">
+              Is the name to be printed on the policy declaration too long to fit in the fields above, or different than the above name/mailing address?<span class="star">*</span>
+            </label>
+            <select id="00NU7000007chSv" name="IfAdditionalInfo__c"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--None--</option>
+              <option value="Y">Y</option>
+              <option value="N">N</option>
+            </select>
+          </div>
+
+          <!-- Additional info block for Mortgagee 1 -->
+          <div id="addMort1AdditionalBlock" class="hidden border-t border-gray-200 pt-4 mt-2">
+            <div class="mb-3">
+              <label class="block text-sm font-medium text-gray-700">
+                Enter name as it should appear on the policy declaration<span class="star">*</span>
+              </label>
+              <input id="00NU7000007bhEr" name="Name_as_on_policy_1__c" maxlength="30" type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+            </div>
+
+            <!-- 7 blank fields (no labels on UI, but still capturing data) -->
+            <input id="00NU700000749FD" name="name1_1_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007bfLH" name="Name_Continued_1_AddInt__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU70000074AET" name="address2_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007bhI5" name="city_addint_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007blVN" name="state_addint_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007blbp" name="zip_addint_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007bhbT" name="loan_number_addint_1__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+        </div>
+
+        <!-- Add Mortgagee 2 Subsection -->
+        <div id="addMortgagee2Section" class="hidden border-t border-gray-200 pt-4 mt-4">
+          <h4 class="font-semibold text-gray-700 mb-3">Add Mortgagee 2</h4>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Name<span class="star">*</span></label>
+            <input id="00NU70000074APl" name="name_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Name Continued</label>
+            <input id="00NU7000007bh1x" name="Name_Continued_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Address<span class="star">*</span></label>
+            <input id="00NU700000749iM" name="address_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">City<span class="star">*</span></label>
+            <input id="00NU70000074ApZ" name="city_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">State<span class="star">*</span></label>
+            <select id="00NU7000007qKxt" name="State_Central_2__c"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--None--</option>
+<option value="AF AMERICAS">AF AMERICAS</option>
+<option value="YUKON TERRITOR">YUKON TERRITOR</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">ZIP<span class="star">*</span></label>
+            <input id="00NU70000074AuP" name="zip_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">Loan Number<span class="star">*</span></label>
+            <input id="00NU70000074AXp" name="loanNumber_2__c" maxlength="255" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+
+          <div class="mb-3">
+            <label class="block text-sm font-medium text-gray-700">
+              Is the name to be printed on the policy declaration too long to fit in the fields above, or different than the above name/mailing address?<span class="star">*</span>
+            </label>
+            <select id="00NU7000007chZN" name="IfAdditionalInfo_2__c"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--None--</option>
+              <option value="Y">Y</option>
+              <option value="N">N</option>
+            </select>
+          </div>
+
+          <!-- Additional info block for Mortgagee 2 -->
+          <div id="addMort2AdditionalBlock" class="hidden border-t border-gray-200 pt-4 mt-2">
+            <div class="mb-3">
+              <label class="block text-sm font-medium text-gray-700">
+                Enter name as it should appear on the policy declaration<span class="star">*</span>
+              </label>
+              <input id="00NU7000007cZYb" name="Name_as_on_policy_2__c" maxlength="30" type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+            </div>
+
+            <!-- 7 blank fields for additional info 2 -->
+            <input id="00NU70000074AUb" name="name2_2_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007cSdn" name="Name_Continued_2_AddInt__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU70000074Akj" name="address2_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007cZiH" name="city_addint_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007ca8C" name="state_addint_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007cauT" name="zip_addint_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-2" />
+            <input id="00NU7000007cazJ" name="loan_number_addint_2__c" maxlength="30" type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+        </div>
+
+        <!-- Hidden backend Add Mortgagee flags -->
+        <select id="00NU7000007cgyH" name="Add_Mortgagee__c" title="Add Mortgagee" class="hidden">
+          <option value="">--None--</option>
+          <option value="Y">Y</option>
+          <option value="N" selected>N</option>
+        </select>
+
+        <select id="00NU7000007ch37" name="Add_Mortgagee_2__c" title="Add Mortgagee 2" class="hidden">
+          <option value="">--None--</option>
+          <option value="Y">Y</option>
+          <option value="N" selected>N</option>
+        </select>
+      </section>
+
+      <!-- Payor Information Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Payor Information Section">
+        <h3 class="text-xl font-semibold section-title text-gray-700">Payor Information</h3>
+
+        <div class="mb-4">
+          <label for="displayPayorSelect" class="block text-sm font-medium text-gray-700">
+            Send Bill To<span class="star">*</span>
+          </label>
+          <select
+            id="displayPayorSelect"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">--None--</option>
+            <option value="Escrow(bill to mortgage)">Escrow (bill to mortgage)</option>
+            <option value="Non Escrow(bill to insured)">Non Escrow (bill to insured)</option>
+          </select>
+          <select id="00NU70000074BGz" name="Send_Bill_To__c" title="Send Bill To" class="hidden">
+            <option value="">--None--</option>
+            <option value="Mortgagee">Mortgagee</option>
+            <option value="Insured">Insured</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Hidden Salesforce fields -->
+      <input type="hidden" name="oid" value="00DVD000007JpKX" />
+      <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+      <input type="hidden" name="first_name" value="EOI Update" />
+      <input type="hidden" name="last_name" value="Central" />
+      <input type="hidden" name="status" value="New" />
+      <input type="hidden" name="phone" value="17636836129" />
+      <input type="hidden" name="lead_source" value="Web Form" />
+      <input type="hidden" name="company" value="Central Insurance" />
+      <input type="hidden" name="delete_Action_Form__c" value="1" />
+      <input type="hidden" id="00NU7000007OdKL" name="Carrier__c" value="Central Insurance" />
+      <input type="hidden" name="Policy_Action__c" id="00NU7000005zuNN" value="EOI" />
+      <input type="hidden" name="Form_Captured_Data__c" />
+      <input type="hidden" name="Form_Missing_Data__c" />
+
+      <div class="flex justify-end mt-6">
+        <button
+          type="button"
+          id="reviewBtn"
+          class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+        >
+          Review and Submit
+        </button>
+      </div>
+    </form>
+
+    <!-- Confirmation Dialog -->
+    <div
+      id="dialog"
+      class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dialogTitle"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+        <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+        <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+        <div class="flex justify-end space-x-3" id="dialogButtons">
+          <button
+            id="proceedBtn"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+          >
+            Proceed to End Request
+          </button>
+          <button
+            id="editBtn"
+            class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Field label mapping for human-readable format
+  const fieldLabels = {
+    'email': 'Email',
+    'Policy_Number__c': 'Policy Number',
+    'Date__c': 'Effective Date',
+    'Remove_Mortgagee_Number__c': 'Remove Mortgagee Index 1',
+    'Remove_Mortgagee_Number_2__c': 'Remove Mortgagee Index 2',
+    'name_1__c': 'Mortgagee 1 Name',
+    'Name_Continued__c': 'Mortgagee 1 Name Continued',
+    'address_1__c': 'Mortgagee 1 Address',
+    'city_1__c': 'Mortgagee 1 City',
+    'State_Central_1__c': 'Mortgagee 1 State',
+    'zip_1__c': 'Mortgagee 1 ZIP',
+    'loanNumber_1__c': 'Mortgagee 1 Loan Number',
+    'IfAdditionalInfo__c': 'Mortgagee 1 Additional Info Question',
+    'Name_as_on_policy_1__c': 'Mortgagee 1 Policy Name',
+    'name1_1_1__c': 'Mortgagee 1 Addl Name 1',
+    'Name_Continued_1_AddInt__c': 'Mortgagee 1 Addl Name Cont',
+    'address2_1__c': 'Mortgagee 1 Addl Address',
+    'city_addint_1__c': 'Mortgagee 1 Addl City',
+    'state_addint_1__c': 'Mortgagee 1 Addl State',
+    'zip_addint_1__c': 'Mortgagee 1 Addl ZIP',
+    'loan_number_addint_1__c': 'Mortgagee 1 Addl Loan',
+    'name_2__c': 'Mortgagee 2 Name',
+    'Name_Continued_2__c': 'Mortgagee 2 Name Continued',
+    'address_2__c': 'Mortgagee 2 Address',
+    'city_2__c': 'Mortgagee 2 City',
+    'State_Central_2__c': 'Mortgagee 2 State',
+    'zip_2__c': 'Mortgagee 2 ZIP',
+    'loanNumber_2__c': 'Mortgagee 2 Loan Number',
+    'IfAdditionalInfo_2__c': 'Mortgagee 2 Additional Info Question',
+    'Name_as_on_policy_2__c': 'Mortgagee 2 Policy Name',
+    'name2_2_2__c': 'Mortgagee 2 Addl Name 2',
+    'Name_Continued_2_AddInt__c': 'Mortgagee 2 Addl Name Cont',
+    'address2_2__c': 'Mortgagee 2 Addl Address',
+    'city_addint_2__c': 'Mortgagee 2 Addl City',
+    'state_addint_2__c': 'Mortgagee 2 Addl State',
+    'zip_addint_2__c': 'Mortgagee 2 Addl ZIP',
+    'loan_number_addint_2__c': 'Mortgagee 2 Addl Loan',
+    'Send_Bill_To__c': 'Send Bill To',
+    'Remove_Mortgagee__c': 'Remove Mortgagee Flag',
+    'Remove_Mortgagee_2__c': 'Remove Mortgagee 2 Flag',
+    'Add_Mortgagee__c': 'Add Mortgagee Flag',
+    'Add_Mortgagee_2__c': 'Add Mortgagee 2 Flag'
+  };
+
+  // DYNAMIC MANDATORY FIELDS - Add Mortgagee 1 & 2
+  const dynamicRequiredFields = {
+    mortgagee1: [
+      { id: "00NU70000074A4n", name: "name_1__c", label: "Add Mortgagee 1 - Name" },
+      { id: "00NU700000746Z4", name: "address_1__c", label: "Add Mortgagee 1 - Address" },
+      { id: "00NU70000074AG5", name: "city_1__c", label: "Add Mortgagee 1 - City" },
+      { id: "00NU7000007qKoD", name: "State_Central_1__c", label: "Add Mortgagee 1 - State" },
+      { id: "00NU70000074AO9", name: "zip_1__c", label: "Add Mortgagee 1 - ZIP" },
+      { id: "00NU70000074ACr", name: "loanNumber_1__c", label: "Add Mortgagee 1 - Loan Number" },
+      { id: "00NU7000007chSv", name: "IfAdditionalInfo__c", label: "Add Mortgagee 1 - Additional Info Question" }
+    ],
+    mortgagee2: [
+      { id: "00NU70000074APl", name: "name_2__c", label: "Add Mortgagee 2 - Name" },
+      { id: "00NU700000749iM", name: "address_2__c", label: "Add Mortgagee 2 - Address" },
+      { id: "00NU70000074ApZ", name: "city_2__c", label: "Add Mortgagee 2 - City" },
+      { id: "00NU7000007qKxt", name: "State_Central_2__c", label: "Add Mortgagee 2 - State" },
+      { id: "00NU70000074AuP", name: "zip_2__c", label: "Add Mortgagee 2 - ZIP" },
+      { id: "00NU70000074AXp", name: "loanNumber_2__c", label: "Add Mortgagee 2 - Loan Number" },
+      { id: "00NU7000007chZN", name: "IfAdditionalInfo_2__c", label: "Add Mortgagee 2 - Additional Info Question" }
+    ]
+  };
+
+  // Date picker
+  if (window.Pikaday) {
+    new Pikaday({
+      field: document.getElementById("00NU7000005zuLl"),
+      format: "MM/DD/YYYY",
+      toString(date) {
+        const d = String(date.getDate()).padStart(2, "0");
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const y = date.getFullYear();
+        return `${m}/${d}/${y}`;
+      },
+      parse(dateString) {
+        if (!dateString) return null;
+        const [m, d, y] = dateString.split("/");
+        return new Date(y, m - 1, d);
+      },
+    });
+  }
+
+  // Request Type sync
+  const radios = document.querySelectorAll('input[name="requestTypeRadios"]');
+  const requestTypeHidden = document.getElementById("00NU7000006IOzh");
+  function syncRequestType() {
+    const checkedRadio = document.querySelector('input[name="requestTypeRadios"]:checked');
+    if (requestTypeHidden) requestTypeHidden.value = checkedRadio ? checkedRadio.value : "";
+  }
+  radios.forEach((radio) => radio.addEventListener("change", syncRequestType));
+  syncRequestType();
+
+  // Payor mapping
+  const displayPayorSelect = document.getElementById("displayPayorSelect");
+  const backendPayorSelect = document.getElementById("00NU70000074BGz");
+  function syncPayor() {
+    const selected = displayPayorSelect.value;
+    if (backendPayorSelect) {
+      backendPayorSelect.value = selected === "Escrow(bill to mortgage)" ? "Mortgagee" : 
+                                selected === "Non Escrow(bill to insured)" ? "Insured" : "";
+    }
+  }
+  if (displayPayorSelect) displayPayorSelect.addEventListener("change", syncPayor);
+
+  // Remove Mortgagee logic
+  const mortgageeCountSelect = document.getElementById("removeMortgageeCount");
+  const mortgageeRemoveSection1 = document.getElementById("mortgageeRemoveSection1");
+  const mortgageeRemoveSection2 = document.getElementById("mortgageeRemoveSection2");
+  function syncMortgageeRemoval() {
+    if (!mortgageeCountSelect) return;
+    const val = mortgageeCountSelect.value;
+    if (val === "0") {
+      if (mortgageeRemoveSection1) mortgageeRemoveSection1.classList.add("hidden");
+      if (mortgageeRemoveSection2) mortgageeRemoveSection2.classList.add("hidden");
+      document.getElementById("00NU7000007cfsm") && (document.getElementById("00NU7000007cfsm").value = "N");
+      document.getElementById("00NU7000007cgOn") && (document.getElementById("00NU7000007cgOn").value = "N");
+      document.getElementById("00NU7000007cfaq") && (document.getElementById("00NU7000007cfaq").value = "");
+      document.getElementById("00NU7000007cgev") && (document.getElementById("00NU7000007cgev").value = "");
+    } else if (val === "1") {
+      if (mortgageeRemoveSection1) mortgageeRemoveSection1.classList.remove("hidden");
+      if (mortgageeRemoveSection2) mortgageeRemoveSection2.classList.add("hidden");
+      document.getElementById("00NU7000007cfsm") && (document.getElementById("00NU7000007cfsm").value = "Y");
+      document.getElementById("00NU7000007cgOn") && (document.getElementById("00NU7000007cgOn").value = "N");
+      document.getElementById("00NU7000007cgev") && (document.getElementById("00NU7000007cgev").value = "");
+    } else if (val === "2") {
+      if (mortgageeRemoveSection1) mortgageeRemoveSection1.classList.remove("hidden");
+      if (mortgageeRemoveSection2) mortgageeRemoveSection2.classList.remove("hidden");
+      document.getElementById("00NU7000007cfsm") && (document.getElementById("00NU7000007cfsm").value = "Y");
+      document.getElementById("00NU7000007cgOn") && (document.getElementById("00NU7000007cgOn").value = "Y");
+    }
+  }
+  if (mortgageeCountSelect) {
+    mortgageeCountSelect.addEventListener("change", syncMortgageeRemoval);
+    syncMortgageeRemoval();
+  }
+
+  // Add Mortgagee logic
+  const addMortgageeCount = document.getElementById("addMortgageeCount");
+  const addMortgagee1Section = document.getElementById("addMortgagee1Section");
+  const addMortgagee2Section = document.getElementById("addMortgagee2Section");
+  function syncAddMortgagee() {
+    if (!addMortgageeCount) return;
+    const val = addMortgageeCount.value;
+    if (val === "0") {
+      if (addMortgagee1Section) addMortgagee1Section.classList.add("hidden");
+      if (addMortgagee2Section) addMortgagee2Section.classList.add("hidden");
+      document.getElementById("00NU7000007cgyH") && (document.getElementById("00NU7000007cgyH").value = "N");
+      document.getElementById("00NU7000007ch37") && (document.getElementById("00NU7000007ch37").value = "N");
+    } else if (val === "1") {
+      if (addMortgagee1Section) addMortgagee1Section.classList.remove("hidden");
+      if (addMortgagee2Section) addMortgagee2Section.classList.add("hidden");
+      document.getElementById("00NU7000007cgyH") && (document.getElementById("00NU7000007cgyH").value = "Y");
+      document.getElementById("00NU7000007ch37") && (document.getElementById("00NU7000007ch37").value = "N");
+    } else if (val === "2") {
+      if (addMortgagee1Section) addMortgagee1Section.classList.remove("hidden");
+      if (addMortgagee2Section) addMortgagee2Section.classList.remove("hidden");
+      document.getElementById("00NU7000007cgyH") && (document.getElementById("00NU7000007cgyH").value = "Y");
+      document.getElementById("00NU7000007ch37") && (document.getElementById("00NU7000007ch37").value = "Y");
+    }
+  }
+  if (addMortgageeCount) {
+    addMortgageeCount.addEventListener("change", syncAddMortgagee);
+    syncAddMortgagee();
+  }
+
+  // Additional info toggles
+  const ifAdditionalInfo1 = document.getElementById("00NU7000007chSv");
+  const addMort1AdditionalBlock = document.getElementById("addMort1AdditionalBlock");
+  function toggleAddMort1Additional() {
+    if (addMort1AdditionalBlock && ifAdditionalInfo1) {
+      addMort1AdditionalBlock.classList.toggle("hidden", ifAdditionalInfo1.value !== "Y");
+    }
+  }
+  if (ifAdditionalInfo1 && addMort1AdditionalBlock) {
+    ifAdditionalInfo1.addEventListener("change", toggleAddMort1Additional);
+    toggleAddMort1Additional();
+  }
+
+  const ifAdditionalInfo2 = document.getElementById("00NU7000007chZN");
+  const addMort2AdditionalBlock = document.getElementById("addMort2AdditionalBlock");
+  function toggleAddMort2Additional() {
+    if (addMort2AdditionalBlock && ifAdditionalInfo2) {
+      addMort2AdditionalBlock.classList.toggle("hidden", ifAdditionalInfo2.value !== "Y");
+    }
+  }
+  if (ifAdditionalInfo2 && addMort2AdditionalBlock) {
+    ifAdditionalInfo2.addEventListener("change", toggleAddMort2Additional);
+    toggleAddMort2Additional();
+  }
+
+  // DOM elements
+  const form = document.getElementById("mainForm");
+  const reviewBtn = document.getElementById("reviewBtn");
+  const dialog = document.getElementById("dialog");
+  const dialogTitle = document.getElementById("dialogTitle");
+  const missingFieldsList = document.getElementById("missingFieldsList");
+  const proceedBtn = document.getElementById("proceedBtn");
+  const editBtn = document.getElementById("editBtn");
+
+  // 🔥 CREATE HIDDEN FIELDS DYNAMICALLY (exactly like second script)
+  let formCapturedInput = document.querySelector('input[name="Form_Captured_Data__c"]');
+  let formMissingInput = document.querySelector('input[name="Form_Missing_Data__c"]');
+  
+  if (!formCapturedInput) {
+    formCapturedInput = document.createElement("input");
+    formCapturedInput.type = "hidden";
+    formCapturedInput.name = "Form_Captured_Data__c";
+    form.appendChild(formCapturedInput);
+  }
+  
+  if (!formMissingInput) {
+    formMissingInput = document.createElement("input");
+    formMissingInput.type = "hidden";
+    formMissingInput.name = "Form_Missing_Data__c";
+    form.appendChild(formMissingInput);
+  }
+
+  // BASE REQUIRED FIELDS 
+  const fieldData = [
+    { id: "email", label: "Email", type: "email" },
+    { radioGroupName: "requestTypeRadios", label: "Request Type" },
+    { id: "00NU7000005zuX3", label: "Policy Number" },
+    { id: "00NU7000005zuLl", label: "Effective Date (MM/DD/YYYY)", type: "date" },
+    { id: "displayPayorSelect", label: "Send Bill To" },
+    { id: "removeMortgageeCount", label: "Mortgagees to Delete" },
+    { id: "addMortgageeCount", label: "Mortgagees to Add" }
+  ];
+
+  function getFieldValue(field) {
+    if (field.radioGroupName) {
+      const checked = document.querySelector(`input[name="${field.radioGroupName}"]:checked`);
+      return checked ? checked.value : "";
+    }
+    const el = document.getElementById(field.id);
+    return el ? el.value.trim() : "";
+  }
+
+  function validateFields() {
+    const missing = [];
+    
+    // Check base required fields FIRST 
+    fieldData.forEach((field) => {
+      const value = getFieldValue(field);
+      const inputEl = document.getElementById(field.id);
+      
+      if (field.type === "email" && inputEl) {
+        if (!value || !inputEl.checkValidity()) missing.push(field.label);
+      } 
+      else if (field.type === "date" && inputEl) {
+        const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/(1[0-9]{3}|2[0-9]{3}|30[0-9]{2})$/;
+        if (!value || !dateRegex.test(value)) missing.push(field.label);
+      } 
+      else if (!value) {
+        missing.push(field.label);
+      }
+    });
+
+    // Dynamic mortgagee validation
+    const addMortgageeCountVal = document.getElementById("addMortgageeCount")?.value || "0";
+    
+    if (addMortgageeCountVal === "1") {
+      dynamicRequiredFields.mortgagee1.forEach(field => {
+        const value = document.getElementById(field.id)?.value.trim();
+        if (!value || value === "--None--") {
+          missing.push(field.label);
+        }
+      });
+    } else if (addMortgageeCountVal === "2") {
+      dynamicRequiredFields.mortgagee1.forEach(field => {
+        const value = document.getElementById(field.id)?.value.trim();
+        if (!value || value === "--None--") {
+          missing.push(field.label);
+        }
+      });
+      dynamicRequiredFields.mortgagee2.forEach(field => {
+        const value = document.getElementById(field.id)?.value.trim();
+        if (!value || value === "--None--") {
+          missing.push(field.label);
+        }
+      });
+    }
+
+    return missing;
+  }
+
+  //FORM CAPTURE 
+  function buildFormCapture() {
+    const filled = [];
+    const allElements = Array.from(form.elements);
+    
+    allElements.forEach(el => {
+      // Skip hidden fields
+      if (!el.name || el.type === "hidden" || el.name === "requestTypeRadios") {
+        return;
+      }
+      
+      const value = el.value ? el.value.toString().trim() : "";
+      
+      // Only capture FILLED fields 
+      if (value && value !== "" && value !== "--None--") {
+        const label = fieldLabels[el.name] || el.name.replace(/__/g, ' ').replace(/_/g, ' ');
+        filled.push(`${label} = ${value}`);
+      }
+    });
+
+    return filled.join("\n");
+  }
+
+  // Event handlers
+  form.addEventListener("submit", (e) => e.preventDefault());
+
+  reviewBtn.addEventListener("click", () => {
+    // Sync everything first
+    syncRequestType();
+    if (displayPayorSelect) syncPayor();
+    if (mortgageeCountSelect) syncMortgageeRemoval();
+    if (addMortgageeCount) syncAddMortgagee();
+
+    const missing = validateFields();
+    
+    
+    formCapturedInput.value = buildFormCapture();
+    formMissingInput.value = missing.length ? missing.join("\n") : "";
+
+    if (missing.length) {
+      dialogTitle.textContent = "Below Mandatory Fields are missing and the Team will contact you shortly.";
+      missingFieldsList.innerHTML = missing.map(f => `<li>${f}</li>`).join("");
+    } else {
+      dialogTitle.textContent = "All mandatory fields are completed. Ready to submit your request?";
+      missingFieldsList.innerHTML = "";
+    }
+    
+    dialog.classList.remove("hidden");
+  });
+
+  editBtn.addEventListener("click", () => dialog.classList.add("hidden"));
+  
+  proceedBtn.addEventListener("click", () => {
+    syncRequestType();
+    if (displayPayorSelect) syncPayor();
+    if (mortgageeCountSelect) syncMortgageeRemoval();
+    if (addMortgageeCount) syncAddMortgagee();
+    
+    const missing = validateFields();
+    formCapturedInput.value = buildFormCapture();
+    formMissingInput.value = missing.length ? missing.join("\n") : "";
+    
+    dialog.classList.add("hidden");
+    form.submit();
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.classList.add("hidden");
+  });
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") dialog.classList.add("hidden");
+  });
+
+  console.log("BLANK FIELDS → Form_Missing_Data__c | FILLED → Form_Captured_Data__c");
+});
+</script>
+</body>
+</html>
