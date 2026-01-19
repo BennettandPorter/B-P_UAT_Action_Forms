@@ -87,7 +87,7 @@
     <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
       <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
       <div class="mb-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email<span class="text-red-600">*</span></label>
         <input
           type="email" id="email" name="email"
           class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -95,7 +95,7 @@
         />
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:</label>
+        <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="text-red-600">*</span></label>
         <div class="flex space-x-4 mb-2">
           <label class="inline-flex items-center ">
             <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Quote" class="mr-2 " />Quote
@@ -108,7 +108,7 @@
       </div>
       <div class="space-y-4 mt-2">
         <div>
-          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">Policy Number</label>
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">Policy Number<span class="text-red-600">*</span></label>
           <input
             type="text"
             id="00NU7000005zuX3"
@@ -121,7 +121,7 @@
           <div id="policyNumberError" class="error-message hidden">Policy Number must start with 'Y' and be 8 digits total (e.g., Y1234567).</div>
         </div>
         <div>
-          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">Effective Date</label>
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">Effective Date<span class="text-red-600">*</span></label>
           <input 
             type="text" 
             id="00NU7000005zuLl" 
@@ -138,7 +138,7 @@
     <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Driver Details Section">
       <h3 class="text-xl font-semibold mb-4 text-gray-700">Driver Details</h3>
       <div class="mb-4">
-        <label for="00NU7000006j9bZ" class="block text-sm font-medium text-gray-700">Reason for Deleting Driver</label>
+        <label for="00NU7000006j9bZ" class="block text-sm font-medium text-gray-700">Reason for Deleting Driver<span class="text-red-600">*</span></label>
         <select id="00NU7000006j9bZ" name="Reaon_for_Deleting_Driver__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
           <option value="">--None--</option>
           <option value="No longer resides at this address">No longer resides at this address</option>
@@ -149,11 +149,11 @@
       <div id="driverDetailsSection" class="space-y-4 mb-3">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label for="00NU7000005zuOz" class="block text-sm font-medium text-gray-700">First Name</label>
+            <label for="00NU7000005zuOz" class="block text-sm font-medium text-gray-700">First Name<span class="text-red-600">*</span></label>
             <input type="text" id="00NU7000005zuOz" name="First_Name__c" class="w-full p-2 border border-gray-300 rounded-lg" />
           </div>
           <div>
-            <label for="birthYear" class="block text-sm font-medium text-gray-700">Birth Year</label>
+            <label for="birthYear" class="block text-sm font-medium text-gray-700">Birth Year<span class="text-red-600">*</span></label>
             <select id="00NU7000006lumT" name="BirthYear__c" class="w-full p-2 border border-gray-300 rounded-lg">
               <option value="">--Select Year--</option>
             </select>
@@ -162,7 +162,7 @@
         </div>
       </div>
       <div>
-        <label for="00NU7000005zuVR" class="block text-sm font-medium text-gray-700">Relationship to Insured</label>
+        <label for="00NU7000005zuVR" class="block text-sm font-medium text-gray-700">Relationship to Insured<span class="text-red-600">*</span></label>
         <select id="00NU7000005zuVR" name="Relationship_to_Insured__c" class="w-full p-2 border border-gray-300 rounded-lg mb-4">
           <option value="">--Select--</option>
           <option value="Spouse">Spouse</option>
@@ -174,7 +174,7 @@
         </select>
       </div>
       <div id="maritalStatusContainer" class="hidden w-full mb-4">
-        <label for="00NU7000006kjDB" class="block text-sm font-medium text-gray-700">What will be the marital status of insured driver?</label>
+        <label for="00NU7000006kjDB" class="block text-sm font-medium text-gray-700">What will be the marital status of insured driver?<span class="text-red-600">*</span></label>
         <select id="00NU7000006kjDB" name="Marital_Status_RD__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
           <option value="">--None--</option>
           <option value="Divorced">Divorced</option>
@@ -189,7 +189,7 @@
       <h3 class="text-xl font-semibold mb-4 text-gray-700">Vehicle Information</h3>
       <div class="space-y-4">
         <div>
-          <label for="00NU7000006N0iD" class="block text-sm font-medium text-gray-700">Vehicle Use</label>
+          <label for="00NU7000006N0iD" class="block text-sm font-medium text-gray-700">Vehicle Use<span class="text-red-600">*</span></label>
           <select id="00NU7000006N0iD" name="Vehicle_Use__c"
                   class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
             <option value="">--None--</option>
@@ -200,18 +200,18 @@
 
         <div id="vehicleCommuteFields" class="hidden space-y-4">
           <div>
-            <label for="00NU7000006kjI1" class="block text-sm font-medium text-gray-700">Mileage One Way</label>
+            <label for="00NU7000006kjI1" class="block text-sm font-medium text-gray-700">Mileage One Way<span class="text-red-600">*</span></label>
             <input type="text" id="00NU7000006kjI1" name="Mileage_One_Way__c" class="w-full p-2 border border-gray-300 rounded-lg" />
           </div>
         </div>
 
         <div>
-          <label for="00NU7000006N0zx" class="block text-sm font-medium text-gray-700">Annual Miles</label>
+          <label for="00NU7000006N0zx" class="block text-sm font-medium text-gray-700">Annual Miles<span class="text-red-600">*</span></label>
           <input type="text" id="00NU7000006N0zx" name="Annual_Miles__c" class="w-full p-2 border border-gray-300 rounded-lg" />
         </div>
 
         <div>
-          <label for="00NU7000006N0wj" class="block text-sm font-medium text-gray-700">Ownership</label>
+          <label for="00NU7000006N0wj" class="block text-sm font-medium text-gray-700">Ownership<span class="text-red-600">*</span></label>
           <select id="00NU7000006N0wj" name="Ownership__c"
                   class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
             <option value="">--None--</option>
