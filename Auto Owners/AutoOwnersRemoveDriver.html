@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AutoOwners Remove Driver Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" />
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <style>
+      .hidden { display: none; }
+      .star { color: #ef4444; margin-left: 2px; }
+      .modal-bg { background: rgba(0, 0, 0, 0.4); }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    <form
+      id="mainForm"
+      action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dcb000009T0mR"
+      method="POST"
+      class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8 relative"
+      autocomplete="off"
+      novalidate
+    >
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">AutoOwners Remove Driver Form</h2>
+
+      <div class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+
+        <div class="mb-3">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email<span class="star">*</span></label>
+          <input type="email" id="email" name="email" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" autocomplete="off" />
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="star">*</span></label>
+          <div class="flex space-x-4">
+            <label class="inline-flex items-center"><input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Quote" class="mr-2" />Quote</label>
+            <label class="inline-flex items-center"><input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Endorse" class="mr-2" />Endorsement</label>
+          </div>
+        </div>
+
+        <input type="hidden" id="00NU7000005zuNN" name="Policy_Action__c" value="Remove Driver" />
+
+        <div class="mb-3">
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">Policy Number<span class="star">*</span></label>
+          <input type="text" id="00NU7000005zuX3" name="Policy_Number__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" autocomplete="off" />
+        </div>
+
+        <div class="mb-3">
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">Effective Date (MM/DD/YYYY)<span class="star">*</span></label>
+          <input type="text" id="00NU7000005zuLl" name="Date__c" placeholder="MM/DD/YYYY" maxlength="10" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" readonly />
+        </div>
+      </div>
+
+      <div class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Remove Driver Details</h3>
+
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="driverName" class="block text-sm font-medium text-gray-700 mb-1">Driver Name<span class="star">*</span></label>
+            <input type="text" id="driverName" name="First_Name__c" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+          <div>
+            <label for="driverAge" class="block text-sm font-medium text-gray-700 mb-1">Age<span class="star">*</span></label>
+            <input type="text" id="driverAge" name="Age__c" maxlength="3" class="w-full p-2 border border-gray-300 rounded-lg shadow-sm" />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="00NU7000005zuVR" class="block text-sm font-medium text-gray-700">Relationship To Insured<span class="star">*</span></label>
+          <select id="00NU7000005zuVR" name="Relationship_to_Insured__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--None--</option>
+            <option value="Spouse">Spouse</option>
+            <option value="Child">Child</option>
+            <option value="Parent">Parent</option>
+            <option value="Other relation">Other relation</option>
+          </select>
+        </div>
+
+        <p id="disclaimerMessage" class="hidden mt-3 text-sm text-yellow-700 bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-4">
+          ⚠️ If removing a <strong>spouse</strong>, Customer Service will contact you to complete the request upon submission of form.
+        </p>
+
+        <div class="mb-4">
+          <label for="reasonToDelete" class="block text-sm font-medium text-gray-700">Reason to delete driver<span class="star">*</span></label>
+          <select id="reasonToDelete" name="reasonToDelete__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--Select--</option>
+            <option value="Deceased">Deceased</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Moved out of household">Moved out of household</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div id="otherReasonField" class="mb-4 hidden">
+            <label for="otherReason" class="block text-sm font-medium text-gray-700">Other Reason<span class="star">*</span></label>
+            <input type="text" id="otherReason" name="Other_Reason__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"  />
+        </div>
+
+        <div class="mb-4">
+          <label for="additionalNamed" class="block text-sm font-medium text-gray-700">Is Driver assigned as additional named?<span class="star">*</span></label>
+          <select id="additionalNamed" name="Is_Driver_assigned_as_additional_named__c" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--Select--</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div id="additionalNamedReasonField" class="mb-4 hidden">
+          <label for="removeReason" class="block text-sm font-medium text-gray-700">Reason to remove as additional named<span class="star">*</span></label>
+          <select id="removeReason" name="Reason_to_remove_as_additional_named__c" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+            <option value="">--Select--</option>
+            <option value="Correction of existing names (ie, misspelling, in care ofs, etc.)">Correction of existing names (ie, misspelling, in care ofs, etc.)</option>
+            <option value="Add/delete/change due to marriage/divorce/death">Add/delete/change due to marriage/divorce/death</option>
+            <option value="Add/delete/change non-spouses (ie, teenagers, other household members)">Add/delete/change non-spouses (ie, teenagers, other household members)</option>
+            <option value="Change of ownership">Change of ownership</option>
+            <option value="Change of entity (including estates, trusts)">Change of entity (including estates, trusts)</option>
+          </select>
+        </div>
+      </div>
+
+      <input type="hidden" name="oid" value="00Dcb000009T0mR" />
+      <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+      <input type="hidden" id="formDataJson" name="Form_Captured_Data__c" value="" />
+      <input type="hidden" id="formMissingData" name="Form_Missing_Data__c" value="" />
+      <input type="hidden" name="Carrier__c" value="Auto Owners" />
+
+      <div class="flex justify-end mt-6">
+        <button type="button" id="reviewBtn" class="bg-blue-600 text-white font-semibold py-2 px-8 rounded-xl hover:bg-blue-700 transition">Review and Submit</button>
+      </div>
+    </form>
+
+    <div id="dialog" class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50">
+      <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+        <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+        <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm space-y-1"></ul>
+        <div class="flex justify-end space-x-3">
+          <button id="proceedBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 font-medium transition">Proceed to Submit</button>
+          <button id="editBtn" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-lg hover:bg-gray-400 font-medium transition">Edit Form</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("mainForm");
+        const relationshipSelect = document.getElementById("00NU7000005zuVR");
+        const disclaimer = document.getElementById("disclaimerMessage");
+        const reasonToDelete = document.getElementById("reasonToDelete");
+        const otherReasonField = document.getElementById("otherReasonField");
+        const otherReasonInput = document.getElementById("otherReason");
+        const additionalNamed = document.getElementById("additionalNamed");
+        const additionalReasonField = document.getElementById("additionalNamedReasonField");
+
+        // 1. Spouse Disclaimer Logic
+        relationshipSelect.addEventListener("change", function () {
+          if (this.value === "Spouse") {
+            disclaimer.classList.remove("hidden");
+          } else {
+            disclaimer.classList.add("hidden");
+          }
+        });
+
+        // 2. Reason to Delete "Other" Logic
+        reasonToDelete.addEventListener("change", function() {
+            if (this.value === "Other") {
+                otherReasonField.classList.remove("hidden");
+            } else {
+                otherReasonField.classList.add("hidden");
+                otherReasonInput.value = "";
+            }
+        });
+
+        // 3. Additional Named Logic
+        additionalNamed.addEventListener("change", function() {
+            if (this.value === "Yes") {
+                additionalReasonField.classList.remove("hidden");
+            } else {
+                additionalReasonField.classList.add("hidden");
+                document.getElementById("removeReason").value = "";
+            }
+        });
+
+        // 4. Datepicker
+        new Pikaday({
+          field: document.getElementById("00NU7000005zuLl"),
+          format: "MM/DD/YYYY"
+        });
+
+        // 5. Validation & Review
+        const fieldData = [
+          { id: "email", label: "Email", type: "email" },
+          { id: "Is_this_a_quote_or_a_change_request__c", label: "Request Type", type: "radio" },
+          { id: "00NU7000005zuX3", label: "Policy Number" },
+          { id: "00NU7000005zuLl", label: "Effective Date", type: "date" },
+          { id: "driverName", label: "Driver Name" },
+          { id: "driverAge", label: "Age" },
+          { id: "00NU7000005zuVR", label: "Relationship To Insured" },
+          { id: "reasonToDelete", label: "Reason to delete driver" },
+          { id: "additionalNamed", label: "Additional Named Driver" }
+        ];
+
+        document.getElementById("reviewBtn").addEventListener("click", () => {
+          let missing = [];
+          
+          fieldData.forEach(field => {
+            if (field.type === "radio") {
+              const checked = document.querySelector(`input[name='${field.id}']:checked`);
+              if (!checked) missing.push(field.label);
+            } else {
+              const input = document.getElementById(field.id);
+              if (!input.value.trim()) missing.push(field.label);
+            }
+          });
+
+          // Conditional validation for "Other Reason"
+          if (reasonToDelete.value === "Other" && !otherReasonInput.value.trim()) {
+            missing.push("Other Reason Detail");
+          }
+
+          // Conditional validation for Additional Named
+          if (additionalNamed.value === "Yes" && !document.getElementById("removeReason").value) {
+            missing.push("Reason to remove as additional named");
+          }
+
+          // Build Data String
+          const completedData = [];
+          fieldData.forEach(f => {
+              if (f.type === "radio") {
+                  const checked = document.querySelector(`input[name='${f.id}']:checked`);
+                  if(checked) completedData.push(`${f.label} = ${checked.value}`);
+              } else {
+                  const val = document.getElementById(f.id).value;
+                  if(val) completedData.push(`${f.label} = ${val}`);
+              }
+          });
+          if(otherReasonInput.value) completedData.push(`Other Reason = ${otherReasonInput.value}`);
+          if(document.getElementById("removeReason").value) completedData.push(`Additional Named Reason = ${document.getElementById("removeReason").value}`);
+
+          document.getElementById("formDataJson").value = completedData.join("\n");
+          document.getElementById("formMissingData").value = missing.join("\n");
+
+          const dialog = document.getElementById("dialog");
+          const title = document.getElementById("dialogTitle");
+          const list = document.getElementById("missingFieldsList");
+
+          if (missing.length) {
+            title.textContent = "Please complete mandatory fields:";
+            list.innerHTML = missing.map(m => `<li>• ${m}</li>`).join("");
+          } else {
+            title.textContent = "Form complete! Ready to submit?";
+            list.innerHTML = "";
+          }
+          dialog.classList.remove("hidden");
+        });
+
+        document.getElementById("editBtn").addEventListener("click", () => document.getElementById("dialog").classList.add("hidden"));
+        document.getElementById("proceedBtn").addEventListener("click", () => form.submit());
+      });
+    </script>
+  </body>
+</html>
