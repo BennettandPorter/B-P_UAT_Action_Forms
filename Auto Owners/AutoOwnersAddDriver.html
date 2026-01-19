@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AutoOwners Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pikaday Datepicker Library -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <style>
+      .hidden {
+        display: none;
+      }
+      .star {
+        color: #ef4444;
+        margin-left: 2px;
+      }
+      .modal-bg {
+        background: rgba(0, 0, 0, 0.4);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    <form
+      id="mainForm"
+      action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dcb000009T0mR"
+      method="POST"
+      class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8 relative"
+      autocomplete="off"
+      novalidate
+    >
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">
+        Add Driver AutoOwners Form
+      </h2>
+
+      <div class="bg-gray-50 border rounded-xl p-6 shadow-inner">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+
+        <!-- Email -->
+        <div class="mb-3">
+         <label for="email" class="block text-sm font-medium text-gray-700">
+           Email<span class="star">*</span>
+         </label>
+         <input
+           type="email"
+           id="email"
+           name="email"
+           class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+           autocomplete="off"
+         />
+        </div>
+
+        <div>
+         <label class="block text-sm font-medium text-gray-700 mb-2">Select the Request Type:<span class="star">*</span></label>
+         <div class="flex space-x-4 mb-2">
+           <label class="inline-flex items-center ">
+             <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Quote" required class="mr-2 " />Quote
+           </label>
+           <label class="inline-flex items-center">
+             <input type="radio" name="Is_this_a_quote_or_a_change_request__c" value="Endorse" required class="mr-2" />Endorsement
+           </label>
+         </div>
+         <div id="quotePolicyError" class="error-message hidden ">Please select an option</div>
+        </div>
+
+        <!-- Policy Action (hidden, always "Add Driver") -->
+        <input
+         type="hidden"
+         id="00NU7000005zuNN"
+         name="Policy_Action__c"
+         value="Add Driver"
+        />
+
+        <!-- Policy Number -->
+        <div class="mb-3">
+         <label
+           for="00NU7000005zuX3"
+           class="block text-sm font-medium text-gray-700"
+         >
+           Policy Number<span class="star">*</span>
+         </label>
+         <input
+           type="text"
+           id="00NU7000005zuX3"
+           name="Policy_Number__c"
+           class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+           autocomplete="off"
+         />
+        </div>
+        <!-- Effective Date -->
+        <div class="mb-3">
+         <label
+           for="00NU7000005zuLl"
+           class="block text-sm font-medium text-gray-700"
+         >
+           Effective Date <span class="star">*</span>
+         </label>
+         <input
+           type="text"
+           id="00NU7000005zuLl"
+           name="Date__c"
+           placeholder="MM/DD/YYYY"
+           maxlength="10"
+           class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+           autocomplete="off"
+           readonly
+         />
+        </div>
+      </div>
+
+      <!-- New Add Driver Details box -->
+      <div class="bg-gray-50 border rounded-xl p-6 shadow-inner mt-8">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Add Driver Details</h3>
+        
+        <!-- First, Middle, Last Name in one row -->
+        <div class="flex space-x-4 mb-3">
+         <div class="flex-1">
+           <label for="driverFirstName" class="block text-sm font-medium text-gray-700">First Name<span class="star">*</span></label>
+           <input type="text" id="driverFirstName" name="First_Name__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" autocomplete="off" />
+         </div>
+         <div class="flex-1">
+           <label for="driverMiddleName" class="block text-sm font-medium text-gray-700">Middle Name</label>
+           <input type="text" id="driverMiddleName" name="Middle_Name__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" autocomplete="off" />
+         </div>
+         <div class="flex-1">
+           <label for="driverLastName" class="block text-sm font-medium text-gray-700">Last Name<span class="star">*</span></label>
+           <input type="text" id="driverLastName" name="Last_Name__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" autocomplete="off" />
+         </div>
+        </div>
+
+        <!-- DOB and Gender in one row -->
+        <div class="flex space-x-4 mb-3">
+         <div class="flex-1">
+           <label for="driverDOB" class="block text-sm font-medium text-gray-700">Date of Birth<span class="star">*</span></label>
+           <input type="text" id="driverDOB" name="Date_of_Birth__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm" placeholder="MM/DD/YYYY" maxlength="10" autocomplete="off" />
+         </div>
+         <div class="flex-1">
+           <label for="driverGender" class="block text-sm font-medium text-gray-700">Gender<span class="star">*</span></label>
+           <select id="driverGender" name="Gender__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+             <option value="">--Select--</option>
+             <option value="Male">Male</option>
+             <option value="Female">Female</option>
+           </select>
+         </div>
+        </div>
+
+        <!-- Marital Status and Relationship in one row -->
+        <div class="flex space-x-4 mb-3">
+         <div class="flex-1">
+           <label for="driverMaritalStatus" class="block text-sm font-medium text-gray-700">Marital Status<span class="star">*</span></label>
+           <select id="driverMaritalStatus" name="Marital_Status__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+             <option value="">--Select--</option>
+             <option value="Single">Single</option>
+             <option value="Married">Married</option>
+             <option value="Divorced">Divorced</option>
+             <option value="Widowed">Widowed</option>
+           </select>
+         </div>
+         <div class="flex-1">
+           <label for="driverRelationship" class="block text-sm font-medium text-gray-700">Relationship<span class="star">*</span></label>
+           <select id="driverRelationship" name="Relationship_To_Insured_AutoOwners__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+             <option value="">--Select--</option>
+             <option value="Spouse">Spouse</option>
+             <option value="Unrelated Named Insured">Unrelated Named Insured</option>
+             <option value="Child">Child</option>
+             <option value="Resident Relative">Resident Relative</option>
+             <option value="Other">Other</option>
+           </select>
+         </div>
+         <div class="flex-1">
+    <label for="driverStatus" class="block text-sm font-medium text-gray-700">
+      Driver Status<span class="star">*</span>
+    </label>
+    <select id="driverStatus" name="Driver_Status_AutoOwners__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+      <option value="">--Select--</option>
+      <option value="Driver" selected>Driver</option>
+            <option value="Non-Driver">Non-Driver</option>
+      <option value="Deceased">Deceased</option>
+
+      
+    </select>
+  </div>
+        </div>
+
+       
+
+        <!-- Business/Industry and Occupation in one row - HIDDEN BY DEFAULT -->
+        <div id="employmentFields" class="flex space-x-4 mb-3 hidden">
+         <div class="flex-1">
+           <label for="businessIndustry" class="block text-sm font-medium text-gray-700">
+             Business/Industry<span class="star">*</span>
+           </label>
+           <select
+             id="businessIndustry"
+             name="Business_Industry__c"
+             class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+           >
+             <option value="">--Select--</option>
+             <!-- values to be added later -->
+              <option value="All Industries">All Industries</option>
+<option value="Retired">Retired</option>
+<option value="Homemaker">Homemaker</option>
+<option value="Student">Student</option>
+<option value="Agriculture / Forestry / Fishing">Agriculture / Forestry / Fishing</option>
+<option value="Art / Design / Media">Art / Design / Media</option>
+<option value="Banking / Finance / Real Estate">Banking / Finance / Real Estate</option>
+<option value="Business / Sales / Office">Business / Sales / Office</option>
+<option value="Construction / Energy / Trades">Construction / Energy / Trades</option>
+<option value="Education / Library">Education / Library</option>
+<option value="Engineer / Architect / Science / Math">Engineer / Architect / Science / Math</option>
+<option value="Government">Government</option>
+<option value="Information / Technology">Information / Technology</option>
+<option value="Insurance">Insurance</option>
+<option value="Legal / Law Enforcement / Security">Legal / Law Enforcement / Security</option>
+<option value="Maintenance / Repair / Housekeeping">Maintenance / Repair / Housekeeping</option>
+<option value="Medical / Social Science / Religion">Medical / Social Science / Religion</option>
+<option value="Personal Care / Service">Personal Care / Service</option>
+<option value="Restaurant / Hotel">Restaurant / Hotel</option>
+<option value="Sports / Recreation">Sports / Recreation</option>
+<option value="Travel / Transportation / Warehousing">Travel / Transportation / Warehousing</option>
+<option value="Military">Military</option>
+<option value="Other">Other</option>
+
+           </select>
+         </div>
+         <div class="flex-1">
+           <label for="occupation" class="block text-sm font-medium text-gray-700">
+             Occupation<span class="star">*</span>
+           </label>
+           <select
+             id="occupation"
+             name="Occupation__c"
+             class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+           >
+             <option value="">--Select--</option>
+             <!-- values to be added later -->
+              <option value="Account Executive">Account Executive</option>
+<option value="Accountant/Auditor">Accountant/Auditor</option>
+<option value="Activity Assistant">Activity Assistant</option>
+<option value="Actor">Actor</option>
+<option value="Actuary">Actuary</option>
+<option value="Admin. Assistant">Admin. Assistant</option>
+<option value="Administrators">Administrators</option>
+<option value="Ag Inspector">Ag Inspector</option>
+<option value="Agent / Broker">Agent / Broker</option>
+<option value="Air Traffic Control">Air Traffic Control</option>
+<option value="Airport Operations">Airport Operations</option>
+<option value="Analyst">Analyst</option>
+<option value="Analyst Broker">Analyst Broker</option>
+<option value="Animal Control">Animal Control</option>
+<option value="Arborist">Arborist</option>
+<option value="Architect">Architect</option>
+<option value="Artist">Artist</option>
+<option value="Assistant-Medical">Assistant-Medical</option>
+<option value="Athlete">Athlete</option>
+<option value="Attorney">Attorney</option>
+<option value="Author/Writer">Author/Writer</option>
+<option value="Bailiff">Bailiff</option>
+<option value="Baker">Baker</option>
+<option value="Barber">Barber</option>
+<option value="Bartender">Bartender</option>
+<option value="Bellhop">Bellhop</option>
+<option value="Bellhop / Porter">Bellhop / Porter</option>
+<option value="Boiler Operator">Boiler Operator</option>
+<option value="Bookkeeper">Bookkeeper</option>
+<option value="Branch Manager">Branch Manager</option>
+<option value="Bricklayer / Mason">Bricklayer / Mason</option>
+<option value="Broadcaster">Broadcaster</option>
+<option value="Bus Person">Bus Person</option>
+<option value="Camp Counselor">Camp Counselor</option>
+<option value="Caregiver">Caregiver</option>
+<option value="Carpenter">Carpenter</option>
+<option value="Carpet Installer">Carpet Installer</option>
+<option value="Chef">Chef</option>
+<option value="Claim Rep/Adjuster">Claim Rep/Adjuster</option>
+<option value="Clergy">Clergy</option>
+<option value="Clerk">Clerk</option>
+<option value="Clerk-Office">Clerk-Office</option>
+<option value="Coach">Coach</option>
+<option value="Collections">Collections</option>
+<option value="Composer/Director">Composer/Director</option>
+<option value="Computer Repair">Computer Repair</option>
+<option value="Concierge">Concierge</option>
+<option value="Concrete Worker">Concrete Worker</option>
+<option value="Construction-P.M.">Construction-P.M.</option>
+<option value="Consultant">Consultant</option>
+<option value="Cook-Fast Food">Cook-Fast Food</option>
+<option value="Cook-Restaurant">Cook-Restaurant</option>
+<option value="Correction Officer">Correction Officer</option>
+<option value="Counselor">Counselor</option>
+<option value="Crane Loader">Crane Loader</option>
+<option value="Crane Operator">Crane Operator</option>
+<option value="CSR / Teller">CSR / Teller</option>
+<option value="Cust. Service Rep.">Cust. Service Rep.</option>
+<option value="Custodian/Janitor">Custodian/Janitor</option>
+<option value="Dancer">Dancer</option>
+<option value="Dental Hygienist">Dental Hygienist</option>
+<option value="Dentist">Dentist</option>
+<option value="Deputy Sheriff">Deputy Sheriff</option>
+<option value="Designer">Designer</option>
+<option value="Desk Clerk">Desk Clerk</option>
+<option value="Dishwasher">Dishwasher</option>
+<option value="Dispatcher">Dispatcher</option>
+<option value="Doctor">Doctor</option>
+<option value="Drafter">Drafter</option>
+<option value="Driver-Bus">Driver-Bus</option>
+<option value="Driver-Limo">Driver-Limo</option>
+<option value="Dry Cleaner">Dry Cleaner</option>
+<option value="Editor">Editor</option>
+<option value="Electrician">Electrician</option>
+<option value="Electrician-Lineman">Electrician-Lineman</option>
+<option value="Engineer">Engineer</option>
+<option value="Engineer-Hardware">Engineer-Hardware</option>
+<option value="Engineer-Software">Engineer-Software</option>
+<option value="Equipment Operator">Equipment Operator</option>
+<option value="Examiner">Examiner</option>
+<option value="Inspector">Inspector</option>
+<option value="Investment Banker">Investment Banker</option>
+<option value="Investor">Investor</option>
+<option value="Journalist/Reporter">Journalist/Reporter</option>
+<option value="Judge">Judge</option>
+<option value="Laborer / Worker">Laborer / Worker</option>
+<option value="Landscaping">Landscaping</option>
+<option value="Legislator">Legislator</option>
+<option value="Librarian/Curator">Librarian/Curator</option>
+<option value="Lifeguard">Lifeguard</option>
+<option value="Loan Processor">Loan Processor</option>
+<option value="Logger">Logger</option>
+<option value="Maintenance">Maintenance</option>
+<option value="Manager">Manager</option>
+<option value="Manicurist">Manicurist</option>
+<option value="Marketing Mngr.">Marketing Mngr.</option>
+<option value="Masseuse">Masseuse</option>
+<option value="Mathematician">Mathematician</option>
+<option value="Metalworker">Metalworker</option>
+<option value="Meter Reader">Meter Reader</option>
+<option value="Military-Air Force">Military-Air Force</option>
+<option value="Military-Army">Military-Army</option>
+<option value="Military-Marines">Military-Marines</option>
+<option value="Military-Navy">Military-Navy</option>
+<option value="Military-Other">Military-Other</option>
+<option value="Military-USCG">Military-USCG</option>
+<option value="Millworker">Millworker</option>
+<option value="Miner">Miner</option>
+<option value="Mngr. Systems">Mngr. Systems</option>
+<option value="Mngr.-Credit/Loan">Mngr.-Credit/Loan</option>
+<option value="Mngr.-Finance">Mngr.-Finance</option>
+<option value="Mngr.-H.R./P.R.">Mngr.-H.R./P.R.</option>
+<option value="Mngr.-Property">Mngr.-Property</option>
+<option value="Mngr.-Retail Sales">Mngr.-Retail Sales</option>
+<option value="Mngr.-Sales Other">Mngr.-Sales Other</option>
+<option value="Musician / Singer">Musician / Singer</option>
+<option value="Nanny / Child Care">Nanny / Child Care</option>
+<option value="Network Admin.">Network Admin.</option>
+<option value="Nurse-CNA">Nurse-CNA</option>
+<option value="Nurse-LN">Nurse-LN</option>
+<option value="Nurse-RN">Nurse-RN</option>
+<option value="Optometrist">Optometrist</option>
+<option value="Painter">Painter</option>
+<option value="Paralegal">Paralegal</option>
+<option value="Park Ranger">Park Ranger</option>
+<option value="Parking Lot Attend.">Parking Lot Attend.</option>
+<option value="Pilot/Cptn./Crew">Pilot/Cptn./Crew</option>
+<option value="Planner">Planner</option>
+<option value="Plaster/Drywall">Plaster/Drywall</option>
+<option value="Plumber">Plumber</option>
+<option value="Police Chief">Police Chief</option>
+<option value="Police Detective">Police Detective</option>
+<option value="Police Officer">Police Officer</option>
+<option value="Postmaster">Postmaster</option>
+<option value="Producer">Producer</option>
+<option value="Production Crew">Production Crew</option>
+<option value="Programmer">Programmer</option>
+<option value="Project Engineer">Project Engineer</option>
+<option value="Prvt. Investigator">Prvt. Investigator</option>
+<option value="Railroad Worker">Railroad Worker</option>
+<option value="Ranger">Ranger</option>
+<option value="Realtor">Realtor</option>
+<option value="Receptionist">Receptionist</option>
+<option value="Researcher">Researcher</option>
+<option value="Roofer">Roofer</option>
+<option value="Route/Vendor">Route/Vendor</option>
+<option value="Sales - Retail">Sales - Retail</option>
+<option value="Sales-Counter">Sales-Counter</option>
+<option value="Sales-Mfg. Rep">Sales-Mfg. Rep</option>
+<option value="Scientist">Scientist</option>
+<option value="Security Guard">Security Guard</option>
+<option value="Sheriff">Sheriff</option>
+<option value="Social Worker">Social Worker</option>
+<option value="Sports Media">Sports Media</option>
+<option value="Superintendent">Superintendent</option>
+<option value="Supervisor">Supervisor</option>
+<option value="Support Technician">Support Technician</option>
+<option value="Surveyor/Mapmaker">Surveyor/Mapmaker</option>
+<option value="Teacher-Other">Teacher-Other</option>
+<option value="Teacher-Spec. Ed.">Teacher-Spec. Ed.</option>
+<option value="Teaching Assistant">Teaching Assistant</option>
+<option value="Technician">Technician</option>
+<option value="Therapist">Therapist</option>
+<option value="Ticket Agent">Ticket Agent</option>
+<option value="Ticket Sales/Usher">Ticket Sales/Usher</option>
+<option value="Trainer/Instructor">Trainer/Instructor</option>
+<option value="Travel Agent">Travel Agent</option>
+<option value="Umpire/Referee">Umpire/Referee</option>
+<option value="Undergraduate">Undergraduate</option>
+<option value="Underwriter">Underwriter</option>
+<option value="Veterinarian">Veterinarian</option>
+<option value="Waiter / Waitress">Waiter / Waitress</option>
+<option value="Other">Other</option>
+<option value="Executive">Executive</option>
+<option value="Farm Owner/Worker">Farm Owner/Worker</option>
+<option value="Financial Advisor">Financial Advisor</option>
+<option value="Fire Chief">Fire Chief</option>
+<option value="Firefighter">Firefighter</option>
+<option value="Fisherman">Fisherman</option>
+<option value="Food Production">Food Production</option>
+<option value="Funeral Director">Funeral Director</option>
+<option value="Gaming Officer">Gaming Officer</option>
+<option value="Graduate Student">Graduate Student</option>
+<option value="Hair Stylist">Hair Stylist</option>
+<option value="Handyman">Handyman</option>
+<option value="High School">High School</option>
+<option value="Highway Patrol">Highway Patrol</option>
+<option value="Hospice Volunteers">Hospice Volunteers</option>
+<option value="Host / Maitre d'">Host / Maitre d'</option>
+<option value="Housekeeper">Housekeeper</option>
+<option value="Housekeeper / Maid">Housekeeper / Maid</option>
+<option value="HVAC Repair">HVAC Repair</option>
+<option value="HVAC Technician">HVAC Technician</option>
+
+           </select>
+         </div>
+        </div>
+
+        <!-- City of Employment - HIDDEN BY DEFAULT -->
+        <div id="cityOfEmploymentField" class="mb-3 hidden">
+         <label for="cityOfEmployment" class="block text-sm font-medium text-gray-700">
+           City of Employer/School<span class="star">*</span>
+         </label>
+         <input
+           type="text"
+           id="cityOfEmployment"
+           name="City_of_Employer_School__c"
+           class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+           autocomplete="off"
+         />
+        </div>
+
+        <!-- License State and License Number in one row -->
+        <div class="flex space-x-4 mb-3">
+         <div class="flex-1">
+           <label for="licenseState" class="block text-sm font-medium text-gray-700">
+             License State<span class="star">*</span>
+           </label>
+           <select
+             id="licenseState"
+             name="License_State_AutoOwners__c"
+             class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+           >
+             <option value="">--Select--</option>
+             <option value="AK">AK</option>
+  <option value="AL">AL</option>
+  <option value="AR">AR</option>
+  <option value="AZ">AZ</option>
+  <option value="CA">CA</option>
+  <option value="CO">CO</option>
+  <option value="CT">CT</option>
+  <option value="DC">DC</option>
+  <option value="DE">DE</option>
+  <option value="FL">FL</option>
+  <option value="GA">GA</option>
+  <option value="HI">HI</option>
+  <option value="IA">IA</option>
+  <option value="ID">ID</option>
+  <option value="IL">IL</option>
+  <option value="IN">IN</option>
+  <option value="KS">KS</option>
+  <option value="KY">KY</option>
+  <option value="LA">LA</option>
+  <option value="MA">MA</option>
+  <option value="MD">MD</option>
+  <option value="ME">ME</option>
+  <option value="MI">MI</option>
+  <option value="MN">MN</option>
+  <option value="MO">MO</option>
+  <option value="MS">MS</option>
+  <option value="MT">MT</option>
+  <option value="NC">NC</option>
+  <option value="ND">ND</option>
+  <option value="NE">NE</option>
+  <option value="NH">NH</option>
+  <option value="NJ">NJ</option>
+  <option value="NM">NM</option>
+  <option value="NV">NV</option>
+  <option value="NY">NY</option>
+  <option value="OH">OH</option>
+  <option value="OK">OK</option>
+  <option value="OR">OR</option>
+  <option value="PA">PA</option>
+  <option value="RI">RI</option>
+  <option value="SC">SC</option>
+  <option value="SD">SD</option>
+  <option value="TN">TN</option>
+  <option value="TX">TX</option>
+  <option value="UT">UT</option>
+  <option value="VA">VA</option>
+  <option value="VT">VT</option>
+  <option value="WA">WA</option>
+  <option value="WI">WI</option>
+  <option value="WV">WV</option>
+  <option value="WY">WY</option>
+             
+           </select>
+         </div>
+
+
+
+         <div class="flex-1">
+           <label for="licenseNumber" class="block text-sm font-medium text-gray-700">
+             License Number<span class="star">*</span>
+           </label>
+           <input
+             type="text"
+             id="licenseNumber"
+             name="Drivers_license_number__c"
+             class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+             autocomplete="off"
+           />
+         </div>
+        </div>
+
+         <!-- NEW: Child Discount Fields - HIDDEN BY DEFAULT -->
+        <div id="childDiscountFields" class="flex space-x-4 mb-3 hidden">
+          <div class="flex-1">
+            <label for="goodStudentDriver" class="block text-sm font-medium text-gray-700">
+              Good Student Driver<span class="star">*</span>
+            </label>
+            <select id="goodStudentDriver" name="Good_Student_Driver_AutoOwners__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--Select--</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+          <div class="flex-1">
+            <label for="teenDriverMonitoring" class="block text-sm font-medium text-gray-700">
+              Teen Driver Monitoring Discount<span class="star">*</span>
+            </label>
+            <select id="teenDriverMonitoring" name="Teen_Driver_Monitoring_Discount__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm">
+              <option value="">--Select--</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+        <div id="motorcycleSafetyField" class="mb-3 hidden">
+          <label for="motorcycleSafety" class="block text-sm font-medium text-gray-700">
+            Motorcycle Safety Foundation Discount<span class="star">*</span>
+          </label>
+          <select id="motorcycleSafety" name="Motorcycle_Safety_Foundation_Discount__c" class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm mb-1">
+            <option value="">--Select--</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+       
+<!-- GPA note, visible only for Child relationship -->
+<div
+  id="goodStudentNote"
+  class="hidden mt-2 rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-gray-800 mb-2"
+>
+  <p>
+    <strong>Note:</strong>
+    Please email proof of recent grades showing GPA 3.0 or higher to
+    <a href="mailto:agency@bennettandporter.com" class="text-blue-600 underline">
+      agency@bennettandporter.com
+    </a>.
+  </p>
+  <p>If proof of grades not received within 5 days, discount will be removed.</p>
+</div>
+
+
+
+        <!-- Vehicles vs Drivers -->
+<div class="mb-3">
+  <label for="moreVehiclesThanDrivers" class="block text-sm font-medium text-gray-700 ">
+    Is number of vehicles more than number of drivers?<span class="star">*</span>
+  </label>
+  <select
+    id="moreVehiclesThanDrivers"
+    name="More_Vehicles_Than_Drivers__c"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+  >
+    <option value="">--Select--</option>
+    <option value="Yes">Yes</option>
+    <option value="No">No</option>
+  </select>
+</div>
+
+<!-- Age question (hidden until answer = Yes) -->
+<div id="vehicleAgeContainer" class="mb-3 hidden">
+  <label for="vehicleDriverAge" class="block text-sm font-medium text-gray-700">
+    Age<span class="star">*</span>
+  </label>
+  <input
+    type="number"
+    id="vehicleDriverAge"
+    name="Age__c"
+    min="0"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+    autocomplete="off"
+  />
+</div>
+
+<!-- VIN field (conditional on age + relationship) -->
+<div id="vinFieldContainer" class="mb-3 hidden">
+  <label for="extraVehicleVIN" class="block text-sm font-medium text-gray-700">
+    VIN<span class="star">*</span>
+  </label>
+  <input
+    type="text"
+    id="extraVehicleVIN"
+    name="VIN_number__c"
+    class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+    autocomplete="off"
+  />
+</div>
+
+      </div>
+
+      <!-- Hidden Salesforce fields -->
+      <input type="hidden" name="oid" value="00Dcb000009T0mR" />
+ <!-- <input type="hidden" name="recordType" id="recordType" value="012U7000003Ie5JIAS" />-->
+      <input type="hidden" name="retURL" value="https://bennettandporter.com/" />
+      <input type="hidden" name="first_name" value="Add Driver Test AutoOwners New" />
+      <input type="hidden" name="last_name" value="Test Demo" />
+      <input type="hidden" name="status" value="New" />
+      <input type="hidden" name="phone" value="28436836129" />
+      <input type="hidden" name="lead_source" value="Web Form" />
+      <input type="hidden" name="company" value="Test Company" />
+      <input type="hidden" name="Debug_Notes__c" value="AutoOwners Test: 2025-06-27 07:21AM" />
+      <input type="hidden" name="delete_Action_Form__c" value="1" />
+      <input type="hidden" id="formDataJson" name="Form_Captured_Data__c" value="" />
+      <input type="hidden" id="missingFormData" name="Form_Missing_Data__c" value="" />
+                     <input type="hidden" name="Carrier__c" value ="Auto Owners">
+                  <!--   <input type="hidden" name="debug" value=1>                              
+<input type="hidden" name="debugEmail" value="annie.rawal@caeliusconsulting.com">-->
+
+      <!-- Submit button -->
+      <div class="flex justify-end mt-6">
+       <button
+         type="button"
+         id="reviewBtn"
+         class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+       >
+         Review and Submit
+       </button>
+      </div>
+    </form>
+
+    <!-- Confirmation Dialog -->
+    <div
+      id="dialog"
+      class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dialogTitle"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+        <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+        <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+        <div class="flex justify-end space-x-3" id="dialogButtons">
+         <button
+           id="proceedBtn"
+           class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+         >
+           Proceed to End Request
+         </button>
+         <button
+           id="editBtn"
+           class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+         >
+           Edit
+         </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("mainForm");
+        const reviewBtn = document.getElementById("reviewBtn");
+        const dialog = document.getElementById("dialog");
+        const dialogTitle = document.getElementById("dialogTitle");
+        const missingFieldsList = document.getElementById("missingFieldsList");
+        const proceedBtn = document.getElementById("proceedBtn");
+        const editBtn = document.getElementById("editBtn");
+        const moreVehiclesSelect = document.getElementById("moreVehiclesThanDrivers");
+const vehicleAgeContainer = document.getElementById("vehicleAgeContainer");
+const vehicleAgeInput = document.getElementById("vehicleDriverAge");
+const vinFieldContainer = document.getElementById("vinFieldContainer");
+const vinInput = document.getElementById("extraVehicleVIN");
+const goodStudentNote = document.getElementById('goodStudentNote');
+
+
+
+
+
+        // Employment fields containers
+        const employmentFieldsContainer = document.getElementById("employmentFields");
+        const cityOfEmploymentField = document.getElementById("cityOfEmploymentField");
+        // NEW: Child discount fields containers
+        const childDiscountFieldsContainer = document.getElementById("childDiscountFields");
+        const motorcycleSafetyField = document.getElementById("motorcycleSafetyField");
+        const relationshipSelect = document.getElementById("driverRelationship");
+
+        
+
+        // Toggle employment fields based on relationship
+        function toggleEmploymentFields() {
+         const relationshipValue = relationshipSelect.value;
+         const shouldShowEmployment = relationshipValue === "Spouse" || relationshipValue === "Unrelated Named Insured";
+         
+         if (shouldShowEmployment) {
+           employmentFieldsContainer.classList.remove("hidden");
+           cityOfEmploymentField.classList.remove("hidden");
+           // Reset fields when shown
+           document.getElementById("businessIndustry").value = "";
+           document.getElementById("occupation").value = "";
+           document.getElementById("cityOfEmployment").value = "";
+         } else {
+           employmentFieldsContainer.classList.add("hidden");
+           cityOfEmploymentField.classList.add("hidden");
+         }
+        }
+
+        // NEW: Toggle child discount fields based on relationship
+        function toggleChildDiscountFields() {
+  const relationshipValue = relationshipSelect.value;
+  const shouldShowChildFields = relationshipValue === "Child";
+  
+  if (shouldShowChildFields) {
+    childDiscountFieldsContainer.classList.remove("hidden");
+    motorcycleSafetyField.classList.remove("hidden");
+    if (goodStudentNote) {
+      goodStudentNote.classList.remove("hidden");
+    }
+    // Reset fields when shown
+    document.getElementById("goodStudentDriver").value = "";
+    document.getElementById("teenDriverMonitoring").value = "";
+    document.getElementById("motorcycleSafety").value = "";
+  } else {
+    childDiscountFieldsContainer.classList.add("hidden");
+    motorcycleSafetyField.classList.add("hidden");
+    if (goodStudentNote) {
+      goodStudentNote.classList.add("hidden");
+    }
+  }
+}
+
+
+const baseFieldData = [
+  { id: 'email', label: 'Email', type: 'email' },
+  { id: '00NU7000005zuX3', label: 'Policy Number' },
+  { id: '00NU7000005zuLl', label: 'Effective Date MM/DD/YYYY', type: 'date' },
+  { id: 'driverFirstName', label: 'First Name' },
+  { id: 'driverLastName', label: 'Last Name' },
+  { id: 'driverDOB', label: 'Date of Birth MM/DD/YYYY', type: 'date' },
+  { id: 'driverGender', label: 'Gender' },
+  { id: 'driverMaritalStatus', label: 'Marital Status' },
+  { id: 'driverRelationship', label: 'Relationship' },
+  { id: 'driverStatus', label: 'Driver Status' },
+  { id: 'licenseState', label: 'License State' },
+  { id: 'licenseNumber', label: 'License Number' },
+  { id: 'moreVehiclesThanDrivers', label: 'Is number of vehicles more than number of drivers?' }
+];
+
+function isRequestTypeSelected() {
+  const radios = document.querySelectorAll('input[name="Is_this_a_quote_or_a_change_request__c"]:checked');
+  return radios.length > 0;
+}
+
+
+const vehicleLogicFieldData = [
+  { id: "vehicleDriverAge", label: "Age" },
+  { id: "extraVehicleVIN", label: "VIN" }
+];
+
+function resetVehicleLogicFields() {
+  vehicleAgeInput.value = "";
+  vinInput.value = "";
+  vehicleAgeContainer.classList.add("hidden");
+  vinFieldContainer.classList.add("hidden");
+}
+
+// Step 1: handle Yes/No on number of vehicles
+function handleMoreVehiclesChange() {
+  const val = moreVehiclesSelect.value;
+
+  if (val === "Yes") {
+    vehicleAgeContainer.classList.remove("hidden");
+  } else {
+    resetVehicleLogicFields();
+  }
+
+  // Whenever top answer changes, also re-evaluate VIN visibility
+  updateVinVisibility();
+}
+
+// Step 2: decide when to show VIN based on age + relationship
+function updateVinVisibility() {
+  const moreVehicles = moreVehiclesSelect.value === "Yes";
+  const ageValue = parseInt(vehicleAgeInput.value, 10);
+  const relationshipValue = relationshipSelect.value;
+
+  // Default: hide VIN
+  vinFieldContainer.classList.add("hidden");
+
+  if (!moreVehicles || isNaN(ageValue)) {
+    // If number-of-vehicles is not Yes or age not provided, VIN stays hidden
+    return;
+  }
+
+  // Age > 25 => always show VIN
+  if (ageValue > 25) {
+    vinFieldContainer.classList.remove("hidden");
+    return;
+  }
+
+  // Age <= 25 => show VIN only when relationship is Child
+  if (ageValue <= 25 && relationshipValue === "Child") {
+    vinFieldContainer.classList.remove("hidden");
+  }
+}
+
+moreVehiclesSelect.addEventListener("change", handleMoreVehiclesChange);
+vehicleAgeInput.addEventListener("input", updateVinVisibility);
+relationshipSelect.addEventListener("change", function () {
+  toggleEmploymentFields();
+  toggleChildDiscountFields();
+  // relationship change can affect VIN visibility for age <= 25
+  updateVinVisibility();
+});
+
+// On initial load
+handleMoreVehiclesChange();
+updateVinVisibility();
+
+
+        // Employment field data (conditionally validated)
+        const employmentFieldData = [
+         { id: "businessIndustry", label: "Business/Industry" },
+         { id: "occupation", label: "Occupation" },
+         { id: "cityOfEmployment", label: "City of Employment" }
+        ];
+
+        // NEW: Child discount field data (conditionally validated)
+        const childDiscountFieldData = [
+         { id: "goodStudentDriver", label: "Good Student Driver" },
+         { id: "teenDriverMonitoring", label: "Teen Driver Monitoring Discount" },
+         { id: "motorcycleSafety", label: "Motorcycle Safety Foundation Discount" }
+        ];
+
+        function isValidDateFormat(value) {
+         return /^(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])\/\d{4}$/.test(value);
+        }
+
+        let formDataJsonInput = document.getElementById("formDataJson");
+        if (!formDataJsonInput) {
+         formDataJsonInput = document.createElement("input");
+         formDataJsonInput.type = "hidden";
+         formDataJsonInput.id = "formDataJson";
+         formDataJsonInput.name = "Form_Captured_Data__c";
+         form.appendChild(formDataJsonInput);
+        }
+
+        let missingFormDataInput = document.getElementById("missingFormData");
+        if (!missingFormDataInput) {
+         missingFormDataInput = document.createElement("input");
+         missingFormDataInput.type = "hidden";
+         missingFormDataInput.id = "missingFormData";
+         missingFormDataInput.name = "Form_Missing_Data__c";
+         form.appendChild(missingFormDataInput);
+        }
+
+        // Enhanced validation that includes conditional employment AND child discount fields
+        function validateFields() {
+         const missing = [];
+         
+         // Always validate base fields
+       baseFieldData.forEach(field => {
+  const input = document.getElementById(field.id);
+  if (field.type === 'email') {
+    if (!input.value.trim() || !input.checkValidity()) {
+      missing.push(field.label);
+    }
+  } else if (field.type === 'date') {
+    if (!input.value.trim() || !isValidDateFormat(input.value.trim())) {
+      missing.push(field.label);
+    }
+  } else if (!input.value.trim()) {
+    missing.push(field.label);
+  }
+});
+// Validate Request Type radios separately
+if (!isRequestTypeSelected()) {
+  missing.push('Request Type');
+}
+
+         
+
+         
+         // Conditionally validate employment fields if visible
+         const relationshipValue = relationshipSelect.value;
+         const shouldValidateEmployment = relationshipValue === "Spouse" || relationshipValue === "Unrelated Named Insured";
+         
+         if (shouldValidateEmployment) {
+           employmentFieldData.forEach((field) => {
+             const input = document.getElementById(field.id);
+             if (!input.value.trim()) {
+               missing.push(field.label);
+             }
+           });
+         }
+
+         // NEW: Conditionally validate child discount fields if visible
+         const shouldValidateChildDiscounts = relationshipValue === "Child";
+         if (shouldValidateChildDiscounts) {
+           childDiscountFieldData.forEach((field) => {
+             const input = document.getElementById(field.id);
+             if (!input.value.trim()) {
+               missing.push(field.label);
+             }
+           });
+         }
+         const moreVehicles = moreVehiclesSelect.value === "Yes";
+const ageVal = vehicleAgeInput.value.trim();
+const parsedAge = parseInt(ageVal, 10);
+
+// If user answered Yes, Age becomes required
+if (moreVehicles) {
+  if (!ageVal || isNaN(parsedAge) || parsedAge < 0) {
+    missing.push("Age");
+  } else {
+    // If VIN should be visible per business rules, make it required
+    const shouldShowVin =
+      parsedAge > 25 ||
+      (parsedAge <= 25 && relationshipValue === "Child");
+
+    if (shouldShowVin) {
+      if (!vinInput.value.trim()) {
+        missing.push("VIN");
+      }
+    }
+  }
+}
+
+         return missing;
+        }
+
+        reviewBtn.addEventListener("click", () => {
+         let missing = validateFields();
+
+         const completedData = [];
+         
+         // Add base fields
+         baseFieldData.forEach((field) => {
+           const input = document.getElementById(field.id);
+           const value = input.value.trim();
+           if (!missing.includes(field.label) && value) {
+             completedData.push(`${field.label} = ${value}`);
+           }
+         });
+        
+if (moreVehiclesSelect.value) {
+  if (!missing.includes("Is number of vehicles more than number of drivers?")) {
+    completedData.push(
+      `Is number of vehicles more than number of drivers? = ${moreVehiclesSelect.value}`
+    );
+  }
+}
+
+if (!vehicleAgeContainer.classList.contains("hidden")) {
+  const ageValForCapture = vehicleAgeInput.value.trim();
+  if (ageValForCapture && !missing.includes("Age")) {
+    completedData.push(`Age = ${ageValForCapture}`);
+  }
+}
+
+if (!vinFieldContainer.classList.contains("hidden")) {
+  const vinValForCapture = vinInput.value.trim();
+  if (vinValForCapture && !missing.includes("VIN")) {
+    completedData.push(`VIN = ${vinValForCapture}`);
+  }
+}
+
+         // Add employment fields if visible and completed
+         const relationshipValue = relationshipSelect.value;
+         const shouldIncludeEmployment = relationshipValue === "Spouse" || relationshipValue === "Unrelated Named Insured";
+         
+         if (shouldIncludeEmployment) {
+           employmentFieldData.forEach((field) => {
+             const input = document.getElementById(field.id);
+             const value = input.value.trim();
+             if (!missing.includes(field.label) && value) {
+               completedData.push(`${field.label} = ${value}`);
+             }
+           });
+         }
+
+         // NEW: Add child discount fields if visible and completed
+         const shouldIncludeChildDiscounts = relationshipValue === "Child";
+         if (shouldIncludeChildDiscounts) {
+           childDiscountFieldData.forEach((field) => {
+             const input = document.getElementById(field.id);
+             const value = input.value.trim();
+             if (!missing.includes(field.label) && value) {
+               completedData.push(`${field.label} = ${value}`);
+             }
+           });
+         }
+
+         // Store completed data in hidden field
+         formDataJsonInput.value = completedData.join("\n");
+
+         // Store missing fields in hidden field
+         missingFormDataInput.value = missing.join("\n");
+
+         if (missing.length) {
+           dialogTitle.textContent = "Below Mandatory Fields are missing and the Team will contact you shortly.";
+           missingFieldsList.innerHTML = missing.map((f) => `<li>${f}</li>`).join("");
+         } else {
+           dialogTitle.textContent = "All mandatory fields are completed. Ready to submit your request?";
+           missingFieldsList.innerHTML = "";
+         }
+
+         dialog.classList.remove("hidden");
+        });
+
+        editBtn.addEventListener("click", () => {
+         dialog.classList.add("hidden");
+        });
+
+        proceedBtn.addEventListener("click", () => {
+         dialog.classList.add("hidden");
+         form.submit();
+        });
+
+        window.addEventListener("click", (e) => {
+         if (e.target === dialog) {
+           dialog.classList.add("hidden");
+         }
+        });
+        window.addEventListener("keydown", (e) => {
+         if (e.key === "Escape" && !dialog.classList.contains("hidden")) {
+           dialog.classList.add("hidden");
+         }
+        });
+
+        // Attach relationship change listener
+        relationshipSelect.addEventListener("change", function() {
+         toggleEmploymentFields();
+         toggleChildDiscountFields();
+        });
+        
+        // Initialize on page load
+        toggleEmploymentFields();
+        toggleChildDiscountFields();
+
+        // Initialize Pikaday datepickers
+        new Pikaday({
+         field: document.getElementById("00NU7000005zuLl"),
+         format: "MM/DD/YYYY",
+         toString(date) {
+           const day = String(date.getDate()).padStart(2, "0");
+           const month = String(date.getMonth() + 1).padStart(2, "0");
+           const year = date.getFullYear();
+           return `${month}/${day}/${year}`;
+         },
+         parse(dateString) {
+           const [month, day, year] = dateString.split("/");
+           return new Date(year, month - 1, day);
+         },
+        });
+
+        new Pikaday({
+         field: document.getElementById("driverDOB"),
+         format: "MM/DD/YYYY",
+         toString(date) {
+           const day = String(date.getDate()).padStart(2, "0");
+           const month = String(date.getMonth() + 1).padStart(2, "0");
+           const year = date.getFullYear();
+           return `${month}/${day}/${year}`;
+         },
+         parse(dateString) {
+           const [month, day, year] = dateString.split("/");
+           return new Date(year, month - 1, day);
+         },
+        });
+      });
+    </script>
+  </body>
+</html>
