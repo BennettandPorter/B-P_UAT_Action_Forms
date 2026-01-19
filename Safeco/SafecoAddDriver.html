@@ -537,7 +537,7 @@ discount. You are required to provide within 7 days to avoid discount being remo
         <option value="Yes">Yes</option>
         <option value="No">No</option>
       </select>
-      <div class="hidden">
+      <div id="namedInsuredDropdownWrap" class="hidden">
         <label for="00NU7000006VUKv"  class="block text-sm font-medium text-gray-700">
           Select Named Insured Driver<span class="text-red-600">*</span>
         </label>
@@ -984,7 +984,7 @@ function validateAllFields() {
     let val = "";
     let isMissing = false;
 
-    // Respect section visibility
+    // 1. Check Section Visibility
     if (field.sectionId) {
       const section = document.getElementById(field.sectionId);
       if (!section) return;
@@ -993,39 +993,41 @@ function validateAllFields() {
       if (isHiddenByClass || isHiddenByStyle) return;
     }
 
+    // 2. NEW: Check if the specific element or its immediate container is hidden
+    const input = document.getElementById(field.id);
+    if (input) {
+      // offsetParent is null if the element or any of its parents are 'display: none'
+      if (input.type !== "hidden" && input.offsetParent === null) {
+        return; 
+      }
+    }
+
     if (field.type === "radio") {
       const radios = document.querySelectorAll(`input[name="${field.id}"]`);
       const chosen = Array.from(radios).find(r => r.checked);
       val = chosen ? chosen.value : "";
       isMissing = !val;
-    }  else {
-  const input = document.getElementById(field.id);
-  if (!input || input.disabled) return;
-
-  // Special handling for the two RightTrack confirmation checkboxes
-  if (field.type === "checkbox") {
-    const rt = document.getElementById("00NU7000006VUPl");
-    const rtIsYes = rt && rt.value === "Yes";
-
-    // If RightTrack is not Yes, completely skip these fields
-    if (!rtIsYes) return;
-
-    // When RightTrack is Yes, treat "not checked" as missing
-    val = input.checked ? "Yes" : "";
-    isMissing = !input.checked;
-  } else {
-    // Normal text/select/date/email fields
-    val = (input.value || "").trim();
-    if (field.type === "email") {
-      isMissing = !val || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
-    } else if (field.type === "date") {
-      isMissing = !val || !parseMMDDYYYY(val);
     } else {
-      isMissing = !val;
-    }
-  }
-}
+      if (!input || input.disabled) return;
 
+      if (field.type === "checkbox") {
+        const rt = document.getElementById("00NU7000006VUPl");
+        const rtIsYes = rt && rt.value === "Yes";
+        if (!rtIsYes) return;
+
+        val = input.checked ? "Yes" : "";
+        isMissing = !input.checked;
+      } else {
+        val = (input.value || "").trim();
+        if (field.type === "email") {
+          isMissing = !val || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val);
+        } else if (field.type === "date") {
+          isMissing = !val || !parseMMDDYYYY(val);
+        } else {
+          isMissing = !val;
+        }
+      }
+    }
 
     if (isMissing) {
       missingLabels.push(field.label);
