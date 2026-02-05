@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Auto Owners Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css" />
+    <style>
+      .hidden { display: none; }
+      .star { color: #ef4444; margin-left: 2px; }
+      .modal-bg { background: rgba(0,0,0,0.4); }
+    </style>
+  </head>
+  <body class="bg-gray-100 flex items-center justify-center min-h-screen p-6">
+    <form
+      id="mainForm"
+      action="https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DU7000006EuID"
+      method="POST"
+      class="bg-white p-8 rounded-2xl shadow-md w-full max-w-xl space-y-8 relative"
+      autocomplete="off"
+      novalidate
+    >
+      <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+        EOI Auto Owners Form
+      </h2>
+
+      <!-- Policy Changes Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Policy Changes Section">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Policy Changes</h3>
+
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">
+            Email<span class="star">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            autocomplete="off"
+          />
+        </div>
+
+        <fieldset class="mb-4">
+          <legend class="block text-sm font-medium text-gray-700 mb-1">
+            Select the Request Type:<span class="star">*</span>
+          </legend>
+
+          <div class="flex space-x-6">
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="requestTypeRadios"
+                value="Quote"
+                class="mr-2"
+              />
+              Quote
+            </label>
+
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="requestTypeRadios"
+                value="Endorsement"
+                class="mr-2"
+              />
+              Endorsement
+            </label>
+          </div>
+
+          <select
+            id="00NU7000006IOzh"
+            name="Is_this_a_quote_or_a_change_request__c"
+            class="hidden"
+          >
+            <option value=""></option>
+            <option value="Quote">Quote</option>
+            <option value="Endorsement">Endorsement</option>
+          </select>
+        </fieldset>
+
+        <input type="hidden" name="Policy_Action__c" id="00NU7000005zuNN" value="EOI" />
+
+        <div class="mb-4">
+          <label for="00NU7000005zuX3" class="block text-sm font-medium text-gray-700">
+            Policy Number<span class="star">*</span>
+          </label>
+          <input
+            type="text"
+            id="00NU7000005zuX3"
+            name="Policy_Number__c"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label for="00NU7000005zuLl" class="block text-sm font-medium text-gray-700">
+            Effective Date (MM/DD/YYYY)<span class="star">*</span>
+          </label>
+          <input
+            type="text"
+            id="00NU7000005zuLl"
+            name="Date__c"
+            placeholder="MM/DD/YYYY"
+            maxlength="10"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            autocomplete="off"
+          />
+        </div>
+      </section>
+
+      <!-- Remove Mortgage Details Section -->
+      <section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Remove Mortgage Details Section">
+        <h3 class="text-xl font-semibold mb-4 text-gray-700">Remove Mortgage Details</h3>
+
+        <div class="mb-4">
+          <label for="numMortgageeToDelete" class="block text-sm font-medium text-gray-700">
+            Please select the number of mortgagee you want to delete:<span class="star">*</span>
+          </label>
+          <select
+            id="numMortgageeToDelete"
+            name="numMortgageeToDelete"
+            class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+          </select>
+        </div>
+
+        <div id="mortgageeDeleteContainer" class="space-y-4">
+          <div id="mortgageeDelete1Wrapper" class="hidden">
+            <label for="00NU70000085jkf" class="block text-sm font-medium text-gray-700">
+              Please enter the Name of Mortgagee to delete:
+            </label>
+            <input
+              id="00NU70000085jkf"
+              maxlength="30"
+              name="name_of_Mortgagee_to_delete_1__c"
+              size="20"
+              type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
+          <div id="mortgageeDelete2Wrapper" class="hidden">
+            <label for="00NU70000085jmH" class="block text-sm font-medium text-gray-700">
+              Please enter the Name of Mortgagee to delete:
+            </label>
+            <input
+              id="00NU70000085jmH"
+              maxlength="30"
+              name="name_of_Mortgagee_to_delete_2__c"
+              size="20"
+              type="text"
+              class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Add Mortgage Details Section -->
+<section class="bg-gray-50 border rounded-xl p-6 shadow-inner" aria-label="Add Mortgage Details Section">
+  <h3 class="text-xl font-semibold mb-4 text-gray-700">Add Mortgage Details</h3>
+
+  <div class="mb-4">
+    <label for="numMortgageeToAdd" class="block text-sm font-medium text-gray-700">
+      Please select the number of Mortgagee Details you want to Add:<span class="star">*</span>
+    </label>
+    <select
+      id="numMortgageeToAdd"
+      name="numMortgageeToAdd"
+      class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+      required
+    >
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+
+  <div id="mortgageeAddContainer" class="space-y-6">
+
+    <!-- Mortgagee 1 -->
+    <div id="addMortgagee1Wrapper" class="hidden border border-gray-200 rounded-lg p-4 space-y-3">
+      <h4 class="text-md font-semibold text-gray-700 border-b pb-2">Add Mortgage 1</h4>
+
+      <div>
+        <label for="00NU70000085iIL" class="block text-sm font-medium text-gray-700">
+          Interest Type<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085iIL"
+          name="Interest_Type_1__c"
+          title="Interest Type 1"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Mortgagee/Home Equity Line of Credit">Mortgagee/Home Equity Line of Credit</option>
+          <option value="Additional Interest">Additional Interest</option>
+        </select>
+      </div>
+
+      <div id="mortgageeRank1Wrapper" class="hidden">
+        <label for="00NU70000085jHd" class="block text-sm font-medium text-gray-700">
+          Mortgagee Rank<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000085jHd"
+          name="Mortgagee_Rank__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div id="partyCode1Wrapper" class="hidden">
+        <label for="00NU70000085jRJ" class="block text-sm font-medium text-gray-700">
+          Party Code<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085jRJ"
+          name="Party_Code_1__c"
+          title="Party Code 1"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Administrator">Administrator</option>
+          <option value="Deedholder">Deedholder</option>
+          <option value="Executor">Executor</option>
+          <option value="Titleholder / Joint Titleholder">Titleholder / Joint Titleholder</option>
+          <option value="Contract Holder">Contract Holder</option>
+          <option value="Contractor's Interest">Contractor's Interest</option>
+          <option value="Loss Payable">Loss Payable</option>
+          <option value="Property and Liability">Property and Liability</option>
+          <option value="Additional Insured - Liability Only">Additional Insured - Liability Only</option>
+          <option value="Additional Insured - Watercraft Storing and Mooring">Additional Insured - Watercraft Storing and Mooring</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU70000074A4n" class="block text-sm font-medium text-gray-700">
+          Interest Name<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000074A4n"
+          name="name_1__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      
+        <div>
+              <label for="00NU700000749FD" class="block text-sm font-medium text-gray-700">
+                Interest Name Line 2:
+              </label>
+              <input
+                id="00NU700000749FD"
+                name="name1_1_1__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+            
+              <div>
+              <input
+                id="00NU7000007CBN3"
+                name="Name_Continued__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+            
+            <div>
+              <label for="00NU70000085j7x" class="block text-sm font-medium text-gray-700">
+                Attention/Care of:
+              </label>
+              <input
+                id="00NU70000085j7x"
+                name="Attention_Care_of_1__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+            
+          <div>
+              <label for="00NU70000085kQb" class="block text-sm font-medium text-gray-700">
+                Country:
+              </label>
+              <select
+                id="00NU70000085kQb"
+                name="Auto_Owners_Country_1__c"
+                title="Auto Owners Country 1"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              >
+                <option value="">--None--</option>
+                <option value="United States of America">United States of America</option>
+                <option value="Canada">Canada</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Other Alien Countries">Other Alien Countries</option>
+                <option value="American Samoa">American Samoa</option>
+                <option value="Armed Forces Americas">Armed Forces Americas</option>
+                <option value="Armed Forces Other">Armed Forces Other</option>
+                <option value="Armed Forces Pacific">Armed Forces Pacific</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                <option value="Guam">Guam</option>
+                <option value="Guantanamo Bay (US Naval Base)">Guantanamo Bay (US Naval Base)</option>
+                <option value="Marshall Islands">Marshall Islands</option>
+                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option value="Palau">Palau</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="US Virgin Islands">US Virgin Islands</option>
+              </select>
+            </div>    
+            
+      <div>
+        <label for="00NU7000006qtOL" class="block text-sm font-medium text-gray-700">
+          Mailing Address<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000006qtOL"
+          name="Address_Line_1_GL__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      
+      <div>
+              <input
+                id="00NU7000006qtg5"
+                name="Address_Line_1_2_Gl__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+            
+            
+      
+      <div>
+        <label for="00NU7000006qtcr" class="block text-sm font-medium text-gray-700">
+          City<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000006qtcr"
+          name="City_1_GL__c"
+          maxlength="255"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU7000007lLwD" class="block text-sm font-medium text-gray-700">
+          State<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU7000007lLwD"
+          name="License_State_AutoOwners__c"
+          title="License State AutoOwners"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="AK">AK</option>
+          <option value="AL">AL</option>
+          <option value="AR">AR</option>
+          <option value="AZ">AZ</option>
+<option value="CA">CA</option>
+<option value="CO">CO</option>
+<option value="CT">CT</option>
+<option value="DC">DC</option>
+<option value="DE">DE</option>
+<option value="FL">FL</option>
+<option value="GA">GA</option>
+<option value="HI">HI</option>
+<option value="IA">IA</option>
+<option value="ID">ID</option>
+<option value="IL">IL</option>
+<option value="IN">IN</option>
+<option value="KS">KS</option>
+<option value="KY">KY</option>
+<option value="LA">LA</option>
+<option value="MA">MA</option>
+<option value="MD">MD</option>
+<option value="ME">ME</option>
+<option value="MI">MI</option>
+<option value="MN">MN</option>
+<option value="MO">MO</option>
+<option value="MS">MS</option>
+<option value="MT">MT</option>
+<option value="NC">NC</option>
+<option value="ND">ND</option>
+<option value="NE">NE</option>
+<option value="NH">NH</option>
+<option value="NJ">NJ</option>
+<option value="NM">NM</option>
+<option value="NV">NV</option>
+<option value="NY">NY</option>
+<option value="OH">OH</option>
+<option value="OK">OK</option>
+<option value="OR">OR</option>
+<option value="PA">PA</option>
+<option value="RI">RI</option>
+<option value="SC">SC</option>
+<option value="SD">SD</option>
+<option value="TN">TN</option>
+<option value="TX">TX</option>
+<option value="UT">UT</option>
+<option value="VA">VA</option>
+<option value="VT">VT</option>
+<option value="WA">WA</option>
+<option value="WI">WI</option>
+<option value="WV">WV</option>
+<option value="WY">WY</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU7000007qTgD" class="block text-sm font-medium text-gray-700">
+          Zip Code<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000007qTgD"
+          name="Zip_Auto_Owners_1__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU70000085iwf" class="block text-sm font-medium text-gray-700">
+          Is this an Escrow Account:
+        </label>
+        <select
+          id="00NU70000085iwf"
+          name="Is_this_an_escrow_account_1__c"
+          title="Is this an escrow account 1"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="">--None--</option>
+          <option value="Y">Yes</option>
+          <option value="N">No</option>
+        </select>
+      </div>
+      
+      <div>
+              <label for="00NU70000074ACr" class="block text-sm font-medium text-gray-700">
+                Loan Number:
+              </label>
+              <input
+                id="00NU70000074ACr"
+                name="loanNumber_1__c"
+                maxlength="255"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+    </div>
+
+    <!-- Mortgagee 2 -->
+    <div id="addMortgagee2Wrapper" class="hidden border border-gray-200 rounded-lg p-4 space-y-3">
+      <h4 class="text-md font-semibold text-gray-700 border-b pb-2">Add Mortgage 2</h4>
+
+      <div>
+        <label for="00NU70000085ia5" class="block text-sm font-medium text-gray-700">
+          Interest Type<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085ia5"
+          name="00NU70000085ia5"
+          title="Interest Type 2"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Mortgagee/Home Equity Line of Credit">Mortgagee/Home Equity Line of Credit</option>
+          <option value="Additional Interest">Additional Interest</option>
+        </select>
+      </div>
+
+      <div id="mortgageeRank2Wrapper" class="hidden">
+        <label for="00NU70000085jJF" class="block text-sm font-medium text-gray-700">
+          Mortgagee Rank<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000085jJF"
+          name="00NU70000085jJF"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div id="partyCode2Wrapper" class="hidden">
+        <label for="00NU70000085jXl" class="block text-sm font-medium text-gray-700">
+          Party Code<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085jXl"
+          name="00NU70000085jXl"
+          title="Party Code 2"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Administrator">Administrator</option>
+          <option value="Deedholder">Deedholder</option>
+          <option value="Executor">Executor</option>
+          <option value="Titleholder / Joint Titleholder">Titleholder / Joint Titleholder</option>
+          <option value="Contract Holder">Contract Holder</option>
+          <option value="Contractor's Interest">Contractor's Interest</option>
+          <option value="Loss Payable">Loss Payable</option>
+          <option value="Property and Liability">Property and Liability</option>
+          <option value="Additional Insured - Liability Only">Additional Insured - Liability Only</option>
+          <option value="Additional Insured - Watercraft Storing and Mooring">Additional Insured - Watercraft Storing and Mooring</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU70000074APl" class="block text-sm font-medium text-gray-700">
+          Interest Name<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000074APl"
+          name="name_2__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      
+      <div>
+              <label for="00NU70000074AUb" class="block text-sm font-medium text-gray-700">
+                Interest Name Line 2:
+              </label>
+              <input
+                id="00NU70000074AUb"
+                name="name2_2_2__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <input
+                id="00NU7000007bh1x"
+                name="Name_Continued_2__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <label for="00NU70000085j9Z" class="block text-sm font-medium text-gray-700">
+                Attention/Care of:
+              </label>
+              <input
+                id="00NU70000085j9Z"
+                name="Attention_Care_of_2__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <label for="00NU70000085kSD" class="block text-sm font-medium text-gray-700">
+                Country:
+              </label>
+              <select
+                id="00NU70000085kSD"
+                name="Auto_Owners_Country_2__c"
+                title="Auto Owners Country 2"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              >
+                <option value="">--None--</option>
+                <option value="United States of America">United States of America</option>
+                <option value="Canada">Canada</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Other Alien Countries">Other Alien Countries</option>
+                <option value="American Samoa">American Samoa</option>
+                <option value="Armed Forces Americas">Armed Forces Americas</option>
+                <option value="Armed Forces Other">Armed Forces Other</option>
+                <option value="Armed Forces Pacific">Armed Forces Pacific</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                <option value="Guam">Guam</option>
+                <option value="Guantanamo Bay (US Naval Base)">Guantanamo Bay (US Naval Base)</option>
+                <option value="Marshall Islands">Marshall Islands</option>
+                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option value="Palau">Palau</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="US Virgin Islands">US Virgin Islands</option>
+              </select>
+            </div>
+      
+      <div>
+        <label for="00NU7000006qtTB" class="block text-sm font-medium text-gray-700">
+          Mailing Address<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000006qtTB"
+          name="Address_Line_2_GL__c"
+          maxlength="255"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      
+      <div>
+              <input
+                id="00NU7000006qthh"
+                name="Address_Line_2_2_GL__c"
+                maxlength="255"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+      
+      <div>
+        <label for="00NU7000006qsRW" class="block text-sm font-medium text-gray-700">
+          City<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000006qsRW"
+          name="City_2_GL__c"
+          maxlength="255"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU70000085n8L" class="block text-sm font-medium text-gray-700">
+          State<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085n8L"
+          name="License_State_AutoOwners_2__c"
+          title="License State AutoOwners 2"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="AK">AK</option>
+          <option value="AL">AL</option>
+          <option value="AR">AR</option>
+          <option value="AZ">AZ</option>
+<option value="CA">CA</option>
+<option value="CO">CO</option>
+<option value="CT">CT</option>
+<option value="DC">DC</option>
+<option value="DE">DE</option>
+<option value="FL">FL</option>
+<option value="GA">GA</option>
+<option value="HI">HI</option>
+<option value="IA">IA</option>
+<option value="ID">ID</option>
+<option value="IL">IL</option>
+<option value="IN">IN</option>
+<option value="KS">KS</option>
+<option value="KY">KY</option>
+<option value="LA">LA</option>
+<option value="MA">MA</option>
+<option value="MD">MD</option>
+<option value="ME">ME</option>
+<option value="MI">MI</option>
+<option value="MN">MN</option>
+<option value="MO">MO</option>
+<option value="MS">MS</option>
+<option value="MT">MT</option>
+<option value="NC">NC</option>
+<option value="ND">ND</option>
+<option value="NE">NE</option>
+<option value="NH">NH</option>
+<option value="NJ">NJ</option>
+<option value="NM">NM</option>
+<option value="NV">NV</option>
+<option value="NY">NY</option>
+<option value="OH">OH</option>
+<option value="OK">OK</option>
+<option value="OR">OR</option>
+<option value="PA">PA</option>
+<option value="RI">RI</option>
+<option value="SC">SC</option>
+<option value="SD">SD</option>
+<option value="TN">TN</option>
+<option value="TX">TX</option>
+<option value="UT">UT</option>
+<option value="VA">VA</option>
+<option value="VT">VT</option>
+<option value="WA">WA</option>
+<option value="WI">WI</option>
+<option value="WV">WV</option>
+<option value="WY">WY</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU7000007qTpt" class="block text-sm font-medium text-gray-700">
+          Zip Code<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000007qTpt"
+          name="Zip_Auto_Owners_2__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU70000085iv3" class="block text-sm font-medium text-gray-700">
+          Is this an Escrow Account:
+        </label>
+        <select
+          id="00NU70000085iv3"
+          name="Is_this_an_escrow_account_2__c"
+          title="Is this an escrow account 2"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="">--None--</option>
+          <option value="Y">Yes</option>
+          <option value="N">No</option>
+        </select>
+      </div>
+      
+      <div>
+              <label for="00NU70000074AXp" class="block text-sm font-medium text-gray-700">
+                Loan Number:
+              </label>
+              <input
+                id="00NU70000074AXp"
+                name="loanNumber_2__c"
+                maxlength="255"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+    </div>
+
+    <!-- Mortgagee 3 -->
+    <div id="addMortgagee3Wrapper" class="hidden border border-gray-200 rounded-lg p-4 space-y-3">
+      <h4 class="text-md font-semibold text-gray-700 border-b pb-2">Add Mortgage 3</h4>
+
+      <div>
+        <label for="00NU70000085igX" class="block text-sm font-medium text-gray-700">
+          Interest Type<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085igX"
+          name="00NU70000085igX"
+          title="Interest Type 3"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Mortgagee/Home Equity Line of Credit">Mortgagee/Home Equity Line of Credit</option>
+          <option value="Additional Interest">Additional Interest</option>
+        </select>
+      </div>
+
+      <div id="mortgageeRank3Wrapper" class="hidden">
+        <label for="00NU70000085jKr" class="block text-sm font-medium text-gray-700">
+          Mortgagee Rank<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000085jKr"
+          name="00NU70000085jKr"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div id="partyCode3Wrapper" class="hidden">
+        <label for="00NU70000085jcb" class="block text-sm font-medium text-gray-700">
+          Party Code<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085jcb"
+          name="00NU70000085jcb"
+          title="Party Code 3"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="Administrator">Administrator</option>
+          <option value="Deedholder">Deedholder</option>
+          <option value="Executor">Executor</option>
+          <option value="Titleholder / Joint Titleholder">Titleholder / Joint Titleholder</option>
+          <option value="Contract Holder">Contract Holder</option>
+          <option value="Contractor's Interest">Contractor's Interest</option>
+          <option value="Loss Payable">Loss Payable</option>
+          <option value="Property and Liability">Property and Liability</option>
+          <option value="Additional Insured - Liability Only">Additional Insured - Liability Only</option>
+          <option value="Additional Insured - Watercraft Storing and Mooring">Additional Insured - Watercraft Storing and Mooring</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU70000074Axd" class="block text-sm font-medium text-gray-700">
+          Interest Name<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000074Axd"
+          name="name_3__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+      
+      <div>
+              <label for="00NU70000074B45" class="block text-sm font-medium text-gray-700">
+                Interest Name Line 2:
+              </label>
+              <input
+                id="00NU70000074B45"
+                name="name3_3_3__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <input
+                id="00NU70000085nxx"
+                name="Name_Continued_3__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <label for="00NU70000085jBB" class="block text-sm font-medium text-gray-700">
+                Attention/Care of:
+              </label>
+              <input
+                id="00NU70000085jBB"
+                name="Attention_Care_of_3__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+            <div>
+              <label for="00NU70000085kVR" class="block text-sm font-medium text-gray-700">
+                Country:
+              </label>
+              <select
+                id="00NU70000085kVR"
+                name="Auto_Owners_Country_3__c"
+                title="Auto Owners Country 3"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              >
+                <option value="">--None--</option>
+                <option value="United States of America">United States of America</option>
+                <option value="Canada">Canada</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Other Alien Countries">Other Alien Countries</option>
+                <option value="American Samoa">American Samoa</option>
+                <option value="Armed Forces Americas">Armed Forces Americas</option>
+                <option value="Armed Forces Other">Armed Forces Other</option>
+                <option value="Armed Forces Pacific">Armed Forces Pacific</option>
+                <option value="District of Columbia">District of Columbia</option>
+                <option value="Federated States of Micronesia">Federated States of Micronesia</option>
+                <option value="Guam">Guam</option>
+                <option value="Guantanamo Bay (US Naval Base)">Guantanamo Bay (US Naval Base)</option>
+                <option value="Marshall Islands">Marshall Islands</option>
+                <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                <option value="Palau">Palau</option>
+                <option value="Puerto Rico">Puerto Rico</option>
+                <option value="US Virgin Islands">US Virgin Islands</option>
+              </select>
+            </div>
+
+      
+      <div>
+        <label for="00NU7000007xfEP" class="block text-sm font-medium text-gray-700">
+          Mailing Address<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000007xfEP"
+          name="Address_Line_3_GL__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+              <input
+                id="00NU7000007xfG1"
+                name="Address_Line_3_2_GL__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+
+      <div>
+        <label for="00NU7000007xfvx" class="block text-sm font-medium text-gray-700">
+          City<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU7000007xfvx"
+          name="City_3_GL__c"
+          maxlength="50"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU70000085kTq" class="block text-sm font-medium text-gray-700">
+          State<span class="star">*</span>:
+        </label>
+        <select
+          id="00NU70000085kTq"
+          name="License_State_AutoOwners_3__c"
+          title="License State AutoOwners 3"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        >
+          <option value="">--None--</option>
+          <option value="AK">AK</option>
+          <option value="AL">AL</option>
+          <option value="AR">AR</option>
+          <option value="AZ">AZ</option>
+<option value="CA">CA</option>
+<option value="CO">CO</option>
+<option value="CT">CT</option>
+<option value="DC">DC</option>
+<option value="DE">DE</option>
+<option value="FL">FL</option>
+<option value="GA">GA</option>
+<option value="HI">HI</option>
+<option value="IA">IA</option>
+<option value="ID">ID</option>
+<option value="IL">IL</option>
+<option value="IN">IN</option>
+<option value="KS">KS</option>
+<option value="KY">KY</option>
+<option value="LA">LA</option>
+<option value="MA">MA</option>
+<option value="MD">MD</option>
+<option value="ME">ME</option>
+<option value="MI">MI</option>
+<option value="MN">MN</option>
+<option value="MO">MO</option>
+<option value="MS">MS</option>
+<option value="MT">MT</option>
+<option value="NC">NC</option>
+<option value="ND">ND</option>
+<option value="NE">NE</option>
+<option value="NH">NH</option>
+<option value="NJ">NJ</option>
+<option value="NM">NM</option>
+<option value="NV">NV</option>
+<option value="NY">NY</option>
+<option value="OH">OH</option>
+<option value="OK">OK</option>
+<option value="OR">OR</option>
+<option value="PA">PA</option>
+<option value="RI">RI</option>
+<option value="SC">SC</option>
+<option value="SD">SD</option>
+<option value="TN">TN</option>
+<option value="TX">TX</option>
+<option value="UT">UT</option>
+<option value="VA">VA</option>
+<option value="VT">VT</option>
+<option value="WA">WA</option>
+<option value="WI">WI</option>
+<option value="WV">WV</option>
+<option value="WY">WY</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="00NU70000085nmf" class="block text-sm font-medium text-gray-700">
+          Zip Code<span class="star">*</span>:
+        </label>
+        <input
+          id="00NU70000085nmf"
+          name="Zip_Auto_Owners_3__c"
+          maxlength="30"
+          type="text"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="00NU70000085itR" class="block text-sm font-medium text-gray-700">
+          Is this an Escrow Account:
+        </label>
+        <select
+          id="00NU70000085itR"
+          name="Is_this_an_escrow_account_3__c"
+          title="Is this an escrow account 3"
+          class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
+        >
+          <option value="">--None--</option>
+          <option value="Y">Yes</option>
+          <option value="N">No</option>
+        </select>
+      </div>
+      
+        <div>
+              <label for="00NU70000074B5h" class="block text-sm font-medium text-gray-700">
+                Loan Number:
+              </label>
+              <input
+                id="00NU70000074B5h"
+                name="loanNumber_3__c"
+                maxlength="30"
+                type="text"
+                class="mt-1 w-full p-2 border border-gray-300 rounded-lg shadow-sm"
+              />
+            </div>
+    </div>
+
+  </div>
+</section>
+
+      <!-- Hidden Salesforce fields -->
+      <input type="hidden" name="oid" value="00DU7000006EuID" />
+      <input
+        type="hidden"
+        name="retURL"
+        value="https://bennettandporter.com/"
+      />
+      <input type="hidden" name="first_name" value="EOI Update"/>
+      <input type="hidden" name="last_name" value="Auto Owners" />
+      <input type="hidden" name="status" value="New" />
+      <input type="hidden" name="phone" value="179184736129" />
+      <input type="hidden" name="lead_source" value="Web Form" />
+      <input type="hidden" name="delete_Action_Form__c" value="1" />
+      <input type="hidden" name="Carrier__c" value ="Auto Owners">
+      <input type="hidden" name="Form_Captured_Data__c" />
+      <input type="hidden" name="Form_Missing_Data__c" />
+      <input type="hidden" name="company" value="Auto Owners"/>
+
+      <div class="flex justify-end mt-6">
+        <button
+          type="button"
+          id="reviewBtn"
+          class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-xl hover:bg-blue-700 transition"
+        >
+          Review and Submit
+        </button>
+      </div>
+    </form>
+
+    <!-- Confirmation Dialog -->
+    <div
+      id="dialog"
+      class="hidden fixed inset-0 flex items-center justify-center modal-bg z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dialogTitle"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg text-gray-800">
+        <h3 id="dialogTitle" class="text-lg font-semibold mb-4"></h3>
+        <ul id="missingFieldsList" class="mb-4 text-red-600 text-sm"></ul>
+        <div class="flex justify-end space-x-3" id="dialogButtons">
+          <button
+            id="proceedBtn"
+            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-medium"
+          >
+            Proceed to End Request
+          </button>
+          <button
+            id="editBtn"
+            class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 font-medium"
+          >
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // ================= DATE PICKER =================
+  new Pikaday({
+    field: document.getElementById("00NU7000005zuLl"),
+    format: "MM/DD/YYYY",
+    toString(date) {
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = date.getFullYear();
+      return `${month}/${day}/${year}`;
+    },
+    parse(dateString) {
+      const [month, day, year] = dateString.split("/");
+      return new Date(year, month - 1, day);
+    },
+  });
+
+  const form = document.getElementById("mainForm");
+  const reviewBtn = document.getElementById("reviewBtn");
+  const dialog = document.getElementById("dialog");
+  const dialogTitle = document.getElementById("dialogTitle");
+  const missingFieldsList = document.getElementById("missingFieldsList");
+  const proceedBtn = document.getElementById("proceedBtn");
+  const editBtn = document.getElementById("editBtn");
+
+  // ================= CREATE/ENSURE HIDDEN FIELDS =================
+  let capturedInput = document.querySelector('input[name="Form_Captured_Data__c"]');
+  let missingInput = document.querySelector('input[name="Form_Missing_Data__c"]');
+  
+  if (!capturedInput) {
+    capturedInput = document.createElement("input");
+    capturedInput.type = "hidden";
+    capturedInput.name = "Form_Captured_Data__c";
+    form.appendChild(capturedInput);
+  }
+  
+  if (!missingInput) {
+    missingInput = document.createElement("input");
+    missingInput.type = "hidden";
+    missingInput.name = "Form_Missing_Data__c";
+    form.appendChild(missingInput);
+  }
+
+  // ================= MORTGAGEE COUNT HANDLERS =================
+  // Delete Mortgagee Count
+  const numMortgageeToDelete = document.getElementById("numMortgageeToDelete");
+  if (numMortgageeToDelete) {
+    numMortgageeToDelete.addEventListener("change", function() {
+      const count = parseInt(this.value);
+      const delete1Wrapper = document.getElementById("mortgageeDelete1Wrapper");
+      const delete2Wrapper = document.getElementById("mortgageeDelete2Wrapper");
+      
+      if (delete1Wrapper) delete1Wrapper.classList.toggle("hidden", count < 1);
+      if (delete2Wrapper) delete2Wrapper.classList.toggle("hidden", count < 2);
+    });
+  }
+
+  // Add Mortgagee Count
+  const numMortgageeToAdd = document.getElementById("numMortgageeToAdd");
+  if (numMortgageeToAdd) {
+    numMortgageeToAdd.addEventListener("change", function() {
+      const count = parseInt(this.value);
+      
+      // Toggle mortgagee sections 1-3
+      [1,2,3].forEach(i => {
+        const wrapper = document.getElementById(`addMortgagee${i}Wrapper`);
+        if (wrapper) wrapper.classList.toggle("hidden", count < i);
+      });
+      
+      setTimeout(updateInterestTypeDependencies, 100);
+    });
+  }
+
+  // ================= FIXED DYNAMIC MORTGAGEE RANK/PARTY CODE VISIBILITY =================
+function updateInterestTypeDependencies() {
+
+  const mappings = [
+    {
+      interest: "00NU70000085iIL",
+      rank: "00NU70000085jHd",
+      rankWrap: "mortgageeRank1Wrapper",
+      party: "00NU70000085jRJ",
+      partyWrap: "partyCode1Wrapper"
+    },
+    {
+      interest: "00NU70000085ia5",
+      rank: "00NU70000085jJF",
+      rankWrap: "mortgageeRank2Wrapper",
+      party: "00NU70000085jXl",
+      partyWrap: "partyCode2Wrapper"
+    },
+    {
+      interest: "00NU70000085igX",
+      rank: "00NU70000085jKr",
+      rankWrap: "mortgageeRank3Wrapper",
+      party: "00NU70000085jcb",
+      partyWrap: "partyCode3Wrapper"
+    }
+  ];
+
+  mappings.forEach(m => {
+    const interestEl = document.getElementById(m.interest);
+    const rankEl = document.getElementById(m.rank);
+    const partyEl = document.getElementById(m.party);
+    const rankWrap = document.getElementById(m.rankWrap);
+    const partyWrap = document.getElementById(m.partyWrap);
+
+    if (!interestEl) return;
+
+    // Hide both first
+    rankWrap.classList.add("hidden");
+    partyWrap.classList.add("hidden");
+
+    // 🔥 CRITICAL: clear BOTH before re-enabling one
+    rankEl.value = "";
+    partyEl.value = "";
+
+    if (interestEl.value === "Mortgagee/Home Equity Line of Credit") {
+      rankWrap.classList.remove("hidden");
+    }
+
+    if (interestEl.value === "Additional Interest") {
+      partyWrap.classList.remove("hidden");
+    }
+  });
+}
+
+
+
+
+  // Listen for interest type changes
+  document.addEventListener("change", function(e) {
+    const target = e.target;
+    if (target.id === "00NU70000085iIL" || 
+        target.id === "00NU70000085ia5" || 
+        target.id === "00NU70000085igX") {
+      updateInterestTypeDependencies();
+    }
+  });
+
+  // Initial setup
+  updateInterestTypeDependencies();
+
+  // ================= CORE FIELDS ONLY (MANDATORY) =================
+  const coreMandatoryFields = [
+    { id: "email", label: "Email", type: "email", mandatory: true },
+    { radioGroupName: "requestTypeRadios", label: "Select the Request Type", mandatory: true },
+    { id: "00NU7000005zuX3", label: "Policy Number", mandatory: true },
+    { id: "00NU7000005zuLl", label: "Effective Date", type: "date", mandatory: true },
+    { id: "numMortgageeToDelete", label: "Num Delete Mortgagees", mandatory: true },
+    { id: "numMortgageeToAdd", label: "Num Add Mortgagees", mandatory: true }
+  ];
+
+  // ================= ADD MORTGAGEE FIELDS (DYNAMICALLY MANDATORY) =================
+  const addMortgageeFields = {
+    1: [
+      { id: "00NU70000085iIL", label: "Interest Type 1", mandatory: true },
+      { id: "00NU70000085jHd", label: "Mortgagee Rank 1", dynamic: true },
+      { id: "00NU70000085jRJ", label: "Party Code 1", dynamic: true },
+      { id: "00NU70000074A4n", label: "Interest Name 1", mandatory: true },
+      { id: "00NU7000006qtOL", label: "Address 1", mandatory: true },
+      { id: "00NU7000006qtcr", label: "City 1", mandatory: true },
+      { id: "00NU7000007lLwD", label: "State 1", mandatory: true },
+      { id: "00NU7000007qTgD", label: "Zip 1", mandatory: true }
+    ],
+    2: [
+      { id: "00NU70000085ia5", label: "Interest Type 2", mandatory: true },
+      { id: "00NU70000085jJF", label: "Mortgagee Rank 2", dynamic: true },
+      { id: "00NU70000085jXl", label: "Party Code 2", dynamic: true },
+      { id: "00NU70000074APl", label: "Interest Name 2", mandatory: true },
+      { id: "00NU7000006qtTB", label: "Address 2", mandatory: true },
+      { id: "00NU7000006qsRW", label: "City 2", mandatory: true },
+      { id: "00NU70000085n8L", label: "State 2", mandatory: true },
+      { id: "00NU7000007qTpt", label: "Zip 2", mandatory: true }
+    ],
+    3: [
+      { id: "00NU70000085igX", label: "Interest Type 3", mandatory: true },
+      { id: "00NU70000085jKr", label: "Mortgagee Rank 3", dynamic: true },
+      { id: "00NU70000085jcb", label: "Party Code 3", dynamic: true },
+      { id: "00NU70000074Axd", label: "Interest Name 3", mandatory: true },
+      { id: "00NU7000007xfEP", label: "Address 3", mandatory: true },
+      { id: "00NU7000007xfvx", label: "City 3", mandatory: true },
+      { id: "00NU70000085kTq", label: "State 3", mandatory: true },
+      { id: "00NU70000085nmf", label: "Zip 3", mandatory: true }
+    ]
+  };
+
+  // ================= ALL FIELDS FOR CAPTURE =================
+  const allCaptureFields = [
+    // Core visible fields
+    { id: "email", label: "Email" },
+    { radioGroupName: "requestTypeRadios", label: "Select the Request Type" },
+    { id: "00NU7000005zuX3", label: "Policy Number" },
+    { id: "00NU7000005zuLl", label: "Effective Date" },
+    { id: "00NU7000005zuNN", label: "Policy Action" },
+    
+    // Delete section
+    { id: "numMortgageeToDelete", label: "Num Delete Mortgagees" },
+    { id: "00NU70000085jkf", label: "Delete Mortgagee 1" },
+    { id: "00NU70000085jmH", label: "Delete Mortgagee 2" },
+    { id: "numMortgageeToAdd", label: "Num Add Mortgagees" },
+    
+    // Mortgagee 1 - ALL fields
+    { id: "00NU70000085iIL", label: "Interest Type 1" },
+    { id: "00NU70000085jHd", label: "Mortgagee Rank 1" },
+    { id: "00NU70000085jRJ", label: "Party Code 1" },
+    { id: "00NU70000074A4n", label: "Interest Name 1" },
+    { id: "00NU700000749FD", label: "Name Line 2 - 1" },
+    { id: "00NU7000007CBN3", label: "Name Continued 1" },
+    { id: "00NU70000085j7x", label: "Attention 1" },
+    { id: "00NU70000085kQb", label: "Country 1" },
+    { id: "00NU7000006qtOL", label: "Address 1" },
+    { id: "00NU7000006qtg5", label: "Address 2 - 1" },
+    { id: "00NU7000006qtcr", label: "City 1" },
+    { id: "00NU7000007lLwD", label: "State 1" },
+    { id: "00NU7000007qTgD", label: "Zip 1" },
+    { id: "00NU70000085iwf", label: "Escrow 1" },
+    { id: "00NU70000074ACr", label: "Loan Num 1" },
+    
+    // Mortgagee 2 - ALL fields
+    { id: "00NU70000085ia5", label: "Interest Type 2" },
+    { id: "00NU70000085jJF", label: "Mortgagee Rank 2" },
+    { id: "00NU70000085jXl", label: "Party Code 2" },
+    { id: "00NU70000074APl", label: "Interest Name 2" },
+    { id: "00NU70000074AUb", label: "Name Line 2 - 2" },
+    { id: "00NU7000007bh1x", label: "Name Continued 2" },
+    { id: "00NU70000085j9Z", label: "Attention 2" },
+    { id: "00NU70000085kSD", label: "Country 2" },
+    { id: "00NU7000006qtTB", label: "Address 2" },
+    { id: "00NU7000006qthh", label: "Address 2-2" },
+    { id: "00NU7000006qsRW", label: "City 2" },
+    { id: "00NU70000085n8L", label: "State 2" },
+    { id: "00NU7000007qTpt", label: "Zip 2" },
+    { id: "00NU70000085iv3", label: "Escrow 2" },
+    { id: "00NU70000074AXp", label: "Loan Num 2" },
+    
+    // Mortgagee 3 - ALL fields
+    { id: "00NU70000085igX", label: "Interest Type 3" },
+    { id: "00NU70000085jKr", label: "Mortgagee Rank 3" },
+    { id: "00NU70000085jcb", label: "Party Code 3" },
+    { id: "00NU70000074Axd", label: "Interest Name 3" },
+    { id: "00NU70000074B45", label: "Name Line 2 - 3" },
+    { id: "00NU70000085nxx", label: "Name Continued 3" },
+    { id: "00NU70000085jBB", label: "Attention 3" },
+    { id: "00NU70000085kVR", label: "Country 3" },
+    { id: "00NU7000007xfEP", label: "Address 3" },
+    { id: "00NU7000007xfG1", label: "Address 3-2" },
+    { id: "00NU7000007xfvx", label: "City 3" },
+    { id: "00NU70000085kTq", label: "State 3" },
+    { id: "00NU70000085nmf", label: "Zip 3" },
+    { id: "00NU70000085itR", label: "Escrow 3" },
+    { id: "00NU70000074B5h", label: "Loan Num 3" }
+  ];
+
+  // ================= HELPER FUNCTIONS =================
+  function getFieldElement(field) {
+    if (field.radioGroupName) return document.querySelector(`input[name="${field.radioGroupName}"]`);
+    return field.id ? document.getElementById(field.id) : 
+           field.name ? document.querySelector(`input[name="${field.name}"]`) : null;
+  }
+
+  function getFieldValue(field) {
+    const el = getFieldElement(field);
+    if (!el) return "";
+    
+    if (field.radioGroupName) {
+      const checkedRadio = document.querySelector(`input[name="${field.radioGroupName}"]:checked`);
+      return checkedRadio ? checkedRadio.value : "";
+    }
+    
+    return el.value.trim();
+  }
+
+  function isFieldVisible(field) {
+    const el = getFieldElement(field);
+    if (!el) return false;
+    const wrapper = el.closest('[id*="Wrapper"], .space-y-3, .space-y-4, .space-y-6');
+    return !wrapper || !wrapper.classList.contains('hidden');
+  }
+
+  // ================= BULLETPROOF VALIDATION - CRITICAL FIX =================
+  function validateField(field) {
+    const el = getFieldElement(field);
+    if (!el) return null;
+
+    if (!isFieldVisible(field)) {
+  return null;
+    }
+    // *** CORE FIELDS - ALWAYS MANDATORY ***
+    const coreField = coreMandatoryFields.find(core => core.id === field.id || core.radioGroupName === field.radioGroupName);
+    if (coreField) {
+      const value = getFieldValue(field);
+      if (!value) return field.label;
+      
+      if (coreField.type === "email" && !el.checkValidity()) return field.label;
+      if (coreField.type === "date") {
+        const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[0-1])\/(1[9][0-9][0-9]|20[0-9][0-9])$/;
+        if (!dateRegex.test(value)) return field.label;
+      }
+      return null;
+    }
+
+    // *** DELETE FIELDS - NEVER MANDATORY ***
+    if (field.id === "00NU70000085jkf" || field.id === "00NU70000085jmH") {
+      return null;
+    }
+
+    // *** INTEREST TYPE - ALWAYS MANDATORY WHEN SECTION ACTIVE ***
+    if (field.id === "00NU70000085iIL" || field.id === "00NU70000085ia5" || field.id === "00NU70000085igX") {
+      const numAdd = parseInt(getFieldValue({ id: "numMortgageeToAdd" })) || 0;
+      const sectionNum = field.id === "00NU70000085iIL" ? 1 : field.id === "00NU70000085ia5" ? 2 : 3;
+      if (sectionNum <= numAdd) {
+        const value = getFieldValue(field);
+        if (!value) return field.label;
+      }
+      return null;
+    }
+
+    // *** DYNAMIC FIELDS VALIDATION - CRITICAL FIX ***
+    const rankIds = ["00NU70000085jHd", "00NU70000085jJF", "00NU70000085jKr"];
+    const partyIds = ["00NU70000085jRJ", "00NU70000085jXl", "00NU70000085jcb"];
+    
+    if (rankIds.includes(field.id) || partyIds.includes(field.id)) {
+      const numAdd = parseInt(getFieldValue({ id: "numMortgageeToAdd" })) || 0;
+      const sectionNum = rankIds.includes(field.id) ? 
+        (field.id === "00NU70000085jHd" ? 1 : field.id === "00NU70000085jJF" ? 2 : 3) :
+        (field.id === "00NU70000085jRJ" ? 1 : field.id === "00NU70000085jXl" ? 2 : 3);
+      
+      if (sectionNum > numAdd) return null;
+      
+      // *** CHECK INTEREST TYPE TO DETERMINE WHICH FIELD SHOULD BE VISIBLE/MANDATORY ***
+      let interestTypeId, rankWrapperId, partyWrapperId;
+      if (sectionNum === 1) {
+        interestTypeId = "00NU70000085iIL";
+        rankWrapperId = "mortgageeRank1Wrapper";
+        partyWrapperId = "partyCode1Wrapper";
+      } else if (sectionNum === 2) {
+        interestTypeId = "00NU70000085ia5";
+        rankWrapperId = "mortgageeRank2Wrapper";
+        partyWrapperId = "partyCode2Wrapper";
+      } else {
+        interestTypeId = "00NU70000085igX";
+        rankWrapperId = "mortgageeRank3Wrapper";
+        partyWrapperId = "partyCode3Wrapper";
+      }
+      
+      const interestTypeEl = document.getElementById(interestTypeId);
+      const interestTypeValue = interestTypeEl ? interestTypeEl.value : "";
+      const isMortgagee = interestTypeValue === "Mortgagee/Home Equity Line of Credit";
+      const isAdditional = interestTypeValue === "Additional Interest";
+      
+      // *** VALIDATE ONLY THE VISIBLE FIELD ***
+      if (rankIds.includes(field.id)) {
+        // Mortgagee Rank - validate only if Mortgagee selected AND wrapper visible
+        if (isMortgagee && !getFieldValue(field)) {
+          const rankWrapper = document.getElementById(rankWrapperId);
+          if (rankWrapper && !rankWrapper.classList.contains('hidden')) {
+            return field.label;
+          }
+        }
+      } else if (partyIds.includes(field.id)) {
+        // Party Code - validate only if Additional Interest selected AND wrapper visible
+        if (isAdditional && !getFieldValue(field)) {
+          const partyWrapper = document.getElementById(partyWrapperId);
+          if (partyWrapper && !partyWrapper.classList.contains('hidden')) {
+            return field.label;
+          }
+        }
+      }
+      return null;
+    }
+
+    // *** OTHER MANDATORY FIELDS (Name, Address, etc.) ***
+    if (field.mandatory && !getFieldValue(field)) {
+      const numAdd = parseInt(getFieldValue({ id: "numMortgageeToAdd" })) || 0;
+      const sectionNum = field.id.includes("00NU70000074A") || field.id.includes("00NU7000006qt") || 
+                        field.id.includes("00NU7000007lLwD") || field.id.includes("00NU7000007qTgD") ? 1 :
+                        field.id.includes("00NU70000074APl") || field.id.includes("00NU7000006qtTB") ? 2 : 3;
+      if (sectionNum <= numAdd) return field.label;
+      return null;
+    }
+
+    return null;
+  }
+
+  function validateFields() {
+    const missing = [];
+    
+    // Validate core fields FIRST
+    coreMandatoryFields.forEach(field => {
+      const error = validateField(field);
+      if (error) missing.push(error);
+    });
+    
+    // Validate ALL add mortgagee fields for active sections
+    const numAdd = parseInt(getFieldValue({ id: "numMortgageeToAdd" })) || 0;
+    for (let i = 1; i <= numAdd; i++) {
+      addMortgageeFields[i].forEach(fieldDef => {
+        const field = { ...fieldDef }; // Create copy with id/label
+        const error = validateField(field);
+        if (error) missing.push(error);
+      });
+    }
+    
+    return missing;
+  }
+
+  // ================= CAPTURE ALL FORM DATA =================
+  function captureFormData() {
+    const captured = [];
+    const missingFields = validateFields();
+    
+    // Capture ALL visible fields regardless of mandatory status
+    allCaptureFields.forEach(field => {
+      const value = getFieldValue(field);
+      if (value && isFieldVisible(field)) {
+        captured.push(`${field.label} = ${value}`);
+      }
+    });
+    
+    capturedInput.value = captured.join("\n");
+    missingInput.value = missingFields.join("\n");
+    
+    return { captured, missingFields };
+  }
+
+  // ================= EVENT HANDLERS =================
+  reviewBtn.addEventListener("click", () => {
+    const missing = validateFields();
+    captureFormData();
+
+    if (missing.length) {
+      dialogTitle.textContent = "Below Mandatory Fields are missing and the Team will contact you shortly.";
+      missingFieldsList.innerHTML = missing.map(f => `<li>${f}</li>`).join("");
+    } else {
+      dialogTitle.textContent = "All mandatory fields are completed. Ready to submit your request?";
+      missingFieldsList.innerHTML = "";
+    }
+
+    dialog.classList.remove("hidden");
+  });
+
+  editBtn.addEventListener("click", () => dialog.classList.add("hidden"));
+
+  proceedBtn.addEventListener("click", () => {
+    captureFormData();
+    dialog.classList.add("hidden");
+    form.submit();
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.classList.add("hidden");
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !dialog.classList.contains("hidden")) {
+      dialog.classList.add("hidden");
+    }
+  });
+
+});
+</script>
+  </body>
+</html>
